@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+source: https://api-docs.qargo.com/docs
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.2.0
+  docs: https://api-docs.qargo.com/docs
+deprecation:
+  policy: 'Deprecated operations are marked `deprecated: true` in the OpenAPI and superseded by hyphenated-path equivalents (e.g. /v1/accounting/sales_invoice → /v1/accounting/sales-invoice). Changes are announced in the dated Changelog.'
+  changelog: https://api-docs.qargo.com/docs/section/changelog
+  sunset_header: false
+status_page: null
+support: integrations@qargo.com
+deprecated_operations:
+- openapi/qargo-tms-openapi-original.yml#list_companies__deprecated__v1_accounting_company_get
+- openapi/qargo-tms-openapi-original.yml#create_company__deprecated__v1_accounting_company_post
+- openapi/qargo-tms-openapi-original.yml#get_company__deprecated__v1_accounting_company__id__get
+- openapi/qargo-tms-openapi-original.yml#update_company__deprecated__v1_accounting_company__id__put
+- openapi/qargo-tms-openapi-original.yml#update_company__deprecated__v1_accounting_company__id__patch
+- openapi/qargo-tms-openapi-original.yml#Archive_company__deprecated__v1_accounting_company__id__delete
+- openapi/qargo-tms-openapi-original.yml#Retrieve_purchase_invoice__deprecated__v1_accounting_purchase_invoice__id__get
+- openapi/qargo-tms-openapi-original.yml#Update_purchase_invoice__deprecated__v1_accounting_purchase_invoice__id__patch
+- openapi/qargo-tms-openapi-original.yml#Retrieve_purchase_invoice_documents__deprecated__v1_accounting_purchase_invoice__id__documents_get
+- openapi/qargo-tms-openapi-original.yml#Report_payment_status_for_purchase_invoice__deprecated__v1_accounting_purchase_invoice__id__payment_update_status_post
+- openapi/qargo-tms-openapi-original.yml#Retrieve_sales_credit_note__deprecated__v1_accounting_sales_credit_note__id__get
+- openapi/qargo-tms-openapi-original.yml#Update_credit_note__deprecated__v1_accounting_sales_credit_note__id__patch
+- openapi/qargo-tms-openapi-original.yml#Retrieve_sales_credit_note_documents__deprecated__v1_accounting_sales_credit_note__id__documents_get
+- openapi/qargo-tms-openapi-original.yml#Report_refund_status_for_sales_credit_note__deprecated__v1_accounting_sales_credit_note__id__refund_update_status_post
+- openapi/qargo-tms-openapi-original.yml#Retrieve_sales_invoice__deprecated__v1_accounting_sales_invoice__id__get
+- openapi/qargo-tms-openapi-original.yml#Update_sales_invoice__deprecated__v1_accounting_sales_invoice__id__patch
+- openapi/qargo-tms-openapi-original.yml#Retrieve_sales_invoice_documents__deprecated__v1_accounting_sales_invoice__id__documents_get
+- openapi/qargo-tms-openapi-original.yml#Report_payment_status_for_sales_invoice__deprecated__v1_accounting_sales_invoice__id__payment_update_status_post

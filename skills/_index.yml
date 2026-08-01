@@ -1,0 +1,16 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/qargo-tms-openapi-original.yml
+skills:
+  - file: qargo-import-order.md
+    name: Import an order into Qargo and track its status
+    api: openapi/qargo-tms-openapi-original.yml
+    operations: [generate_token_v1_auth_token_post, import_order_v1_orders_order_upload_post, get_order_import_status_v1_orders_order_upload__upload_id__get, get_order_details_v1_orders_order__order_id__get, order_status_v1_orders_order__order_id__status_get]
+  - file: qargo-create-sales-invoice.md
+    name: Create and reconcile a Qargo sales invoice
+    api: openapi/qargo-tms-openapi-original.yml
+    operations: [generate_token_v1_auth_token_post, Create_a_sales_invoice_v1_accounting_sales_invoice__post, Retrieve_sales_invoice_v1_accounting_sales_invoice__id__get, Retrieve_sales_invoice_documents_v1_accounting_sales_invoice__id__documents_get, Report_payment_status_for_sales_invoice_v1_accounting_sales_invoice__id__payment_update_status_post]
+  - file: qargo-sync-master-data.md
+    name: Sync master data (companies and resources) into Qargo
+    api: openapi/qargo-tms-openapi-original.yml
+    operations: [generate_token_v1_auth_token_post, create_company_v1_companies_company_post, list_companies_v1_companies_company_get, Create_resource_v1_resources_resource_post, List_resources_v1_resources_resource_get, Patch_resource_v1_resources_resource__resource_id__patch]

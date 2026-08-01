@@ -1,0 +1,36 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/qargo-tms-openapi-original.yml
+docs: https://api-docs.qargo.com/docs/section/authentication/the-api-call-to-request-tokens
+summary:
+  types:
+  - oauth2
+  - http
+  oauth2_flows:
+  - clientCredentials
+  note: >-
+    The Qargo TMS REST API uses OAuth2 client-credentials (service-to-service). A JWT
+    access token is obtained from POST https://api.qargo.com/v1/auth/token using HTTP
+    Basic auth (client_id:secret_id, base64) and refreshed on expiry (expires_in).
+    Application clients are created by a Super admin under Configuration -> Organisation
+    Settings and must be linked to an approved integration id. Webhooks use a SEPARATE
+    HTTP Basic scheme (BasicAuthWebhookCredentials), provisioned by Qargo — OAuth tokens
+    must not be used for webhooks.
+schemes:
+- name: oAuth2ClientCredentials
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.qargo.com/v1/auth/token
+    token_format: JWT
+    scopes: 0
+  applies_to: REST API
+  sources:
+  - openapi/qargo-tms-openapi-original.yml
+- name: BasicAuthWebhookCredentials
+  type: http
+  scheme: basic
+  applies_to: Webhooks
+  provisioned_by: Qargo (integrations@qargo.com)
+  sources:
+  - openapi/qargo-tms-openapi-original.yml

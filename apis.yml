@@ -1,25 +1,870 @@
 aid: qargo
-name: qargo
-description: qargo is a company surfaced as a portfolio company of balderton-capital and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1
+name: Qargo
+description: >-
+  Qargo is an intelligent transport management platform (TMS) for road carriers, freight
+  forwarders and 3PLs, using AI to automate operational and administrative work across
+  planning, execution, tracking and accounting. Qargo publishes a public Qargo TMS API
+  (OpenAPI 3.1, v1.2.0, base https://api.qargo.com) exposing tenant-level integration and
+  operational endpoints for orders, trips, companies, resources, documents, tasks and
+  accounting, plus inbound and outbound webhooks and separate Subcontractor and Customer
+  APIs. Service-to-service authentication uses OAuth2 client-credentials (JWT); webhooks
+  use HTTP Basic. Qargo is a Balderton Capital portfolio company.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://app.qargo.com/assets/Qargo_Icon.png
 url: https://raw.githubusercontent.com/api-evangelist/qargo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - balderton-capital
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: public-api-found
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-apis: []
+- Transport Management
+- Logistics
+- Supply Chain
+- Freight
+- TMS
+- Accounting
+- Webhooks
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Qargo Subcontractor API
+  description: Fleet dispatch and subcontractor-specific endpoints for transportation management.
+  humanURL: https://api-docs.qargo.com/subcontractor/docs
+  baseURL: https://api.qargo.com
+  properties:
+  - type: APIReference
+    url: https://api-docs.qargo.com/subcontractor/docs
+- name: Qargo Customer API
+  description: >-
+    Customer portal endpoints for order tracking, status monitoring and customer-facing operations.
+  humanURL: https://api-docs.qargo.com/customer/docs
+  baseURL: https://api.qargo.com
+  properties:
+  - type: APIReference
+    url: https://api-docs.qargo.com/customer/docs
+- aid: qargo:qargo-api-accounting-api
+  name: Qargo API / Accounting API
+  description: The API / Accounting API from Qargo — 33 operation(s) for api / accounting.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Accounting
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-accounting-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-authentication-api
+  name: Qargo API / Authentication API
+  description: The API / Authentication API from Qargo — 1 operation(s) for api / authentication.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-authentication-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-company-api
+  name: Qargo API / Company API
+  description: The API / Company API from Qargo — 6 operation(s) for api / company.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Company
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-company-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-document-api
+  name: Qargo API / Document API
+  description: The API / Document API from Qargo — 2 operation(s) for api / document.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Document
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-document-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-order-api
+  name: Qargo API / Order API
+  description: The API / Order API from Qargo — 8 operation(s) for api / order.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Order
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-order-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-resource-api
+  name: Qargo API / Resource API
+  description: The API / Resource API from Qargo — 8 operation(s) for api / resource.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Resource
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-resource-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-task-api
+  name: Qargo API / Task API
+  description: The API / Task API from Qargo — 3 operation(s) for api / task.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Task
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-task-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-api-trip-api
+  name: Qargo API / Trip API
+  description: The API / Trip API from Qargo — 3 operation(s) for api / trip.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - API / Trip
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-api-trip-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-system-api
+  name: Qargo System API
+  description: The System API from Qargo — 1 operation(s) for system.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-system-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-accounting-api
+  name: Qargo Use case / Accounting API
+  description: >-
+    Required role: `API_ACCOUNTING`.
+
+
+    See [Accounting](/docs/section/accounting) for more information.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Accounting
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-accounting-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-customer-portal-api
+  name: Qargo Use case / Customer portal API
+  description: >-
+    Required api role: `CUSTOMER`
+
+
+    This is the api equivalent of our customer portal functionality.
+
+    Customers can use this api to create/update/cancel orders, view charges and receive status updates.
+
+
+
+    ### Getting started
+
+    See [this section](/docs/section/transport-order-creation-and-status) to get started.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Customer portal
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-customer-portal-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-document-import-api
+  name: Qargo Use case / Document import API
+  description: >-
+    This section provides an overview of all available methods to import documents into Qargo.
+
+
+    ![Document import paths overview](/docs/static/document_import_overview.svg)
+
+
+    ### Document import methods
+
+
+    There are five ways to get documents into Qargo, grouped by domain:
+
+
+    #### Operational
+
+
+    #### 1. Generic document import webhook
+
+
+    The most flexible option for importing documents at the **order level**. Query parameters are fully
+    configurable per integration and are used to pass file metadata and order matching criteria. Only
+    order-level document types are supported.
+
+
+    - **Scope**: Order-level
+
+    - **Auth**: Basic Auth (webhook credentials)
+
+    - **Query parameters**: Configurable per integration (`filename` is always required)
+
+    - **Supported content**: Binary files, text, or base64-encoded content
+
+
+    See the [generic document import webhook](/docs/use-case-document-import/document-import-webhook)
+    for full details.
+
+
+    #### Master Data
+
+
+    #### 2. Synchronous API upload
+
+
+    Upload documents directly via the REST API. Used for master data synchronisation (e.g. importing reference
+    documents). Suited for integrations that require a synchronous response.
+
+
+    - **Scope**: Master data (sync / import)
+
+    - **Auth**: OAuth2 (API credentials)
+
+
+    See the [document upload endpoint](/docs/api-document/upload_document_content_v1_documents_document_upload_content_post)
+    for full details.
+
+
+    #### 3. Subcontractor document upload webhook
+
+
+    Upload documents linked to a specific **stop** on a subcontracted trip. Uses fixed query parameters
+    for stop identification and document type mapping.
+
+
+    - **Scope**: Stop-level (subcontractor trips)
+
+    - **Auth**: Basic Auth (webhook credentials)
+
+    - **Query parameters**: `question_path_key`, `stop_id`
+
+
+    See the [subcontractor document upload webhook](/docs/use-case-subcontractor-dispatch/subcontractor-document-upload-webhook)
+    for full details and example.
+
+
+    #### 4. Fleet document upload webhook
+
+
+    Upload documents linked to a specific **stop** or **stop group** on a fleet-dispatched trip. Same
+    pattern as the subcontractor variant.
+
+
+    - **Scope**: Stop-level (fleet trips)
+
+    - **Auth**: Basic Auth (webhook credentials)
+
+    - **Query parameters**: `question_path_key`, `stop_id`, `stop_group_id`
+
+
+    See the [fleet document upload webhook](/docs/use-case-fleet-dispatch/fleet-document-upload-webhook)
+    for full details and example.
+
+
+    #### Accounting
+
+
+    #### 5. E-invoicing webhook
+
+
+    Import structured purchase invoices or credit notes, optionally with file attachments (e.g. invoice
+    PDF, CMR). Supports JSON, XML (UBL/Peppol), and multipart uploads.
+
+
+    - **Scope**: Purchase invoices / credit notes
+
+    - **Auth**: Basic Auth (webhook credentials)
+
+    - **Formats**: JSON, XML (Peppol UBL), multipart/form-data
+
+    - **Attachments**: Supported via `attachments` array (base64-encoded) in JSON, or as additional parts
+    in multipart uploads
+
+
+    See the [e-invoicing webhook](/docs/use-case-e-invoicing/e-invoicing-webhook) for full details, format
+    examples, and attachment handling.
+
+
+    ### Choosing the right method
+
+
+    | Method | Domain | Scope | Auth | Best for |
+
+    |--------|--------|-------|------|----------|
+
+    | Generic document import | Operational | Order | Basic Auth | CMR, POD, packing lists — any order-level
+    document |
+
+    | Subcontractor document upload | Operational | Stop | Basic Auth | POD/CMR from subcontractor systems
+    (per stop) |
+
+    | Fleet document upload | Operational | Stop / Stop group | Basic Auth | POD/CMR from fleet apps (per
+    stop or stop group) |
+
+    | Synchronous API upload | Master Data | Master data | OAuth2 | Reference document synchronisation
+    |
+
+    | E-invoicing | Accounting | Invoice / Credit note | Basic Auth | Purchase invoices via Peppol, EDI,
+    or custom format |
+
+
+    > **Note:** The generic document import webhook currently supports **order-level document types only**.
+    For stop-level documents, use the subcontractor or fleet document upload webhooks.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Document import
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-document-import-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-e-invoicing-api
+  name: Qargo Use case / E-invoicing API
+  description: >-
+    Required api role: not applicable
+
+
+    Purpose: This interface allows an external party to send e-invoices in a structured format.
+
+
+    A [webhook](/docs/use-case-e-invoicing/e-invoicing-webhook) can be used to send e-invoices to Qargo.
+    The e-invoice can either be a **purchase invoice** or a **purchase credit note**.
+
+
+    ### Supported formats
+
+
+    | Format | Content-Type | Notes |
+
+    |--------|-------------|-------|
+
+    | JSON | `application/json` | Qargo's own purchase invoice/credit note schema |
+
+    | XML (UBL) | `application/xml` | Peppol-compliant UBL documents |
+
+    | Multipart | `multipart/form-data` | JSON invoice data + supporting document files (PDF, XML, etc.)
+    |
+
+
+    ### Attachments
+
+
+    Attachments (e.g. invoice PDF, CMR, proof of delivery) can be included in two ways:
+
+
+    - **In JSON payloads**: Use the `attachments` array, where each item contains a `document` object
+    with `base64`, `content_type`, `document_type`, and `filename` fields.
+
+    - **In multipart uploads**: Send the JSON invoice data as the first part, followed by file attachments
+    as additional parts.
+
+
+    See the [e-invoicing webhook endpoint](/docs/use-case-e-invoicing/e-invoicing-webhook) for detailed
+    examples of all formats and attachment handling.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / E-invoicing
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-e-invoicing-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-fleet-dispatch-api
+  name: Qargo Use case / Fleet dispatch API
+  description: >-
+    Required api role: not applicable (push/push)
+
+
+    Purpose: This interface allows an external party to integrate with driver apps and on board computer
+    systems.
+
+
+    The fleet dispatch uses a push/push model: Qargo pushes a dispatch payload to an external endpoint.
+
+    The third party then updates Qargo using our webhook endpoint:
+
+
+    ![dispatch flow](/docs/static/fleet_dispatch_flow.svg)
+
+
+    Subsequent updates or cancellations will also be sent via this webhook, using the same payload format.
+
+    The dispatch format has the following structure:
+
+
+    ![dispatch payload](/docs/static/dispatch_fleet_payload.svg)
+
+
+    The destination of this webhook can be a RESTful interface or file base protocol like SFTP.
+
+
+    The [status update endpoint](/docs/use-case-fleet-dispatch/fleet-status-update-webhook) can be used
+    to send information about the stops back to Qargo.
+
+    Status update date-time values, including `event_time`, `eta_start`, and `eta_end`, must include a
+    timezone offset such as `Z` or `+02:00`.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Fleet dispatch
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-fleet-dispatch-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-intermodal-partner-api
+  name: Qargo Use case / Intermodal [partner] API
+  description: >-
+    Note: this is currently only a specification meant as a preview.
+
+    Implementation is still pending.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Intermodal [partner]
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-intermodal-partner-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-location-booking-api
+  name: Qargo Use case / Location booking API
+  description: >-
+    Required api role: not applicable (push/push)
+
+
+    Purpose: This interface allows an external party to integrate with warehouse management systems and
+    location booking platforms.
+
+
+    The location booking uses a push/push model: Qargo pushes a booking dispatch payload to an external
+    endpoint.
+
+    The third party then updates Qargo with booking status changes using our webhook endpoint:
+
+
+    ![location booking flow](/docs/static/location_booking_flow.svg)
+
+
+    ### Operations
+
+
+    Each dispatch payload includes an `operation` field indicating the type of action:
+
+
+    | Operation | Description |
+
+    |-----------|-------------|
+
+    | `CREATE` | New booking request. The external system should create a time slot reservation. |
+
+    | `UPDATE` | Booking details have changed (e.g. updated time window, different vehicle). |
+
+    | `CANCEL` | The booking is no longer needed and should be released. |
+
+
+    ### Booking scenarios
+
+
+    The `scenario` field indicates the direction of goods movement at the location:
+
+
+    | Scenario | Description |
+
+    |----------|-------------|
+
+    | `INBOUND` | Goods are being delivered to the location (e.g. warehouse receiving). |
+
+    | `OUTBOUND` | Goods are being picked up from the location (e.g. warehouse shipping). |
+
+    | `INBOUND_OUTBOUND` | Both pickup and delivery happen at the same location in a single booking. |
+
+
+    ### Status lifecycle
+
+
+    The external system updates the booking status via the [booking update webhook](/docs/use-case-location-booking/location-booking-update-webhook):
+
+
+    | Status | Description |
+
+    |--------|-------------|
+
+    | `TO_REQUEST` | Initial state - booking has not yet been sent to the external system. |
+
+    | `REQUESTED` | Booking request sent, awaiting confirmation from the location. |
+
+    | `BOOKED` | Time slot confirmed by the location. |
+
+    | `CANCELLED` | Booking was cancelled. |
+
+
+    ### Payload structure
+
+
+    The dispatch payload contains:
+
+
+    - **Trip information**: trip ID, name, and orders linked to the booking
+
+    - **Booking details**: booking ID, booking name, location address, and relevant stops
+
+    - **Resources**: vehicle, trailer, and resource allocations assigned to the trip
+
+
+    The destination of the dispatch can be a RESTful interface or file-based protocol like SFTP.
+
+
+    ### Update payload
+
+
+    The [booking update webhook](/docs/use-case-location-booking/location-booking-update-webhook) is the
+    inbound channel the external system uses to send booking confirmations, status changes, and execution
+    status updates back to Qargo. Each update carries:
+
+
+    - **Booking reference**: either the Qargo booking `id` or a `match` (matching criteria agreed with
+    the external system)
+
+    - **Status**: new booking status (`REQUESTED`, `BOOKED`, `CANCELLED`)
+
+    - **Execution statuses**: fine-grained status tracking with event times and remarks
+
+    - **Question answers**: answers to questions configured on the booking, mapped onto the order
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Location booking
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-location-booking-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-master-data-sync-api
+  name: Qargo Use case / Master data sync API
+  description: 'Required api role: `API_MASTER_DATA`, or `API_ACCOUNTING` for company sync only.'
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Master data sync
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-master-data-sync-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-order-api
+  name: Qargo Use case / Order API
+  description: >-
+    Required api role: `API_ORDER`
+
+
+    All endpoints related to order creation and status retrieval/subscription.
+
+
+
+    ### Getting started
+
+    See [this section](/docs/section/transport-order-creation-and-status) to get started.
+
+
+    ### Customer portal
+
+    See [Customer portal](/docs/use-case-customer-portal) for the customer version.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Order
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-order-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-subcontractor-dispatch-api
+  name: Qargo Use case / Subcontractor dispatch API
+  description: >-
+    Required api role: not applicable (push/push)
+
+
+    Purpose: This interface allows an external party to integrate with 3rd party transport management
+    systems for subcontracting.
+
+
+    The subcontractor dispatch uses a push/push model: Qargo pushes a dispatch payload to an external
+    endpoint.
+
+    The third party then updates Qargo using our webhook endpoint:
+
+
+    ![dispatch flow](/docs/static/subco_dispatch_flow.svg)
+
+
+    Subsequent updates or cancellations will also be sent via this webhook, using the same payload format.
+
+    The dispatch format has the following structure:
+
+
+    ![dispatch payload](/docs/static/dispatch_subco_payload.svg)
+
+
+    The destination of this webhook can be a RESTful interface or file base protocol like SFTP
+
+
+    The [status update endpoint](/docs/use-case-subcontractor-dispatch/subcontractor-status-update-webhook)
+    can be used to receive information about the stops back to Qargo.
+
+    Status update date-time values, including `event_time`, `eta_start`, and `eta_end`, must include a
+    timezone offset such as `Z` or `+02:00`.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Subcontractor dispatch
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-subcontractor-dispatch-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-tracking-api
+  name: Qargo Use case / Tracking API
+  description: The Use case / Tracking API from Qargo — 1 operation(s) for use case / tracking.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-tracking-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-trip-import-api
+  name: Qargo Use case / Trip import API
+  description: >-
+    Required api role: `API_TRIP`
+
+
+    Purpose: This interface allows an external system (e.g. a route optimisation tool) to send fully planned
+    trips into Qargo.
+
+
+    When a trip payload arrives, Qargo creates or updates a trip with the specified stops, sequence, timestamps,
+    and resource assignments — without manual planning.
+
+
+    The trip import is the last step of a larger planning flow:
+
+
+    1. The external system obtains the Qargo `id`s of the stops and resources to plan. Qargo can push
+    this planning data to the external system (an optional export, configured per integration), or the
+    external system fetches it via the API (e.g. orders and resources).
+
+    2. The external system computes trips and assigns each one a `trip_identifier`.
+
+    3. The external system pushes the planned trips to the trip import webhook.
+
+
+    ![trip import flow](/docs/static/trip_import_flow.svg)
+
+
+    ### Getting started
+
+
+    A trip import pushes stop sequences, resource assignments, and timing information into Qargo so that
+    the planning board reflects the externally computed plan.
+
+
+    The `trip_identifier` is used to determine whether an incoming trip is new or an update to an existing
+    one:
+
+    - **Create** — a new trip is created when a payload arrives with a `trip_identifier` that has not
+    been seen before.
+
+    - **Update** — if a payload arrives with a `trip_identifier` that already exists, Qargo updates the
+    original trip rather than creating a new one.
+
+    - **Cancel** — setting `status = 'CANCELLED'` will remove the trip. A trip must have been created
+    before it can be cancelled.
+
+
+    ### Limitations
+
+
+    - Stops must be referenced by their Qargo stop `id`. Location names, using location details or aliases
+    are not supported.
+
+    - Each stop must have a `sequence` value (starting from `0`) and a start/end timestamp. Missing either
+    will cause the import to fail.
+
+    - Resources can only be assigned by their Qargo resource `id` — not by license plate, name, or external
+    reference.
+
+    - All stops in the payload must be unplanned. Stops that are already assigned to another trip cannot
+    be imported.
+
+    - Trips are created automatically — there is no approval or review step before the trip appears on
+    the planning board (unlike order import).
+
+    - A cancelled trip cannot receive further updates. To re-import, use a new `trip_identifier`.
+
+    - Stop timestamps must be logically consistent: the sequence order must match the chronological order,
+    and a delivery stop cannot precede its corresponding pickup.
+
+    - Trip import is asynchronous — the endpoint does not return trip data.
+
+    - Splitting a trip into multiple trips is not supported via trip import - split the order first.
+
+    - Each integration instance supports either webhook or EDI routing — not both simultaneously.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Trip import
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-trip-import-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-use-case-visibility-api
+  name: Qargo Use case / Visibility API
+  description: The Use case / Visibility API from Qargo — 2 operation(s) for use case / visibility.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Use case / Visibility
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-use-case-visibility-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-webhooks-inbound-api
+  name: Qargo Webhooks / Inbound API
+  description: >-
+    Inbound webhooks use **Basic Authentication**, not OAuth2. See [Authentication](/docs/section/authentication)
+    for details on how to authenticate webhook requests.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Webhooks / Inbound
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-webhooks-inbound-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
+- aid: qargo:qargo-webhooks-outbound-api
+  name: Qargo Webhooks / Outbound API
+  description: >-
+    Outbound webhooks are sent by Qargo to your system when certain events occur. Configure the receiving
+    endpoint URL and credentials in the integration settings.
+  humanURL: https://api-docs.qargo.com/docs
+  baseURL: https://api.qargo.com
+  tags:
+  - Webhooks / Outbound
+  properties:
+  - type: OpenAPI
+    url: openapi/qargo-webhooks-outbound-api-openapi.yml
+  - type: APIReference
+    url: https://api-docs.qargo.com/docs
 common:
 - type: Website
-  url: https://www.qargo.io/
+  url: https://www.qargo.com/
+- type: DeveloperPortal
+  url: https://api-docs.qargo.com/docs
+- type: Documentation
+  url: https://api-docs.qargo.com/docs
+- type: APIReference
+  url: https://api-docs.qargo.com/docs
+- type: GettingStarted
+  url: https://api-docs.qargo.com/docs/section/authentication/the-api-call-to-request-tokens
+- type: Authentication
+  url: authentication/qargo-authentication.yml
+- type: OAuthScopes
+  url: authentication/qargo-authentication.yml
+- type: Conventions
+  url: conventions/qargo-conventions.yml
+- type: ErrorCatalog
+  url: errors/qargo-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/qargo-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/qargo-lifecycle.yml
+- type: ChangeLog
+  url: changelog/qargo-changelog.yml
+- type: ChangeLog
+  url: https://api-docs.qargo.com/docs/section/changelog
+- type: MCPServer
+  url: mcp/qargo-mcp.yml
+- type: Webhooks
+  url: asyncapi/qargo-webhooks.yml
+- type: AgenticAccess
+  url: agentic-access/qargo-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/qargo-data-model.yml
+- type: Conformance
+  url: conformance/qargo-conformance.yml
+- type: DomainSecurity
+  url: security/qargo-domain-security.yml
+- type: WellKnown
+  url: well-known/qargo-well-known.yml
+- type: LLMsTxt
+  url: llms/qargo-llms.txt
+- type: Postman
+  url: postman/qargo-postman.json
+- type: Support
+  url: https://help.qargo.com/en/
+- type: Blog
+  url: https://www.qargo.com/resources/news-and-blogs/
+- type: Login
+  url: https://app.qargo.com/login
+- type: TermsOfService
+  url: https://www.qargo.com/terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://www.qargo.com/privacy-notice/

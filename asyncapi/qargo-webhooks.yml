@@ -1,0 +1,65 @@
+generated: '2026-07-20'
+method: searched
+type: Webhooks
+source: openapi/qargo-tms-openapi-original.yml
+docs: https://api-docs.qargo.com/docs
+note: >-
+  Qargo documents an inbound and outbound webhook surface inside its OpenAPI (tags
+  Webhooks/Inbound and Webhooks/Outbound). No standalone AsyncAPI document is published.
+  Inbound webhooks are endpoints hosted by Qargo that integrators POST to; outbound
+  webhooks are payloads Qargo POSTs to integrator-hosted endpoints. Webhooks authenticate
+  with HTTP Basic (BasicAuthWebhookCredentials), provisioned by Qargo.
+auth: HTTP Basic (BasicAuthWebhookCredentials)
+inbound:
+  - path: /v1/webhook
+    summary: Create/Update/Cancel Orders
+    use_case: Order
+  - path: /v1/webhook/partial-order-update
+    summary: Partial Order Update
+    use_case: Order
+  - path: /v1/webhook/billing-document-update
+    summary: External Billing Document (Invoice/Credit-Note) Update
+    use_case: Accounting
+  - path: /v1/webhook/document-import
+    summary: Generic Document Import
+    use_case: Document import
+  - path: /v1/webhook/fleet-document-upload
+    summary: External Document Upload From A Fleet Application
+    use_case: Fleet dispatch
+  - path: /v1/webhook/subco-document-upload
+    summary: External Document Update With Payload
+    use_case: Subcontractor dispatch
+  - path: /v1/webhook/e-invoicing
+    summary: Send E-Invoices
+    use_case: E-invoicing
+  - path: /v1/webhook/fleet-status-update
+    summary: External Status Update From A Fleet Application
+    use_case: Fleet dispatch
+  - path: /v1/webhook/intermodal-status
+    summary: Intermodal Booking Status Update Webhook
+    use_case: Intermodal
+  - path: /v1/webhook/location-booking-update
+    summary: Location Booking Update Webhook
+    use_case: Location booking
+  - path: /v1/webhook/subco-status-update
+    summary: External Status Update
+    use_case: Subcontractor dispatch
+  - path: /v1/webhook/tracking-update
+    summary: Tracking Update
+    use_case: Tracking
+  - path: /v1/webhook/trip-import
+    summary: Import Trip
+    use_case: Trip import
+outbound:
+  - summary: Operational Visibility Event
+    use_case: Visibility / Order / Customer portal
+  - summary: Accounting Visibility Event
+    use_case: Visibility / Accounting
+  - summary: Fleet Dispatch Payload
+    use_case: Fleet dispatch
+  - summary: Subcontractor Dispatch Payload
+    use_case: Subcontractor dispatch
+  - summary: Location Booking Dispatch Payload
+    use_case: Location booking
+  - summary: Intermodal Booking Payload
+    use_case: Intermodal

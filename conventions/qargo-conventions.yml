@@ -1,0 +1,51 @@
+generated: '2026-07-20'
+method: searched
+source: https://api-docs.qargo.com/docs
+spec: openapi/qargo-tms-openapi-original.yml
+summary: >-
+  Cross-cutting request/response conventions for the Qargo TMS API (v1, base
+  https://api.qargo.com). Service-to-service OAuth2 client-credentials for the REST
+  API; HTTP Basic for webhooks. Cursor-based pagination, external-id correlation for
+  master-data sync, and a custom JSON validation-error envelope.
+authentication:
+  rest_api:
+    style: oauth2-client-credentials
+    token_endpoint: https://api.qargo.com/v1/auth/token
+    token_format: JWT
+    token_request_auth: HTTP Basic (client_id:secret_id, base64)
+    expiry: response includes expires_in; refresh on expiry
+    note: Application clients created by a Super admin under Configuration -> Organisation Settings (API clients); must be linked to an approved integration id.
+  webhooks:
+    style: http-basic
+    scheme: BasicAuthWebhookCredentials
+    note: Webhook credentials are provisioned by Qargo (contact integrations@qargo.com); do NOT use OAuth tokens for webhooks.
+  ref: authentication/qargo-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header/parameter is documented in the OpenAPI or docs. External-id / foreign-id correlation fields are used for upsert-style master-data sync instead.
+pagination:
+  style: cursor
+  params:
+    - cursor
+    - updated_after
+  note: List endpoints (e.g. GET /v1/resources/resource) are cursor-paginated with an updated_after incremental filter for sync.
+external_id_correlation:
+  supported: true
+  note: Objects accept external_id / foreign-id references and support filters like external_id and external_id:in for master-data synchronisation.
+versioning:
+  scheme: uri-path
+  current: v1
+  ref: lifecycle/qargo-lifecycle.yml
+error_envelope:
+  format: custom-json
+  primary_schema: ValidationErrorResponse
+  fields: [message, errors]
+  item_schema: ValidationErrorDetail
+  item_fields: [message, field, path, detail]
+  note: Validation failures always return a non-empty errors[] array so one and many failures are handled the same way (changelog 2026-07-06).
+  ref: errors/qargo-problem-types.yml
+rate_limiting:
+  signalled: true
+  status: 429
+  header: Retry-After
+  note: 429 Too Many Requests responses instruct clients to honour the Retry-After header.

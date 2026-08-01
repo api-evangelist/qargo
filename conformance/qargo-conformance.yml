@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/qargo-tms-openapi-original.yml
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'openapi: 3.1.0 document published'
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: securitySchemes oAuth2ClientCredentials type oauth2 clientCredentials flow
+- id: http-basic-auth
+  conforms: true
+  evidence: BasicAuthWebhookCredentials http basic for webhook auth + token request
+- id: jwt-bearer
+  conforms: true
+  evidence: /v1/auth/token issues JWT access tokens (expires_in)
+- id: cursor-pagination
+  conforms: true
+  evidence: list endpoints use cursor + updated_after query parameters
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a custom JSON envelope (ValidationErrorResponse), not application/problem+json
+- id: webhooks
+  conforms: true
+  evidence: documented inbound + outbound webhook operations (Webhooks/Inbound, Webhooks/Outbound tags)
+- id: fhir-r4
+  conforms: false
+- id: fapi
+  conforms: false
+- id: scim
+  conforms: false

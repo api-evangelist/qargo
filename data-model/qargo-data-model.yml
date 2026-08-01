@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/qargo-tms-openapi-original.yml
+docs: https://api-docs.qargo.com/docs
+note: Core Qargo TMS domain entities derived from OpenAPI component schemas and id-reference fields. Qargo supports external_id / foreign-id correlation for master-data sync.
+entities:
+- Location
+- Document
+- PurchaseInvoice
+- PurchaseCreditNote
+- Booking
+- ExchangeRate
+relationships:
+- from: Location
+  via: external_id
+  to: external
+- from: Booking
+  via: booking_id
+  to: booking

@@ -1,0 +1,23 @@
+# Qargo TMS API
+
+> Qargo is an intelligent transport management platform (TMS) for carriers, freight forwarders and 3PLs. The Qargo TMS API (OpenAPI 3.1, v1.2.0, base https://api.qargo.com) exposes tenant-level integration and operational endpoints across orders, trips, accounting, companies, resources, documents and tasks, plus inbound and outbound webhooks. Service-to-service auth is OAuth2 client-credentials (JWT); webhooks use HTTP Basic.
+
+## APIs
+- [Qargo TMS API (Tenant)](https://api-docs.qargo.com/docs): main integration + operational API — 84 paths, 114 operations
+- [Subcontractor API](https://api-docs.qargo.com/subcontractor/docs): fleet dispatch and subcontractor endpoints
+- [Customer API](https://api-docs.qargo.com/customer/docs): customer portal, order tracking and status
+
+## Specs
+- [OpenAPI 3.1 (Tenant)](https://raw.githubusercontent.com/api-evangelist/qargo/refs/heads/main/openapi/qargo-tms-openapi-original.yml)
+- [Postman collection](https://raw.githubusercontent.com/api-evangelist/qargo/refs/heads/main/postman/qargo-postman.json)
+
+## Docs
+- [API Documentation](https://api-docs.qargo.com/docs)
+- [Authentication](https://api-docs.qargo.com/docs/section/authentication/the-api-call-to-request-tokens)
+- [Changelog](https://api-docs.qargo.com/docs/section/changelog)
+- [Hosted MCP server](https://api-docs.qargo.com/mcp)
+- [Integrations](https://www.qargo.com/platform/transport-management-system-integrations/)
+- [Help Center](https://help.qargo.com/en/)
+
+## Contact
+- Integrations & API access: integrations@qargo.com

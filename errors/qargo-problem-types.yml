@@ -1,0 +1,46 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/qargo-tms-openapi-original.yml
+docs: https://api-docs.qargo.com/docs/section/error-handling
+format: json (custom validation envelope)
+note: Qargo returns a JSON error envelope. 400 uses ValidationErrorResponse with an `errors` array of ValidationErrorDetail (message, field, path, detail); 422 uses HTTPValidationError. Not RFC 9457 problem+json.
+envelope:
+  primary_schema: ValidationErrorResponse
+  fields:
+  - message
+  - errors[]
+  error_item_schema: ValidationErrorDetail
+  error_item_fields:
+  - message
+  - field
+  - path
+  - detail
+problems:
+- status: 400
+  title: Bad Request — invalid input or malformed request
+  schema: ValidationErrorResponse
+  occurrences: 114
+- status: 401
+  title: Unauthorized — missing or invalid authentication credentials
+  schema: null
+  occurrences: 114
+- status: 403
+  title: Forbidden — insufficient permissions for this operation
+  schema: null
+  occurrences: 114
+- status: 422
+  title: Validation Error — request body failed schema validation
+  schema: HTTPValidationError
+  occurrences: 111
+- status: 429
+  title: Too Many Requests — rate limit exceeded. See the Retry-After header
+  schema: null
+  occurrences: 114
+- status: 500
+  title: Internal Server Error
+  schema: null
+  occurrences: 114
+- status: 503
+  title: Service Unavailable — temporarily unable to handle the request
+  schema: null
+  occurrences: 114

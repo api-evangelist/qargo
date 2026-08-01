@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+note: >-
+  Probed /.well-known/ discovery paths on the Qargo production and app hosts on
+  2026-07-20. app.qargo.com returns HTTP 200 for well-known paths but serves the SPA
+  index HTML (text/html) rather than a real document, so these are treated as absent
+  (no RFC 9116 security.txt, no OIDC discovery document published). The Qargo TMS API
+  uses OAuth2 client-credentials with a fixed token endpoint (/v1/auth/token), not
+  OIDC discovery.
+hosts:
+  - host: https://www.qargo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+  - host: https://app.qargo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        real: false
+        note: SPA index HTML, not a security.txt
+      - path: /.well-known/openid-configuration
+        status: 200
+        real: false
+        note: SPA index HTML, not an OIDC discovery document
+  - host: https://api.qargo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404

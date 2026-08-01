@@ -1,0 +1,53 @@
+generated: '2026-07-20'
+method: searched
+source: https://api-docs.qargo.com/docs/section/changelog
+scheme: date-based (newest first, grouped by API vs Outgoing data)
+current_version: 1.2.0
+entries:
+  - date: '2026-07-10'
+    category: API
+    changes:
+      - 'Added: Order status responses now include first_pickup_stop (GET /v1/orders/order/{order_id}/status).'
+      - 'Changed: last_delivery_stop now uses the documented order-status stop shape.'
+  - date: '2026-07-09'
+    category: API
+    changes:
+      - 'Added: GET /v1/resources/resource documents query filters cursor, updated_after, external_id, external_id:in, resource_type, resource_type:in.'
+  - date: '2026-07-07'
+    category: API
+    changes:
+      - 'Added: Sales invoice and sales credit note responses now include e_invoicing registration metadata.'
+  - date: '2026-07-06'
+    category: API
+    breaking: true
+    changes:
+      - 'Changed: Validation error responses now return an errors[] array (ValidationErrorDetail with message/field/path/detail) instead of flat detail/field/path; array is always present and non-empty.'
+  - date: '2026-07-03'
+    category: API
+    changes:
+      - 'Added: GET /v1/resources/resource_groups lists tenant resource groups (cursor-paginated).'
+      - 'Added: Resource responses include resource_groups; PATCH resource accepts resource_group reference.'
+  - date: '2026-07-02'
+    category: API
+    changes:
+      - 'Added: Location objects include customs_metadata (customs_office_code) alongside terminal_metadata.'
+  - date: '2026-06-15'
+    category: Outgoing data
+    changes:
+      - 'Added: Location dispatch webhook includes a per-consignment tracking_link.'
+  - date: '2026-06-03'
+    category: Outgoing data
+    changes:
+      - 'Added: Operational order visibility now includes goods information.'
+  - date: '2026-05-28'
+    category: Outgoing data
+    changes:
+      - 'Added: Outgoing data includes ADR hazard labels and special_provisions for dangerous goods.'
+  - date: '2026-05-23'
+    category: API
+    changes:
+      - 'Added: Booking exposes vessel, voyage, IMO and associated references for intermodal flows.'
+  - date: '2026-05-20'
+    category: API
+    changes:
+      - 'Added: ContainerStandardSize gains FEET_24 and FEET_26 values.'

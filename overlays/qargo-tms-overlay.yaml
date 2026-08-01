@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Qargo TMS API
+  version: 1.0.0
+extends: openapi/qargo-tms-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-apievangelist-provider: qargo
+    x-apievangelist-artifacts:
+    - authentication
+    - conventions
+    - errors
+    - lifecycle
+    - changelog
+    - mcp
+    - webhooks
+    - agentic-access
+    - skills
+    - data-model
+    - conformance
+- target: $.info
+  update:
+    x-webhook-auth: BasicAuthWebhookCredentials (HTTP Basic) — distinct from the OAuth2
+      client-credentials used for the REST API
