@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Use case / Intermodal [partner] API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Use case / Intermodal [partner]",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Intermodal Booking Status Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/intermodal-status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Inbound webhook to receive intermodal booking status updates from the external intermodal booking system."
+        },
+        {
+          "info": {
+            "name": "Intermodal Booking Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<intermodal-booking-receiving-payload>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Outbound webhook to send intermodal bookings to the external intermodal booking system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

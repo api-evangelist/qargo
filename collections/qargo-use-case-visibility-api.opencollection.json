@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Use case / Visibility API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Use case / Visibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Accounting Visibility Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<accounting-visibility-event-receiving-payload>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Webhook for updates to orders and trips. Subscribe to this endpoint to receive updates.\n\nNote that both support our canonical VisibilityUpdate schema,\nbut the body can also be a custom mapped format."
+        },
+        {
+          "info": {
+            "name": "Operational Visibility Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<visibility-event-receiving-endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Webhook for updates to orders and trips. Subscribe to this endpoint to receive updates.\n\nNote that both support our canonical VisibilityUpdate schema,\nbut the body can also be a custom mapped format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

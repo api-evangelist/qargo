@@ -1,0 +1,320 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Webhooks / Inbound API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks / Inbound",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "External Billing Document (Invoice/Credit-Note) Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/billing-document-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Update billing document metadata (invoices, credit notes) from an external accounting system.\n\nThis webhook uses **Basic Auth** (webhook credentials), not the OAuth credentials used for the API.\nContact integrations@qargo.com to request credentials.\n\nUse this endpoint to push document status changes or related metadata updates back to Qargo.\nThis is typically triggered when your external accounting system processes billing documents."
+        },
+        {
+          "info": {
+            "name": "Generic Document Import",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/document-import",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Name of the file being uploaded, including extension. This is used as the primary source for the file name in Qargo."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for importing documents and attaching them to existing orders in Qargo.\n\n## How it works\n\n1. An external system sends a file to this endpoint with metadata as query parameters.\n2. The system matches the document to an order in Qargo using the provided query parameters.\n3. The document is created and attached to the matched order.\n\n## Query parameters\n\nThe `filename` parameter is always required. Additional query parameters are **configurable\nper integration** during setup and are used to"
+        },
+        {
+          "info": {
+            "name": "External Document Upload From A Fleet Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/fleet-document-upload",
+            "params": [
+              {
+                "name": "question_path_key",
+                "value": "",
+                "type": "query",
+                "description": "The question path key to map the file in Qargo, for example: CMR/POD"
+              },
+              {
+                "name": "stop_id",
+                "value": "",
+                "type": "query",
+                "description": "The stop ID to which the document is related"
+              },
+              {
+                "name": "stop_group_id",
+                "value": "",
+                "type": "query",
+                "description": "The stop group ID to which the document is related"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Upload a document to a specific stop or stop group on a fleet-dispatched trip.\n\nThis webhook uses **Basic Auth** (webhook credentials), not the OAuth credentials used for the API.\nContact integrations@qargo.com to request credentials.\n\n---\n\n## Query parameters\n\n| Parameter | Required | Description |\n|-----------|----------|-------------|\n| `question_path_key` | Yes | Maps the file to a document type in Qargo (e.g. `CMR`, `POD`, `WEIGHT_NOTE`) |\n| `stop_id` | No* | The Qargo UUID of the stop to a"
+        },
+        {
+          "info": {
+            "name": "External Document Update With Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/subco-document-upload",
+            "params": [
+              {
+                "name": "question_path_key",
+                "value": "",
+                "type": "query",
+                "description": "The question path key to map the file in Qargo, for example: CMR/POD"
+              },
+              {
+                "name": "stop_id",
+                "value": "",
+                "type": "query",
+                "description": "The stop ID to which the document is related"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Upload a document to a specific stop on a subcontracted trip.\n\nThis webhook uses **Basic Auth** (webhook credentials), not the OAuth credentials used for the API.\nContact integrations@qargo.com to request credentials.\n\n---\n\n## Query parameters\n\n| Parameter | Required | Description |\n|-----------|----------|-------------|\n| `question_path_key` | Yes | Maps the file to a document type in Qargo (e.g. `CMR`, `POD`, `WEIGHT_NOTE`) |\n| `stop_id` | Yes | The Qargo UUID of the stop to attach the documen"
+        },
+        {
+          "info": {
+            "name": "Send E-Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/e-invoicing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook to receive e-invoices in structured format or as file uploads.\n\n## Supported Formats\nThis endpoint accepts e-invoices in multiple formats:\n\n- **JSON payloads**: Structured data using application/json content type.\n- **XML payloads**: Structured data using application/xml content type. Must be a valid UBL document.\n- **File uploads**: JSON + binary files (PDF, XML, etc.) using multipart/form-data.\n\n## Multipart Upload Support\nWhen using multipart form data, the endpoint expects:\n- First p"
+        },
+        {
+          "info": {
+            "name": "External Status Update From A Fleet Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/fleet-status-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for updating the status, ETA, and data of stops from an external fleet application.\n\nNote that this webhook uses Basic Auth instead of the OAuth credentials used for the api.\nPlease contact integrations@qargo.com to request credentials.\n\nAll `event_time`, `eta_start`, and `eta_end` date-time values must include a timezone offset,\nfor example `2025-06-15T10:30:00Z` or `2025-06-15T12:30:00+02:00`.\n\n---\n\n## Identifying a stop\n\nEach update targets either a single **stop** or a **stop group**"
+        },
+        {
+          "info": {
+            "name": "Intermodal Booking Status Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/intermodal-status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Inbound webhook to receive intermodal booking status updates from the external intermodal booking system."
+        },
+        {
+          "info": {
+            "name": "Location Booking Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/location-booking-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Inbound webhook to receive location booking updates from external systems."
+        },
+        {
+          "info": {
+            "name": "Create/Update/Cancel Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for creating/updating and cancelling transport orders.\n\nThis is the fully asynchronous version of the order upload api.\nThe documented schema is our default input format, but we can also map custom formats.\n\nNote that this webhook uses Basic Auth instead of the OAuth credentials used for the api.\nPlease contact integrations@qargo.com to request credentials."
+        },
+        {
+          "info": {
+            "name": "Partial Order Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/partial-order-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for partial order updates. Push to the endpoint to update specific fields of an existing order."
+        },
+        {
+          "info": {
+            "name": "External Status Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/subco-status-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for updating the status, ETA, and data of stops from an external subcontractor system.\n\nNote that this webhook uses Basic Auth instead of the OAuth credentials used for the api.\nPlease contact integrations@qargo.com to request credentials.\n\nAll `event_time`, `eta_start`, and `eta_end` date-time values must include a timezone offset,\nfor example `2025-06-15T10:30:00Z` or `2025-06-15T12:30:00+02:00`.\n\n---\n\n## Identifying a stop\n\nEach update targets a single stop. You can identify it by its"
+        },
+        {
+          "info": {
+            "name": "Tracking Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/tracking-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for tracking updates.\n\nPush to the endpoint to update tracking information for a resource."
+        },
+        {
+          "info": {
+            "name": "Import Trip",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/trip-import",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for planning a list of stops on a trip and assigning resources.\n\nThe documented schema is our default input format, but we can also map custom formats,\nkeeping in mind the limitations that are documented under use cases.\n\nNote that this webhook uses Basic Auth instead of the OAuth credentials used for the api.\nPlease contact integrations@qargo.com to request credentials."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

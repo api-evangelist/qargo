@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Use case / Location booking API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Use case / Location booking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Location Booking Update Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/location-booking-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Inbound webhook to receive location booking updates from external systems."
+        },
+        {
+          "info": {
+            "name": "Location Booking Dispatch Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<location-booking-receiving-endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Payload for sending location booking dispatches.\n\nBy default, we send our standard `LocationDispatchOutput` schema,\nbut the body can also be a custom mapped format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

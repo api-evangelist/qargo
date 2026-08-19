@@ -1,0 +1,235 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting API / Order API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API / Order",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/orders/order/upload",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create or update orders in Qargo. See the \"Transport order creation & status\" section for more info."
+        },
+        {
+          "info": {
+            "name": "Get Order Import Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/orders/order/upload/:upload_id",
+            "params": [
+              {
+                "name": "upload_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get the status of an order import"
+        },
+        {
+          "info": {
+            "name": "Get Order Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/orders/order/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Fetch order detail"
+        },
+        {
+          "info": {
+            "name": "List Order Charges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/orders/order/:order_id/charges",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Charges for a certain order. Note that these charges are not final and may change"
+        },
+        {
+          "info": {
+            "name": "Approve Order Charges",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/orders/order/:order_id/charges/approval",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Approve or reject certain charges on the order"
+        },
+        {
+          "info": {
+            "name": "List Order Documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/orders/order/:order_id/documents",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Fetch documents for an order. This includes `consignment` documents"
+        },
+        {
+          "info": {
+            "name": "Order Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/orders/order/:order_id/export",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides a minimal set of order data that can be used as a blueprint to create a new order"
+        },
+        {
+          "info": {
+            "name": "Order Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/orders/order/:order_id/status",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Order status endpoint. Provides information on the status of the order"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

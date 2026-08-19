@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting API / Trip API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API / Trip",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Trip By Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/trips/trip/:trip_id",
+            "params": [
+              {
+                "name": "trip_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get trip"
+        },
+        {
+          "info": {
+            "name": "Get Trip Costs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/trips/trip/:trip_id/costs",
+            "params": [
+              {
+                "name": "trip_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get the cost charges associated with this trip"
+        },
+        {
+          "info": {
+            "name": "Get Trip Documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.qargo.com/v1/trips/trip/:trip_id/documents",
+            "params": [
+              {
+                "name": "trip_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/v1/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Fetch trip documents. This includes `order` and `consignment` documents"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

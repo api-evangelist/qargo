@@ -1,0 +1,38 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Use case / E-invoicing API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Use case / E-invoicing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send E-Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/e-invoicing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook to receive e-invoices in structured format or as file uploads.\n\n## Supported Formats\nThis endpoint accepts e-invoices in multiple formats:\n\n- **JSON payloads**: Structured data using application/json content type.\n- **XML payloads**: Structured data using application/xml content type. Must be a valid UBL document.\n- **File uploads**: JSON + binary files (PDF, XML, etc.) using multipart/form-data.\n\n## Multipart Upload Support\nWhen using multipart form data, the endpoint expects:\n- First p"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

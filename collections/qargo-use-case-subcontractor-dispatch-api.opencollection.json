@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Use case / Subcontractor dispatch API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Use case / Subcontractor dispatch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "External Document Update With Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/subco-document-upload",
+            "params": [
+              {
+                "name": "question_path_key",
+                "value": "",
+                "type": "query",
+                "description": "The question path key to map the file in Qargo, for example: CMR/POD"
+              },
+              {
+                "name": "stop_id",
+                "value": "",
+                "type": "query",
+                "description": "The stop ID to which the document is related"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Upload a document to a specific stop on a subcontracted trip.\n\nThis webhook uses **Basic Auth** (webhook credentials), not the OAuth credentials used for the API.\nContact integrations@qargo.com to request credentials.\n\n---\n\n## Query parameters\n\n| Parameter | Required | Description |\n|-----------|----------|-------------|\n| `question_path_key` | Yes | Maps the file to a document type in Qargo (e.g. `CMR`, `POD`, `WEIGHT_NOTE`) |\n| `stop_id` | Yes | The Qargo UUID of the stop to attach the documen"
+        },
+        {
+          "info": {
+            "name": "External Status Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/subco-status-update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for updating the status, ETA, and data of stops from an external subcontractor system.\n\nNote that this webhook uses Basic Auth instead of the OAuth credentials used for the api.\nPlease contact integrations@qargo.com to request credentials.\n\nAll `event_time`, `eta_start`, and `eta_end` date-time values must include a timezone offset,\nfor example `2025-06-15T10:30:00Z` or `2025-06-15T12:30:00+02:00`.\n\n---\n\n## Identifying a stop\n\nEach update targets a single stop. You can identify it by its"
+        },
+        {
+          "info": {
+            "name": "Subcontractor Dispatch Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<external_subco_receiving_endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Payload for sending a trip dispatch.\nIn this case, we send the payload to an external endpoint for processing.\n\nBy default, we send our standard `SubcontractorDispatch` schema,\nbut the body can also be a custom mapped format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

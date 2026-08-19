@@ -1,0 +1,38 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Use case / Trip import API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Use case / Trip import",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import Trip",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.com/v1/webhook/trip-import",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Webhook for planning a list of stops on a trip and assigning resources.\n\nThe documented schema is our default input format, but we can also map custom formats,\nkeeping in mind the limitations that are documented under use cases.\n\nNote that this webhook uses Basic Auth instead of the OAuth credentials used for the api.\nPlease contact integrations@qargo.com to request credentials."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

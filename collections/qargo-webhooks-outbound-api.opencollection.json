@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Qargo TMS API / Accounting Webhooks / Outbound API",
+    "version": "1.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks / Outbound",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Accounting Visibility Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<accounting-visibility-event-receiving-payload>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Webhook for updates to orders and trips. Subscribe to this endpoint to receive updates.\n\nNote that both support our canonical VisibilityUpdate schema,\nbut the body can also be a custom mapped format."
+        },
+        {
+          "info": {
+            "name": "Operational Visibility Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<visibility-event-receiving-endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Webhook for updates to orders and trips. Subscribe to this endpoint to receive updates.\n\nNote that both support our canonical VisibilityUpdate schema,\nbut the body can also be a custom mapped format."
+        },
+        {
+          "info": {
+            "name": "Fleet Dispatch Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<external-fleet-receiving-endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Payload for sending fleet app dispatches.\nIn this case, we send the payload to an external endpoint for processing.\n\nBy default, we send our standard `FleetDispatch` schema,\nbut the body can also be a custom mapped format."
+        },
+        {
+          "info": {
+            "name": "Intermodal Booking Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<intermodal-booking-receiving-payload>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Outbound webhook to send intermodal bookings to the external intermodal booking system."
+        },
+        {
+          "info": {
+            "name": "Location Booking Dispatch Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<location-booking-receiving-endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Payload for sending location booking dispatches.\n\nBy default, we send our standard `LocationDispatchOutput` schema,\nbut the body can also be a custom mapped format."
+        },
+        {
+          "info": {
+            "name": "Subcontractor Dispatch Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.qargo.comhttps://<external_subco_receiving_endpoint>",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Payload for sending a trip dispatch.\nIn this case, we send the payload to an external endpoint for processing.\n\nBy default, we send our standard `SubcontractorDispatch` schema,\nbut the body can also be a custom mapped format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
