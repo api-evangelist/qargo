@@ -200,30 +200,6 @@ apis:
     url: openapi/qargo-use-case-accounting-api-openapi.yml
   - type: APIReference
     url: https://api-docs.qargo.com/docs
-- aid: qargo:qargo-use-case-customer-portal-api
-  name: Qargo Use case / Customer portal API
-  description: >-
-    Required api role: `CUSTOMER`
-
-
-    This is the api equivalent of our customer portal functionality.
-
-    Customers can use this api to create/update/cancel orders, view charges and receive status updates.
-
-
-
-    ### Getting started
-
-    See [this section](/docs/section/transport-order-creation-and-status) to get started.
-  humanURL: https://api-docs.qargo.com/docs
-  baseURL: https://api.qargo.com
-  tags:
-  - Use case / Customer portal
-  properties:
-  - type: OpenAPI
-    url: openapi/qargo-use-case-customer-portal-api-openapi.yml
-  - type: APIReference
-    url: https://api-docs.qargo.com/docs
 - aid: qargo:qargo-use-case-document-import-api
   name: Qargo Use case / Document import API
   description: >-
@@ -599,18 +575,6 @@ apis:
     url: openapi/qargo-use-case-location-booking-api-openapi.yml
   - type: APIReference
     url: https://api-docs.qargo.com/docs
-- aid: qargo:qargo-use-case-master-data-sync-api
-  name: Qargo Use case / Master data sync API
-  description: 'Required api role: `API_MASTER_DATA`, or `API_ACCOUNTING` for company sync only.'
-  humanURL: https://api-docs.qargo.com/docs
-  baseURL: https://api.qargo.com
-  tags:
-  - Use case / Master data sync
-  properties:
-  - type: OpenAPI
-    url: openapi/qargo-use-case-master-data-sync-api-openapi.yml
-  - type: APIReference
-    url: https://api-docs.qargo.com/docs
 - aid: qargo:qargo-use-case-order-api
   name: Qargo Use case / Order API
   description: >-
@@ -790,34 +754,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/qargo-use-case-visibility-api-openapi.yml
-  - type: APIReference
-    url: https://api-docs.qargo.com/docs
-- aid: qargo:qargo-webhooks-inbound-api
-  name: Qargo Webhooks / Inbound API
-  description: >-
-    Inbound webhooks use **Basic Authentication**, not OAuth2. See [Authentication](/docs/section/authentication)
-    for details on how to authenticate webhook requests.
-  humanURL: https://api-docs.qargo.com/docs
-  baseURL: https://api.qargo.com
-  tags:
-  - Webhooks / Inbound
-  properties:
-  - type: OpenAPI
-    url: openapi/qargo-webhooks-inbound-api-openapi.yml
-  - type: APIReference
-    url: https://api-docs.qargo.com/docs
-- aid: qargo:qargo-webhooks-outbound-api
-  name: Qargo Webhooks / Outbound API
-  description: >-
-    Outbound webhooks are sent by Qargo to your system when certain events occur. Configure the receiving
-    endpoint URL and credentials in the integration settings.
-  humanURL: https://api-docs.qargo.com/docs
-  baseURL: https://api.qargo.com
-  tags:
-  - Webhooks / Outbound
-  properties:
-  - type: OpenAPI
-    url: openapi/qargo-webhooks-outbound-api-openapi.yml
   - type: APIReference
     url: https://api-docs.qargo.com/docs
 common:
