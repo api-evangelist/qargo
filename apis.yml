@@ -14,6 +14,18 @@ description: >-
   accounting, plus inbound and outbound webhooks and separate Subcontractor and Customer
   APIs. Service-to-service authentication uses OAuth2 client-credentials (JWT); webhooks
   use HTTP Basic. Qargo is a Balderton Capital portfolio company.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
