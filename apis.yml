@@ -769,6 +769,9 @@ apis:
   - type: APIReference
     url: https://api-docs.qargo.com/docs
 common:
+- type: CapabilityMap
+  url: capabilities/qargo-capability-edges.yml
+  name: Qargo Business Capability Map
 - type: Overlay
   url: overlays/qargo-tms-overlay.yaml
 - type: Website
