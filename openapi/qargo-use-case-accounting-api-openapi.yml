@@ -75,15 +75,70 @@ components:
       required:
       - sales_invoice
       title: BillingDocumentMatchInput
-    HTTPValidationError:
+    SalesInvoiceUpdate:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        match:
+          $ref: '#/components/schemas/BillingDocumentMatchTarget'
+          description: Matcher for the billing document update, used to match to a billing document
       type: object
-      title: HTTPValidationError
+      title: SalesInvoiceUpdate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BillingDocumentUpdate:
+      properties:
+        sales_invoice:
+          anyOf:
+          - $ref: '#/components/schemas/SalesInvoiceUpdate'
+          - type: 'null'
+      type: object
+      title: BillingDocumentUpdate
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
     ValidationErrorDetail:
       properties:
         message:
@@ -116,52 +171,6 @@ components:
       - message
       title: ValidationErrorDetail
       type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SalesInvoiceUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        match:
-          $ref: '#/components/schemas/BillingDocumentMatchTarget'
-          description: Matcher for the billing document update, used to match to a billing document
-      type: object
-      title: SalesInvoiceUpdate
-    SalesInvoiceMatch:
-      properties:
-        name:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-      type: object
-      title: SalesInvoiceMatch
     BillingDocumentMatchTarget:
       properties:
         matches_all:
@@ -171,15 +180,23 @@ components:
           title: Matches All
       type: object
       title: BillingDocumentMatchTarget
-    FieldMatchInput:
+    HTTPValidationError:
       properties:
-        matches_any:
+        detail:
           items:
-            type: string
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Matches Any
+          title: Detail
       type: object
-      title: FieldMatchInput
+      title: HTTPValidationError
+    SalesInvoiceMatch:
+      properties:
+        name:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+      type: object
+      title: SalesInvoiceMatch
     BillingDocumentUpdatePayload:
       properties:
         updates:
@@ -190,32 +207,15 @@ components:
           description: List of updates to process
       type: object
       title: BillingDocumentUpdatePayload
-    BillingDocumentUpdate:
+    FieldMatchInput:
       properties:
-        sales_invoice:
-          anyOf:
-          - $ref: '#/components/schemas/SalesInvoiceUpdate'
-          - type: 'null'
-      type: object
-      title: BillingDocumentUpdate
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+        matches_any:
           items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
+            type: string
           type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
+          title: Matches Any
       type: object
+      title: FieldMatchInput
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

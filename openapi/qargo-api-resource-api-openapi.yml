@@ -1087,349 +1087,7 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    PartialChassisResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        chassis:
-          anyOf:
-          - $ref: '#/components/schemas/ChassisProperties-Input'
-          - type: 'null'
-          description: Chassis specific properties
-        resource_group:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceGroupReference'
-          - type: 'null'
-          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
-      type: object
-      title: PartialChassisResourceInput
-    ChassisProperties-Input:
-      properties:
-        tare_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the chassis in kg
-          examples:
-          - 5000
-        exterior_length_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the chassis in meter
-          examples:
-          - 12
-        exterior_width_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the chassis in meter
-          examples:
-          - 2.5
-        exterior_height_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the chassis in meter
-          examples:
-          - 1.5
-        gross_weight_vehicle_rating_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Gross Weight Vehicle Rating Weight Kg
-          description: Gross vehicle weight rating of the chassis in kg
-          examples:
-          - 30000
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the chassis
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the chassis
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the chassis
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the chassis
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_12_TRAILER
-            - AC_10_TRAILER
-            - AC_8_TRAILER
-            - AC_6_TRAILER
-            - AC_4_TRAILER
-            - AC_2_TRAILER
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the chassis
-      type: object
-      title: ChassisProperties
-    TrailerResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        trailer:
-          anyOf:
-          - $ref: '#/components/schemas/TrailerProperties-Input'
-          - type: 'null'
-          description: Trailer specific properties
-      type: object
-      required:
-      - name
-      title: TrailerResourceInput
-    ResourceValidityReason:
-      type: string
-      enum:
-      - EUROVIGNET
-      - FUEL_CARD
-      - FINE
-      - CONTAINER_CERTIFICATE
-      - CONTAINER_DAMAGE_REPORT
-      - CONTAINER_INSPECTION_REPORT
-      - CONTAINER_LEASE
-      - CONTAINER_MAINTENANCE_REPORT
-      - CONTAINER_REPAIR_REPORT
-      - CONTAINER_TANK_TEST_CERTIFICATE_2Y5
-      - CONTAINER_TANK_TEST_CERTIFICATE_5Y
-      - CONTAINER_TANK_TEST_CERTIFICATE
-      - DRIVER_ADR_EXTRA_TRAINING
-      - DRIVER_ADR_LICENSE
-      - DRIVER_AEO_REGULATED_AGENT_LICENSE
-      - DRIVER_CARD
-      - DRIVER_CIVIL_LIABILITY_EXPLOITATION
-      - DRIVER_CIVIL_LIABILITY_INSURANCE
-      - DRIVER_CODE_95
-      - DRIVER_DRIVING_LICENSE
-      - DRIVER_IDENTITY_CARD
-      - DRIVER_IMI_PORTAL
-      - DRIVER_INSURANCE
-      - DRIVER_MEDICAL_EXAM
-      - DRIVER_PERSONAL_PROTECTIVE_EQUIPMENT
-      - DRIVER_RECUP
-      - DRIVER_REFUGEE_TRAINING_LICENSE
-      - DRIVER_SHIFT_PATTERN
-      - DRIVER_SICK_NOTE
-      - DRIVER_TRAINING
-      - BBS_CERTIFICATE
-      - FORKLIFT_LICENSE
-      - PAYSCALE_DRIVER
-      - VCA_BASIC_SAFETY
-      - TOLL_CARD
-      - SAFETY_CERTIFICATE_TERMINAL
-      - EXCEPTIONAL_TRANSPORT_LICENSE
-      - A1_DOCUMENT
-      - DRIVER_CPC_CARD
-      - DRIVER_POSTING_DOCUMENT
-      - SITE_MOVEMENT_SHEET
-      - DRIVER_PARENTAL_LEAVE
-      - DRIVER_JOB_APPLICATION_LEAVE
-      - DRIVER_PUBLIC_HOLIDAY
-      - DRIVER_SOCIAL_LEAVE
-      - DRIVER_UNION_LEAVE
-      - DRIVER_LONG_HEAVY_VEHICLE_CERT
-      - DRIVER_CARGOCARD_ACCESS_CARD
-      - DRIVER_ALFAPASS
-      - DRIVER_OFF_SHIFT_PATTERN
-      - DRIVER_REDUCED_WORKING_HOURS_SCHEME
-      - DRIVER_UNAUTHORISED_ABSENCE
-      - VEHICLE_MOT_TEST
-      - VEHICLE_REGISTRATION
-      - VEHICLE_INSURANCE_CERTIFICATE
-      - VEHICLE_TRANSPORT_LICENSE
-      - VEHICLE_DAMAGE_REPORT
-      - VEHICLE_MAINTENANCE_REPORT
-      - VEHICLE_ADR_CERTIFICATE
-      - VEHICLE_REPAIR_REPORT
-      - VEHICLE_TACHO
-      - VEHICLE_TIR
-      - VEHICLE_PHOTO
-      - VEHICLE_12_WEEKLY_CHECK
-      - VEHICLE_FIRE_EXTINGUISHER_SERVICE
-      - VEHICLE_UK_HGV_LEVY
-      - VEHICLE_ATP_CERTIFICATE
-      - VEHICLE_FRIDGE_MOTOR
-      - OVERSIZE_WL_PERMIT
-      - ROADTAX
-      - CERTIFICATE_OF_CONFORMITY
-      - BRAKE_TEST_CERTIFICATE
-      - BREAK_TEST_CERTIFICATE
-      - VEHICLE_IDENTIFICATION_REPORT
-      - VEHICLE_FRC_CERTIFICATE
-      - VEHICLE_GERMAN_SECURITY_INSPECTION
-      - VEHICLE_GERMAN_VEHICLE_INSPECTION
-      - CITERNE_CLEANING_CERTIFICATE
-      - HEAVY_LOAD_BE
-      - HEAVY_LOAD_DE
-      - HEAVY_LOAD_FR
-      - XL_CERTIFICATE
-      - VEHICLE_SERVICE
-      - VEHICLE_HIRE
-      - VEHICLE_BRAKE_TEST
-      - VEHICLE_HYDRAULIC_INSPECTION
-      - VEHICLE_LIFT_OPS_EQUIP_REGULATIONS
-      - VEHICLE_PRESSURE_TEST
-      - VEHICLE_TACHOGRAPH_CALIBRATION
-      title: ResourceValidityReason
-    ResourceUnavailabilityInput:
+    ResourceUnavailabilityOutput:
       properties:
         external_id:
           anyOf:
@@ -1456,118 +1114,18 @@ components:
           - type: string
           - type: 'null'
           title: Description
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the unavailability
       type: object
       required:
       - start_time
       - reason
-      title: ResourceUnavailabilityInput
-    DriverDocumentTypes:
-      type: string
-      enum:
-      - DocumentType.A1_DOCUMENT
-      - DocumentType.CARGO_INSURANCE
-      - DocumentType.BBS_CERTIFICATE
-      - DocumentType.COMMUNICATION_SUBCONTRACTOR
-      - DocumentType.DOMESTIC_CARGO_INSURANCE
-      - DocumentType.DRIVER_ADR_LICENSE
-      - DocumentType.DRIVER_AEO_REGULATED_AGENT_LICENSE
-      - DocumentType.DRIVER_ALFAPASS
-      - DocumentType.DRIVER_CARD
-      - DocumentType.DRIVER_CARGOCARD_ACCESS_CARD
-      - DocumentType.DRIVER_CIVIL_LIABILITY_EXPLOITATION
-      - DocumentType.DRIVER_CIVIL_LIABILITY_INSURANCE
-      - DocumentType.DRIVER_CODE_95
-      - DocumentType.DRIVER_CPC_CARD
-      - DocumentType.DRIVER_DRIVING_LICENSE
-      - DocumentType.DRIVER_IDENTITY_CARD
-      - DocumentType.DRIVER_IMI_PORTAL
-      - DocumentType.DRIVER_INSURANCE
-      - DocumentType.DRIVER_LONG_HEAVY_VEHICLE_CERT
-      - DocumentType.DRIVER_MEDICAL_EXAM
-      - DocumentType.DRIVER_PERSONAL_PROTECTIVE_EQUIPMENT
-      - DocumentType.DRIVER_POSTING_DOCUMENT
-      - DocumentType.DRIVER_REFUGEE_TRAINING_LICENSE
-      - DocumentType.DRIVER_SICK_NOTE
-      - DocumentType.DRIVER_TRAINING
-      - DocumentType.EUROVIGNET
-      - DocumentType.EXCEPTIONAL_TRANSPORT_LICENSE
-      - DocumentType.FINE
-      - DocumentType.FORKLIFT_LICENSE
-      - DocumentType.FUEL_CARD
-      - DocumentType.OTHER
-      - DocumentType.PAYSCALE_DRIVER
-      - DocumentType.SAFETY_CERTIFICATE_TERMINAL
-      - DocumentType.SITE_MOVEMENT_SHEET
-      - DocumentType.TOLL_CARD
-      - DocumentType.VCA_BASIC_SAFETY
-      - DocumentType.VEHICLE_ADR_CERTIFICATE
-      title: DriverDocumentTypes
-    BillingEntityReference:
-      properties:
-        code:
-          type: string
-          title: Code
-          description: Code of the reference
-      type: object
-      required:
-      - code
-      title: BillingEntityReference
-    LocationReference:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Identifier of the location
-      type: object
-      required:
       - id
-      title: LocationReference
-    BillingEntity:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the billing entity in Qargo.
-        legal_name:
-          type: string
-          title: Legal Name
-          description: Legal name of the billing entity.
-          examples:
-          - Qargo BV
-        vat_number:
-          type: string
-          title: Vat Number
-          description: VAT number of the billing entity.
-          examples:
-          - NL123456789B01
-        code:
-          type: string
-          title: Code
-          description: Code of the billing entity.
-          examples:
-          - QARGO
-        company_registration_number:
-          type: string
-          title: Company Registration Number
-          description: Company registration number of the billing entity.
-          examples:
-          - '12345678'
-        is_default:
-          type: boolean
-          title: Is Default
-          description: Indicates whether this billing entity is the default one.
-          default: false
-      type: object
-      required:
-      - id
-      - legal_name
-      - vat_number
-      - code
-      - company_registration_number
-      title: BillingEntity
-    PartialTractorResourceInput:
+      title: ResourceUnavailabilityOutput
+    DriverResourceInput:
       properties:
         billing_entity:
           anyOf:
@@ -1583,9 +1141,7 @@ components:
           title: Extras
           description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
         name:
-          anyOf:
-          - type: string
-          - type: 'null'
+          type: string
           title: Name
           description: Name of the resource
         external_id:
@@ -1639,18 +1195,94 @@ components:
           - addsecure1234:
               active: true
               object_id: '1234'
-        tractor:
+        driver:
           anyOf:
-          - $ref: '#/components/schemas/TractorProperties-Input'
+          - $ref: '#/components/schemas/DriverProperties'
           - type: 'null'
-          description: Tractor specific properties
-        resource_group:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceGroupReference'
-          - type: 'null'
-          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
+          description: Driver specific properties
       type: object
-      title: PartialTractorResourceInput
+      required:
+      - name
+      title: DriverResourceInput
+    VanResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        van:
+          anyOf:
+          - $ref: '#/components/schemas/VanProperties-Input'
+          - type: 'null'
+          description: Van specific properties
+      type: object
+      required:
+      - name
+      title: VanResourceInput
     TractorResourceOutput:
       properties:
         row_id:
@@ -1760,7 +1392,202 @@ components:
       - row_id
       - name
       title: TractorResourceOutput
-    ResourceValidityOutput:
+    TractorProperties-Output:
+      properties:
+        tare_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the tractor in kg
+          examples:
+          - 10000
+        exterior_length_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the tractor in meter
+          examples:
+          - 10
+        exterior_width_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the tractor in meter
+          examples:
+          - 5
+        exterior_height_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the tractor in meter
+          examples:
+          - 3
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the tractor
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the tractor
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the tractor
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the tractor
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_4_X_2
+            - AC_4_X_4
+            - AC_6_X_2
+            - AC_6_X_4
+            - AC_6_X_6
+            - AC_8_X_2
+            - AC_8_X_4
+            - AC_8_X_6
+            - AC_10_X_4
+            - AC_12_X_4
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the tractor
+        emission_class:
+          anyOf:
+          - type: string
+            enum:
+            - EURO_1
+            - EURO_2
+            - EURO_3
+            - EURO_4
+            - EURO_5
+            - EURO_6
+          - type: 'null'
+          title: Emission Class
+          description: Emission class of the tractor
+        fuel_type:
+          anyOf:
+          - type: string
+            enum:
+            - DIESEL
+            - BIOFUELS
+            - LPG
+            - ELECTRIC
+            - HYBRID_ELECTRIC
+          - type: 'null'
+          title: Fuel Type
+          description: Fuel type of the tractor
+      type: object
+      title: TractorProperties
+    ResourceValidityReason:
+      type: string
+      enum:
+      - EUROVIGNET
+      - FUEL_CARD
+      - FINE
+      - CONTAINER_CERTIFICATE
+      - CONTAINER_DAMAGE_REPORT
+      - CONTAINER_INSPECTION_REPORT
+      - CONTAINER_LEASE
+      - CONTAINER_MAINTENANCE_REPORT
+      - CONTAINER_REPAIR_REPORT
+      - CONTAINER_TANK_TEST_CERTIFICATE_2Y5
+      - CONTAINER_TANK_TEST_CERTIFICATE_5Y
+      - CONTAINER_TANK_TEST_CERTIFICATE
+      - DRIVER_ADR_EXTRA_TRAINING
+      - DRIVER_ADR_LICENSE
+      - DRIVER_AEO_REGULATED_AGENT_LICENSE
+      - DRIVER_CARD
+      - DRIVER_CIVIL_LIABILITY_EXPLOITATION
+      - DRIVER_CIVIL_LIABILITY_INSURANCE
+      - DRIVER_CODE_95
+      - DRIVER_DRIVING_LICENSE
+      - DRIVER_IDENTITY_CARD
+      - DRIVER_IMI_PORTAL
+      - DRIVER_INSURANCE
+      - DRIVER_MEDICAL_EXAM
+      - DRIVER_PERSONAL_PROTECTIVE_EQUIPMENT
+      - DRIVER_RECUP
+      - DRIVER_REFUGEE_TRAINING_LICENSE
+      - DRIVER_SHIFT_PATTERN
+      - DRIVER_SICK_NOTE
+      - DRIVER_TRAINING
+      - BBS_CERTIFICATE
+      - FORKLIFT_LICENSE
+      - PAYSCALE_DRIVER
+      - VCA_BASIC_SAFETY
+      - TOLL_CARD
+      - SAFETY_CERTIFICATE_TERMINAL
+      - EXCEPTIONAL_TRANSPORT_LICENSE
+      - A1_DOCUMENT
+      - DRIVER_CPC_CARD
+      - DRIVER_POSTING_DOCUMENT
+      - SITE_MOVEMENT_SHEET
+      - DRIVER_PARENTAL_LEAVE
+      - DRIVER_JOB_APPLICATION_LEAVE
+      - DRIVER_PUBLIC_HOLIDAY
+      - DRIVER_SOCIAL_LEAVE
+      - DRIVER_UNION_LEAVE
+      - DRIVER_LONG_HEAVY_VEHICLE_CERT
+      - DRIVER_CARGOCARD_ACCESS_CARD
+      - DRIVER_ALFAPASS
+      - DRIVER_OFF_SHIFT_PATTERN
+      - DRIVER_REDUCED_WORKING_HOURS_SCHEME
+      - DRIVER_UNAUTHORISED_ABSENCE
+      - VEHICLE_MOT_TEST
+      - VEHICLE_REGISTRATION
+      - VEHICLE_INSURANCE_CERTIFICATE
+      - VEHICLE_TRANSPORT_LICENSE
+      - VEHICLE_DAMAGE_REPORT
+      - VEHICLE_MAINTENANCE_REPORT
+      - VEHICLE_ADR_CERTIFICATE
+      - VEHICLE_REPAIR_REPORT
+      - VEHICLE_TACHO
+      - VEHICLE_TIR
+      - VEHICLE_PHOTO
+      - VEHICLE_12_WEEKLY_CHECK
+      - VEHICLE_FIRE_EXTINGUISHER_SERVICE
+      - VEHICLE_UK_HGV_LEVY
+      - VEHICLE_ATP_CERTIFICATE
+      - VEHICLE_FRIDGE_MOTOR
+      - OVERSIZE_WL_PERMIT
+      - ROADTAX
+      - CERTIFICATE_OF_CONFORMITY
+      - BRAKE_TEST_CERTIFICATE
+      - BREAK_TEST_CERTIFICATE
+      - VEHICLE_IDENTIFICATION_REPORT
+      - VEHICLE_FRC_CERTIFICATE
+      - VEHICLE_GERMAN_SECURITY_INSPECTION
+      - VEHICLE_GERMAN_VEHICLE_INSPECTION
+      - CITERNE_CLEANING_CERTIFICATE
+      - HEAVY_LOAD_BE
+      - HEAVY_LOAD_DE
+      - HEAVY_LOAD_FR
+      - XL_CERTIFICATE
+      - VEHICLE_SERVICE
+      - VEHICLE_HIRE
+      - VEHICLE_BRAKE_TEST
+      - VEHICLE_HYDRAULIC_INSPECTION
+      - VEHICLE_LIFT_OPS_EQUIP_REGULATIONS
+      - VEHICLE_PRESSURE_TEST
+      - VEHICLE_TACHOGRAPH_CALIBRATION
+      title: ResourceValidityReason
+    ResourceValidityInput:
       properties:
         start_time:
           type: string
@@ -1799,639 +1626,35 @@ components:
           - type: string
           - type: 'null'
           title: Description
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the validity
+        documents:
+          items:
+            $ref: '#/components/schemas/UploadedDocumentBase_Union_ContainerDocumentTypes__DriverDocumentTypes__VehicleDocumentTypes__'
+          type: array
+          title: Documents
+          description: List of documents associated with the validity
       type: object
       required:
       - start_time
       - type
-      - id
-      title: ResourceValidityOutput
-    Document:
+      title: ResourceValidityInput
+    ValidationErrorResponse:
       properties:
-        id:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
           type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the document
-        name:
-          type: string
-          title: Name
-          description: Name of the document
-        type:
-          type: string
-          title: Type
-          description: Type of the document
-        download_url:
-          type: string
-          title: Download Url
-          description: Relative URL from the base URL to download the document
-          default: ''
-        subject_type:
-          type: string
-          title: Subject Type
-          description: Linked subject of the document
-        content_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Content Type
-          description: Content type of the document
-      type: object
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
       required:
-      - id
-      - name
-      - type
-      - subject_type
-      title: Document
-    ContainerProperties:
-      properties:
-        container_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Container Number
-          description: Container number
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the container
-        standard_size:
-          anyOf:
-          - type: string
-            enum:
-            - FEET_20
-            - FEET_23
-            - FEET_24
-            - FEET_25
-            - FEET_26
-            - FEET_30
-            - FEET_35
-            - FEET_40
-            - FEET_45
-          - type: 'null'
-          title: Standard Size
-          description: Standard size of the container
-        iso_code:
-          anyOf:
-          - type: string
-            maxLength: 4
-          - type: 'null'
-          title: Iso Code
-          description: ISO 6346 container type code (e.g. '22G1', '45G1')
+      - message
+      - errors
+      title: ValidationErrorResponse
       type: object
-      title: ContainerProperties
-    TrailerResourceOutput:
-      properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntity'
-          - type: 'null'
-          description: Billing entity associated with the resource
-        extras:
-          items:
-            $ref: '#/components/schemas/ResourceExtraOutput'
-          type: array
-          title: Extras
-          description: Stop extras this resource is compatible with
-        is_active:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Active
-          description: Is the resource active
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        timestamp_updated:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Timestamp Updated
-          description: Timestamp of the last update of the resource
-        resource_groups:
-          items:
-            $ref: '#/components/schemas/ResourceGroupOutput'
-          type: array
-          title: Resource Groups
-          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
-        trailer:
-          anyOf:
-          - $ref: '#/components/schemas/TrailerProperties-Output'
-          - type: 'null'
-          description: Trailer specific properties
-      type: object
-      required:
-      - row_id
-      - name
-      title: TrailerResourceOutput
-    ListResourceValidityOutput:
-      properties:
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/ResourceValidityOutput'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: ListResourceValidityOutput
-    ContainerResourceOutput:
-      properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntity'
-          - type: 'null'
-          description: Billing entity associated with the resource
-        extras:
-          items:
-            $ref: '#/components/schemas/ResourceExtraOutput'
-          type: array
-          title: Extras
-          description: Stop extras this resource is compatible with
-        is_active:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Active
-          description: Is the resource active
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        timestamp_updated:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Timestamp Updated
-          description: Timestamp of the last update of the resource
-        resource_groups:
-          items:
-            $ref: '#/components/schemas/ResourceGroupOutput'
-          type: array
-          title: Resource Groups
-          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
-        container:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerProperties'
-          - type: 'null'
-          description: Container specific properties
-      type: object
-      required:
-      - row_id
-      - name
-      title: ContainerResourceOutput
-    VanProperties-Input:
-      properties:
-        capacity_pallet_spaces:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Capacity Pallet Spaces
-          description: Capacity of the van in pallet spaces
-          examples:
-          - 10
-        capacity_volume_m3:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Capacity Volume M3
-          description: Capacity of the van in cubic meters
-          examples:
-          - 10
-        capacity_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Capacity Weight Kg
-          description: Capacity of the van in kg
-          examples:
-          - 10000
-        tare_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the van in kg
-          examples:
-          - 10000
-        exterior_length_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the van in meter
-          examples:
-          - 10
-        exterior_width_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the van in meter
-          examples:
-          - 5
-        exterior_height_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the van in meter
-          examples:
-          - 3
-        gross_weight_vehicle_rating_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Gross Weight Vehicle Rating Weight Kg
-          description: Gross weight vehicle rating weight of the van in kg
-          examples:
-          - 10
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the van
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the van
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the van
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the van
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_4_X_2
-            - AC_4_X_4
-            - AC_6_X_2
-            - AC_6_X_4
-            - AC_6_X_6
-            - AC_8_X_2
-            - AC_8_X_4
-            - AC_8_X_6
-            - AC_10_X_4
-            - AC_12_X_4
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the van
-        emission_class:
-          anyOf:
-          - type: string
-            enum:
-            - EURO_1
-            - EURO_2
-            - EURO_3
-            - EURO_4
-            - EURO_5
-            - EURO_6
-          - type: 'null'
-          title: Emission Class
-          description: Emission class of the van
-        fuel_type:
-          anyOf:
-          - type: string
-            enum:
-            - DIESEL
-            - BIOFUELS
-            - LPG
-            - ELECTRIC
-            - HYBRID_ELECTRIC
-          - type: 'null'
-          title: Fuel Type
-          description: Fuel type of the van
-        roof_type:
-          anyOf:
-          - type: string
-            enum:
-            - CLOSED
-            - OPEN
-            - FLATBED
-          - type: 'null'
-          title: Roof Type
-          description: Roof type of the van
-      type: object
-      title: VanProperties
-    TruckProperties-Output:
-      properties:
-        capacity_pallet_spaces:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Capacity Pallet Spaces
-          description: Capacity of the truck in pallet spaces
-          examples:
-          - 10
-        capacity_volume_m3:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Capacity Volume M3
-          description: Capacity of the truck in cubic meters
-          examples:
-          - 10
-        capacity_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Capacity Weight Kg
-          description: Capacity of the truck in kg
-          examples:
-          - 10000
-        tare_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the truck in kg
-          examples:
-          - 10000
-        exterior_length_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the truck in meter
-          examples:
-          - 10
-        exterior_width_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the truck in meter
-          examples:
-          - 5
-        exterior_height_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the truck in meter
-          examples:
-          - 3
-        gross_weight_vehicle_rating_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Gross Weight Vehicle Rating Weight Kg
-          description: Gross weight vehicle rating weight of the truck in kg
-          examples:
-          - 10
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the truck
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the truck
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the truck
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the truck
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_4_X_2
-            - AC_4_X_4
-            - AC_6_X_2
-            - AC_6_X_4
-            - AC_6_X_6
-            - AC_8_X_2
-            - AC_8_X_4
-            - AC_8_X_6
-            - AC_10_X_4
-            - AC_12_X_4
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the truck
-        emission_class:
-          anyOf:
-          - type: string
-            enum:
-            - EURO_1
-            - EURO_2
-            - EURO_3
-            - EURO_4
-            - EURO_5
-            - EURO_6
-          - type: 'null'
-          title: Emission Class
-          description: Emission class of the truck
-        fuel_type:
-          anyOf:
-          - type: string
-            enum:
-            - DIESEL
-            - BIOFUELS
-            - LPG
-            - ELECTRIC
-            - HYBRID_ELECTRIC
-          - type: 'null'
-          title: Fuel Type
-          description: Fuel type of the truck
-        roof_type:
-          anyOf:
-          - type: string
-            enum:
-            - CLOSED
-            - OPEN
-            - FLATBED
-          - type: 'null'
-          title: Roof Type
-          description: Roof type of the truck
-      type: object
-      title: TruckProperties
-    ListResourceGroupOutput:
-      properties:
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/ResourceGroupOutput'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: ListResourceGroupOutput
     VanProperties-Output:
       properties:
         capacity_pallet_spaces:
@@ -2576,453 +1799,23 @@ components:
           description: Roof type of the van
       type: object
       title: VanProperties
-    VanResourceOutput:
+    ListResourceGroupOutput:
       properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
+        next_cursor:
           anyOf:
           - type: string
           - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntity'
-          - type: 'null'
-          description: Billing entity associated with the resource
-        extras:
-          items:
-            $ref: '#/components/schemas/ResourceExtraOutput'
-          type: array
-          title: Extras
-          description: Stop extras this resource is compatible with
-        is_active:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Active
-          description: Is the resource active
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        timestamp_updated:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Timestamp Updated
-          description: Timestamp of the last update of the resource
-        resource_groups:
+          title: Next Cursor
+        items:
           items:
             $ref: '#/components/schemas/ResourceGroupOutput'
           type: array
-          title: Resource Groups
-          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
-        van:
-          anyOf:
-          - $ref: '#/components/schemas/VanProperties-Output'
-          - type: 'null'
-          description: Van specific properties
+          title: Items
       type: object
       required:
-      - row_id
-      - name
-      title: VanResourceOutput
-    DriverResourceOutput:
-      properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntity'
-          - type: 'null'
-          description: Billing entity associated with the resource
-        extras:
-          items:
-            $ref: '#/components/schemas/ResourceExtraOutput'
-          type: array
-          title: Extras
-          description: Stop extras this resource is compatible with
-        is_active:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Active
-          description: Is the resource active
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        timestamp_updated:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Timestamp Updated
-          description: Timestamp of the last update of the resource
-        resource_groups:
-          items:
-            $ref: '#/components/schemas/ResourceGroupOutput'
-          type: array
-          title: Resource Groups
-          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
-        driver:
-          anyOf:
-          - $ref: '#/components/schemas/DriverProperties'
-          - type: 'null'
-          description: Driver specific properties
-      type: object
-      required:
-      - row_id
-      - name
-      title: DriverResourceOutput
-    ResourceExtraOutput:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the stop extra
-        code:
-          type: string
-          title: Code
-          description: Code of the stop extra
-        name:
-          type: string
-          title: Name
-          description: Name of the stop extra
-      type: object
-      required:
-      - id
-      - code
-      - name
-      title: ResourceExtraOutput
-    ChassisResourceOutput:
-      properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntity'
-          - type: 'null'
-          description: Billing entity associated with the resource
-        extras:
-          items:
-            $ref: '#/components/schemas/ResourceExtraOutput'
-          type: array
-          title: Extras
-          description: Stop extras this resource is compatible with
-        is_active:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Active
-          description: Is the resource active
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        timestamp_updated:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Timestamp Updated
-          description: Timestamp of the last update of the resource
-        resource_groups:
-          items:
-            $ref: '#/components/schemas/ResourceGroupOutput'
-          type: array
-          title: Resource Groups
-          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
-        chassis:
-          anyOf:
-          - $ref: '#/components/schemas/ChassisProperties-Output'
-          - type: 'null'
-          description: Chassis specific properties
-      type: object
-      required:
-      - row_id
-      - name
-      title: ChassisResourceOutput
-    ChassisProperties-Output:
-      properties:
-        tare_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the chassis in kg
-          examples:
-          - 5000
-        exterior_length_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the chassis in meter
-          examples:
-          - 12
-        exterior_width_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the chassis in meter
-          examples:
-          - 2.5
-        exterior_height_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the chassis in meter
-          examples:
-          - 1.5
-        gross_weight_vehicle_rating_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Gross Weight Vehicle Rating Weight Kg
-          description: Gross vehicle weight rating of the chassis in kg
-          examples:
-          - 30000
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the chassis
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the chassis
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the chassis
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the chassis
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_12_TRAILER
-            - AC_10_TRAILER
-            - AC_8_TRAILER
-            - AC_6_TRAILER
-            - AC_4_TRAILER
-            - AC_2_TRAILER
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the chassis
-      type: object
-      title: ChassisProperties
-    ResourceTypeEnum:
-      type: string
-      enum:
-      - CHASSIS
-      - COMPARTMENT
-      - CONTAINER
-      - DRIVER
-      - FERRY
-      - FULL_TRAILER
-      - HANDLING
-      - RIGID
-      - SUBCONTRACTOR
-      - TRACTOR
-      - TRAILER
-      - TRAIN
-      - VAN
-      title: ResourceTypeEnum
-    ContainerResourceInput:
+      - items
+      title: ListResourceGroupOutput
+    FullTrailerResourceInput:
       properties:
         billing_entity:
           anyOf:
@@ -3092,536 +1885,15 @@ components:
           - addsecure1234:
               active: true
               object_id: '1234'
-        container:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerProperties'
-          - type: 'null'
-          description: Container specific properties
-      type: object
-      required:
-      - name
-      title: ContainerResourceInput
-    TruckResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        truck:
-          anyOf:
-          - $ref: '#/components/schemas/TruckProperties-Input'
-          - type: 'null'
-          description: Truck specific properties
-      type: object
-      required:
-      - name
-      title: TruckResourceInput
-    ResourceUnavailabilityOutput:
-      properties:
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the unavailability
-        start_time:
-          type: string
-          format: date-time
-          title: Start Time
-          description: Start time of the unavailability
-        end_time:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: End Time
-          description: End time of the unavailability, leave empty for open interval
-        reason:
-          $ref: '#/components/schemas/UnavailabilityReason'
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the unavailability
-      type: object
-      required:
-      - start_time
-      - reason
-      - id
-      title: ResourceUnavailabilityOutput
-    TrailerProperties-Output:
-      properties:
-        capacity_pallet_spaces:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Capacity Pallet Spaces
-          description: Capacity of the trailer in pallet spaces
-          examples:
-          - 10
-        capacity_volume_m3:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Capacity Volume M3
-          description: Capacity of the trailer in cubic meters
-          examples:
-          - 10
-        capacity_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Capacity Weight Kg
-          description: Capacity of the trailer in kg
-          examples:
-          - 10000
-        tare_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the trailer in kg
-          examples:
-          - 10000
-        exterior_length_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the trailer in meter
-          examples:
-          - 10
-        exterior_width_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the trailer in meter
-          examples:
-          - 5
-        exterior_height_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the trailer in meter
-          examples:
-          - 3
-        gross_weight_vehicle_rating_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Gross Weight Vehicle Rating Weight Kg
-          description: Gross weight vehicle rating weight of the trailer in kg
-          examples:
-          - 10
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the trailer
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the trailer
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the trailer
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the trailer
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_12_TRAILER
-            - AC_10_TRAILER
-            - AC_8_TRAILER
-            - AC_6_TRAILER
-            - AC_4_TRAILER
-            - AC_2_TRAILER
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the trailer
-      type: object
-      title: TrailerProperties
-    TractorProperties-Output:
-      properties:
-        tare_weight_kg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the tractor in kg
-          examples:
-          - 10000
-        exterior_length_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the tractor in meter
-          examples:
-          - 10
-        exterior_width_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the tractor in meter
-          examples:
-          - 5
-        exterior_height_m:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the tractor in meter
-          examples:
-          - 3
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the tractor
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the tractor
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the tractor
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the tractor
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_4_X_2
-            - AC_4_X_4
-            - AC_6_X_2
-            - AC_6_X_4
-            - AC_6_X_6
-            - AC_8_X_2
-            - AC_8_X_4
-            - AC_8_X_6
-            - AC_10_X_4
-            - AC_12_X_4
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the tractor
-        emission_class:
-          anyOf:
-          - type: string
-            enum:
-            - EURO_1
-            - EURO_2
-            - EURO_3
-            - EURO_4
-            - EURO_5
-            - EURO_6
-          - type: 'null'
-          title: Emission Class
-          description: Emission class of the tractor
-        fuel_type:
-          anyOf:
-          - type: string
-            enum:
-            - DIESEL
-            - BIOFUELS
-            - LPG
-            - ELECTRIC
-            - HYBRID_ELECTRIC
-          - type: 'null'
-          title: Fuel Type
-          description: Fuel type of the tractor
-      type: object
-      title: TractorProperties
-    PartialTrailerResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        trailer:
+        full_trailer:
           anyOf:
           - $ref: '#/components/schemas/TrailerProperties-Input'
           - type: 'null'
           description: Trailer specific properties
-        resource_group:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceGroupReference'
-          - type: 'null'
-          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
       type: object
-      title: PartialTrailerResourceInput
-    TrailerProperties-Input:
-      properties:
-        capacity_pallet_spaces:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Capacity Pallet Spaces
-          description: Capacity of the trailer in pallet spaces
-          examples:
-          - 10
-        capacity_volume_m3:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Capacity Volume M3
-          description: Capacity of the trailer in cubic meters
-          examples:
-          - 10
-        capacity_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Capacity Weight Kg
-          description: Capacity of the trailer in kg
-          examples:
-          - 10000
-        tare_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the trailer in kg
-          examples:
-          - 10000
-        exterior_length_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the trailer in meter
-          examples:
-          - 10
-        exterior_width_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the trailer in meter
-          examples:
-          - 5
-        exterior_height_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the trailer in meter
-          examples:
-          - 3
-        gross_weight_vehicle_rating_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Gross Weight Vehicle Rating Weight Kg
-          description: Gross weight vehicle rating weight of the trailer in kg
-          examples:
-          - 10
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the trailer
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the trailer
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the trailer
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the trailer
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_12_TRAILER
-            - AC_10_TRAILER
-            - AC_8_TRAILER
-            - AC_6_TRAILER
-            - AC_4_TRAILER
-            - AC_2_TRAILER
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the trailer
-      type: object
-      title: TrailerProperties
+      required:
+      - name
+      title: FullTrailerResourceInput
     TruckResourceOutput:
       properties:
         row_id:
@@ -3731,221 +2003,6 @@ components:
       - row_id
       - name
       title: TruckResourceOutput
-    ResourceGroupReference:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Identifier of the resource group.
-      type: object
-      required:
-      - id
-      title: ResourceGroupReference
-    DriverProperties:
-      properties:
-        first_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: First Name
-          description: First name of the driver
-        last_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Last Name
-          description: Last name of the driver
-        email_address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email Address
-          description: Email of the driver
-        date_of_birth:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Date Of Birth
-          description: Date of birth of the driver
-          examples:
-          - '2025-04-10'
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-          description: Phone number of the driver
-          examples:
-          - '+32412345678'
-        start_stop_location:
-          anyOf:
-          - $ref: '#/components/schemas/LocationReference'
-          - type: 'null'
-          description: Location used as the driver's start and stop location for planning. Must reference a valid location in the tenant's location master data. Set to null to remove the start/stop location.
-      type: object
-      title: DriverProperties
-    TractorProperties-Input:
-      properties:
-        tare_weight_kg:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Tare Weight Kg
-          description: Tare weight of the tractor in kg
-          examples:
-          - 10000
-        exterior_length_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Length M
-          description: Exterior length of the tractor in meter
-          examples:
-          - 10
-        exterior_width_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Width M
-          description: Exterior width of the tractor in meter
-          examples:
-          - 5
-        exterior_height_m:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Exterior Height M
-          description: Exterior height of the tractor in meter
-          examples:
-          - 3
-        vin_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vin Number
-          description: VIN number of the tractor
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the tractor
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-          description: License plate of the tractor
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model of the tractor
-        axle_configuration:
-          anyOf:
-          - type: string
-            enum:
-            - AC_4_X_2
-            - AC_4_X_4
-            - AC_6_X_2
-            - AC_6_X_4
-            - AC_6_X_6
-            - AC_8_X_2
-            - AC_8_X_4
-            - AC_8_X_6
-            - AC_10_X_4
-            - AC_12_X_4
-          - type: 'null'
-          title: Axle Configuration
-          description: Axle configuration of the tractor
-        emission_class:
-          anyOf:
-          - type: string
-            enum:
-            - EURO_1
-            - EURO_2
-            - EURO_3
-            - EURO_4
-            - EURO_5
-            - EURO_6
-          - type: 'null'
-          title: Emission Class
-          description: Emission class of the tractor
-        fuel_type:
-          anyOf:
-          - type: string
-            enum:
-            - DIESEL
-            - BIOFUELS
-            - LPG
-            - ELECTRIC
-            - HYBRID_ELECTRIC
-          - type: 'null'
-          title: Fuel Type
-          description: Fuel type of the tractor
-      type: object
-      title: TractorProperties
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    ResourceGroupOutput:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Identifier of the resource group.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource group.
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource group.
-      type: object
-      required:
-      - id
-      title: ResourceGroupOutput
     PartialBaseResourceInput:
       properties:
         billing_entity:
@@ -4025,332 +2082,131 @@ components:
           description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
       type: object
       title: PartialBaseResourceInput
-    PartialVanResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        van:
-          anyOf:
-          - $ref: '#/components/schemas/VanProperties-Input'
-          - type: 'null'
-          description: Van specific properties
-        resource_group:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceGroupReference'
-          - type: 'null'
-          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
-      type: object
-      title: PartialVanResourceInput
-    PartialFullTrailerResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        full_trailer:
-          anyOf:
-          - $ref: '#/components/schemas/TrailerProperties-Input'
-          - type: 'null'
-          description: Trailer specific properties
-        resource_group:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceGroupReference'
-          - type: 'null'
-          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
-      type: object
-      title: PartialFullTrailerResourceInput
-    FullTrailerResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        full_trailer:
-          anyOf:
-          - $ref: '#/components/schemas/TrailerProperties-Input'
-          - type: 'null'
-          description: Trailer specific properties
-      type: object
-      required:
-      - name
-      title: FullTrailerResourceInput
-    UploadedDocumentBase_Union_ContainerDocumentTypes__DriverDocumentTypes__VehicleDocumentTypes__:
-      properties:
-        upload_id:
-          type: string
-          format: uuid
-          title: Upload Id
-          description: Unique identifier of the uploaded file
-        document_type:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerDocumentTypes'
-          - $ref: '#/components/schemas/DriverDocumentTypes'
-          - $ref: '#/components/schemas/VehicleDocumentTypes'
-          title: Document Type
-          description: Type of the document
-        name:
-          type: string
-          title: Name
-          description: Name of the document
-      type: object
-      required:
-      - upload_id
-      - document_type
-      - name
-      title: UploadedDocumentBase[Union[ContainerDocumentTypes, DriverDocumentTypes, VehicleDocumentTypes]]
-    ContainerDocumentTypes:
+    DriverDocumentTypes:
       type: string
       enum:
+      - DocumentType.A1_DOCUMENT
+      - DocumentType.CARGO_INSURANCE
+      - DocumentType.BBS_CERTIFICATE
       - DocumentType.COMMUNICATION_SUBCONTRACTOR
-      - DocumentType.CONTAINER_CERTIFICATE
-      - DocumentType.CONTAINER_DAMAGE_REPORT
-      - DocumentType.CONTAINER_INSPECTION_REPORT
-      - DocumentType.CONTAINER_LEASE
-      - DocumentType.CONTAINER_MAINTENANCE_REPORT
-      - DocumentType.CONTAINER_REPAIR_REPORT
-      - DocumentType.CONTAINER_TANK_TEST_CERTIFICATE_2Y5
-      - DocumentType.CONTAINER_TANK_TEST_CERTIFICATE_5Y
-      - DocumentType.CONTAINER_TANK_TEST_CERTIFICATE
-      title: ContainerDocumentTypes
-    UnavailabilityReason:
-      type: string
-      enum:
-      - DRIVER_FUNERAL
-      - DRIVER_HOLIDAY
-      - DRIVER_JOB_APPLICATION_LEAVE
-      - DRIVER_LATE_START_EARLY_LEAVE
-      - DRIVER_MEDICAL_EXAM
-      - DRIVER_OFF_SHIFT_PATTERN
-      - DRIVER_OTHER
-      - DRIVER_PARENTAL_LEAVE
-      - DRIVER_PUBLIC_HOLIDAY
-      - DRIVER_RECUP
-      - DRIVER_REDUCED_WORKING_HOURS_SCHEME
-      - DRIVER_SHIFT_PATTERN
-      - DRIVER_SICKNESS
-      - DRIVER_SOCIAL_LEAVE
-      - DRIVER_TEMPORARY_UNEMPLOYMENT
-      - DRIVER_TRAINING
-      - DRIVER_UNAUTHORISED_ABSENCE
-      - DRIVER_UNION_LEAVE
-      - DRIVER_WORK_ACCIDENT
-      - VEHICLE_BRAKE_TEST
-      - VEHICLE_CLEANING
-      - VEHICLE_FRC_CERTIFICATE
-      - VEHICLE_HIRE
-      - VEHICLE_HYDRAULIC_INSPECTION
-      - VEHICLE_INSPECTION
-      - VEHICLE_LIFT_OPS_EQUIP_REGULATIONS
-      - VEHICLE_MAINTENANCE
-      - VEHICLE_MOT_TEST
-      - VEHICLE_OFF_ROAD
-      - VEHICLE_OTHER
-      - VEHICLE_PRESSURE_TEST
-      - VEHICLE_REPAIR
-      - VEHICLE_SERVICE
-      - VEHICLE_TACHOGRAPH_CALIBRATION
-      - SUBCONTRACTOR_HOLIDAY
-      - SUBCONTRACTOR_SICKNESS
-      - SUBCONTRACTOR_OTHER
-      title: UnavailabilityReason
+      - DocumentType.DOMESTIC_CARGO_INSURANCE
+      - DocumentType.DRIVER_ADR_LICENSE
+      - DocumentType.DRIVER_AEO_REGULATED_AGENT_LICENSE
+      - DocumentType.DRIVER_ALFAPASS
+      - DocumentType.DRIVER_CARD
+      - DocumentType.DRIVER_CARGOCARD_ACCESS_CARD
+      - DocumentType.DRIVER_CIVIL_LIABILITY_EXPLOITATION
+      - DocumentType.DRIVER_CIVIL_LIABILITY_INSURANCE
+      - DocumentType.DRIVER_CODE_95
+      - DocumentType.DRIVER_CPC_CARD
+      - DocumentType.DRIVER_DRIVING_LICENSE
+      - DocumentType.DRIVER_IDENTITY_CARD
+      - DocumentType.DRIVER_IMI_PORTAL
+      - DocumentType.DRIVER_INSURANCE
+      - DocumentType.DRIVER_LONG_HEAVY_VEHICLE_CERT
+      - DocumentType.DRIVER_MEDICAL_EXAM
+      - DocumentType.DRIVER_PERSONAL_PROTECTIVE_EQUIPMENT
+      - DocumentType.DRIVER_POSTING_DOCUMENT
+      - DocumentType.DRIVER_REFUGEE_TRAINING_LICENSE
+      - DocumentType.DRIVER_SICK_NOTE
+      - DocumentType.DRIVER_TRAINING
+      - DocumentType.EUROVIGNET
+      - DocumentType.EXCEPTIONAL_TRANSPORT_LICENSE
+      - DocumentType.FINE
+      - DocumentType.FORKLIFT_LICENSE
+      - DocumentType.FUEL_CARD
+      - DocumentType.OTHER
+      - DocumentType.PAYSCALE_DRIVER
+      - DocumentType.SAFETY_CERTIFICATE_TERMINAL
+      - DocumentType.SITE_MOVEMENT_SHEET
+      - DocumentType.TOLL_CARD
+      - DocumentType.VCA_BASIC_SAFETY
+      - DocumentType.VEHICLE_ADR_CERTIFICATE
+      title: DriverDocumentTypes
+    PartialTractorResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        tractor:
+          anyOf:
+          - $ref: '#/components/schemas/TractorProperties-Input'
+          - type: 'null'
+          description: Tractor specific properties
+        resource_group:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceGroupReference'
+          - type: 'null'
+          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
+      type: object
+      title: PartialTractorResourceInput
     FullTrailerResourceOutput:
       properties:
         row_id:
@@ -4460,300 +2316,7 @@ components:
       - row_id
       - name
       title: FullTrailerResourceOutput
-    ResourceExtraInput:
-      properties:
-        code:
-          type: string
-          title: Code
-          description: Code of the stop extra. Must match exactly one extra in the tenant.
-      type: object
-      required:
-      - code
-      title: ResourceExtraInput
-    VanResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        van:
-          anyOf:
-          - $ref: '#/components/schemas/VanProperties-Input'
-          - type: 'null'
-          description: Van specific properties
-      type: object
-      required:
-      - name
-      title: VanResourceInput
-    DriverResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          type: string
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        driver:
-          anyOf:
-          - $ref: '#/components/schemas/DriverProperties'
-          - type: 'null'
-          description: Driver specific properties
-      type: object
-      required:
-      - name
-      title: DriverResourceInput
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CompanyReference:
-      properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-      type: object
-      required:
-      - row_id
-      title: CompanyReference
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    PartialDriverResourceInput:
-      properties:
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity associated with the resource, defaults to default billing entity if not provided
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceExtraInput'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: External identifier of the resource
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the resource
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields for this resource
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReference'
-          - type: 'null'
-          description: Company linked to the resource
-        integrations:
-          anyOf:
-          - additionalProperties:
-              type: object
-            type: object
-          - type: 'null'
-          title: Integrations
-          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
-          examples:
-          - addsecure1234:
-              active: true
-              object_id: '1234'
-        driver:
-          anyOf:
-          - $ref: '#/components/schemas/DriverProperties'
-          - type: 'null'
-          description: Driver specific properties
-        resource_group:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceGroupReference'
-          - type: 'null'
-          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
-      type: object
-      title: PartialDriverResourceInput
-    ListResourceOutput:
+    ListResourceUnavailabilityOutput:
       properties:
         next_cursor:
           anyOf:
@@ -4762,21 +2325,242 @@ components:
           title: Next Cursor
         items:
           items:
-            anyOf:
-            - $ref: '#/components/schemas/DriverResourceOutput'
-            - $ref: '#/components/schemas/TractorResourceOutput'
-            - $ref: '#/components/schemas/TruckResourceOutput'
-            - $ref: '#/components/schemas/VanResourceOutput'
-            - $ref: '#/components/schemas/TrailerResourceOutput'
-            - $ref: '#/components/schemas/FullTrailerResourceOutput'
-            - $ref: '#/components/schemas/ChassisResourceOutput'
-            - $ref: '#/components/schemas/ContainerResourceOutput'
+            $ref: '#/components/schemas/ResourceUnavailabilityOutput'
           type: array
           title: Items
       type: object
       required:
       - items
-      title: ListResourceOutput
+      title: ListResourceUnavailabilityOutput
+    TractorResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        tractor:
+          anyOf:
+          - $ref: '#/components/schemas/TractorProperties-Input'
+          - type: 'null'
+          description: Tractor specific properties
+      type: object
+      required:
+      - name
+      title: TractorResourceInput
+    TrailerResourceOutput:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntity'
+          - type: 'null'
+          description: Billing entity associated with the resource
+        extras:
+          items:
+            $ref: '#/components/schemas/ResourceExtraOutput'
+          type: array
+          title: Extras
+          description: Stop extras this resource is compatible with
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+          description: Is the resource active
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        timestamp_updated:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Timestamp Updated
+          description: Timestamp of the last update of the resource
+        resource_groups:
+          items:
+            $ref: '#/components/schemas/ResourceGroupOutput'
+          type: array
+          title: Resource Groups
+          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
+        trailer:
+          anyOf:
+          - $ref: '#/components/schemas/TrailerProperties-Output'
+          - type: 'null'
+          description: Trailer specific properties
+      type: object
+      required:
+      - row_id
+      - name
+      title: TrailerResourceOutput
+    UnavailabilityReason:
+      type: string
+      enum:
+      - DRIVER_FUNERAL
+      - DRIVER_HOLIDAY
+      - DRIVER_JOB_APPLICATION_LEAVE
+      - DRIVER_LATE_START_EARLY_LEAVE
+      - DRIVER_MEDICAL_EXAM
+      - DRIVER_OFF_SHIFT_PATTERN
+      - DRIVER_OTHER
+      - DRIVER_PARENTAL_LEAVE
+      - DRIVER_PUBLIC_HOLIDAY
+      - DRIVER_RECUP
+      - DRIVER_REDUCED_WORKING_HOURS_SCHEME
+      - DRIVER_SHIFT_PATTERN
+      - DRIVER_SICKNESS
+      - DRIVER_SOCIAL_LEAVE
+      - DRIVER_TEMPORARY_UNEMPLOYMENT
+      - DRIVER_TRAINING
+      - DRIVER_UNAUTHORISED_ABSENCE
+      - DRIVER_UNION_LEAVE
+      - DRIVER_WORK_ACCIDENT
+      - VEHICLE_BRAKE_TEST
+      - VEHICLE_CLEANING
+      - VEHICLE_FRC_CERTIFICATE
+      - VEHICLE_HIRE
+      - VEHICLE_HYDRAULIC_INSPECTION
+      - VEHICLE_INSPECTION
+      - VEHICLE_LIFT_OPS_EQUIP_REGULATIONS
+      - VEHICLE_MAINTENANCE
+      - VEHICLE_MOT_TEST
+      - VEHICLE_OFF_ROAD
+      - VEHICLE_OTHER
+      - VEHICLE_PRESSURE_TEST
+      - VEHICLE_REPAIR
+      - VEHICLE_SERVICE
+      - VEHICLE_TACHOGRAPH_CALIBRATION
+      - SUBCONTRACTOR_HOLIDAY
+      - SUBCONTRACTOR_SICKNESS
+      - SUBCONTRACTOR_OTHER
+      title: UnavailabilityReason
     PartialTruckResourceInput:
       properties:
         billing_entity:
@@ -4861,57 +2645,176 @@ components:
           description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
       type: object
       title: PartialTruckResourceInput
-    ResourceValidityInput:
+    ValidationError:
       properties:
-        start_time:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          format: date-time
-          title: Start Time
-          description: Start time of the validity
-        end_time:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: End Time
-          description: End time of the validity from a planning perspective
-        legal_end_time:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Legal End Time
-          description: End time of the validity from a legal perspective
-        generate_unavailability:
-          type: boolean
-          title: Generate Unavailability
-          description: Generate a planning unavailability once the validity end time has passed
-          default: false
+          title: Message
         type:
-          $ref: '#/components/schemas/ResourceValidityReason'
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ContainerProperties:
+      properties:
+        container_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Container Number
+          description: Container number
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the container
+        standard_size:
+          anyOf:
+          - type: string
+            enum:
+            - FEET_20
+            - FEET_23
+            - FEET_24
+            - FEET_25
+            - FEET_26
+            - FEET_30
+            - FEET_35
+            - FEET_40
+            - FEET_45
+          - type: 'null'
+          title: Standard Size
+          description: Standard size of the container
+        iso_code:
+          anyOf:
+          - type: string
+            maxLength: 4
+          - type: 'null'
+          title: Iso Code
+          description: ISO 6346 container type code (e.g. '22G1', '45G1')
+      type: object
+      title: ContainerProperties
+    ContainerResourceOutput:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
         external_id:
           anyOf:
           - type: string
           - type: 'null'
           title: External Id
-          description: ID of the validity in the external master data system
-        description:
+          description: External identifier of the resource
+        locale:
           anyOf:
           - type: string
           - type: 'null'
-          title: Description
-        documents:
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntity'
+          - type: 'null'
+          description: Billing entity associated with the resource
+        extras:
           items:
-            $ref: '#/components/schemas/UploadedDocumentBase_Union_ContainerDocumentTypes__DriverDocumentTypes__VehicleDocumentTypes__'
+            $ref: '#/components/schemas/ResourceExtraOutput'
           type: array
-          title: Documents
-          description: List of documents associated with the validity
+          title: Extras
+          description: Stop extras this resource is compatible with
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+          description: Is the resource active
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        timestamp_updated:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Timestamp Updated
+          description: Timestamp of the last update of the resource
+        resource_groups:
+          items:
+            $ref: '#/components/schemas/ResourceGroupOutput'
+          type: array
+          title: Resource Groups
+          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
+        container:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerProperties'
+          - type: 'null'
+          description: Container specific properties
       type: object
       required:
-      - start_time
-      - type
-      title: ResourceValidityInput
-    ChassisResourceInput:
+      - row_id
+      - name
+      title: ContainerResourceOutput
+    PartialFullTrailerResourceInput:
       properties:
         billing_entity:
           anyOf:
@@ -4927,7 +2830,9 @@ components:
           title: Extras
           description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
         name:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Name
           description: Name of the resource
         external_id:
@@ -4981,31 +2886,121 @@ components:
           - addsecure1234:
               active: true
               object_id: '1234'
-        chassis:
+        full_trailer:
           anyOf:
-          - $ref: '#/components/schemas/ChassisProperties-Input'
+          - $ref: '#/components/schemas/TrailerProperties-Input'
           - type: 'null'
-          description: Chassis specific properties
+          description: Trailer specific properties
+        resource_group:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceGroupReference'
+          - type: 'null'
+          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
+      type: object
+      title: PartialFullTrailerResourceInput
+    BillingEntity:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the billing entity in Qargo.
+        legal_name:
+          type: string
+          title: Legal Name
+          description: Legal name of the billing entity.
+          examples:
+          - Qargo BV
+        vat_number:
+          type: string
+          title: Vat Number
+          description: VAT number of the billing entity.
+          examples:
+          - NL123456789B01
+        code:
+          type: string
+          title: Code
+          description: Code of the billing entity.
+          examples:
+          - QARGO
+        company_registration_number:
+          type: string
+          title: Company Registration Number
+          description: Company registration number of the billing entity.
+          examples:
+          - '12345678'
+        is_default:
+          type: boolean
+          title: Is Default
+          description: Indicates whether this billing entity is the default one.
+          default: false
       type: object
       required:
-      - name
-      title: ChassisResourceInput
-    ListResourceUnavailabilityOutput:
+      - id
+      - legal_name
+      - vat_number
+      - code
+      - company_registration_number
+      title: BillingEntity
+    LocationReference:
       properties:
-        next_cursor:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Identifier of the location
+      type: object
+      required:
+      - id
+      title: LocationReference
+    ResourceGroupReference:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Identifier of the resource group.
+      type: object
+      required:
+      - id
+      title: ResourceGroupReference
+    Document:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the document
+        name:
+          type: string
+          title: Name
+          description: Name of the document
+        type:
+          type: string
+          title: Type
+          description: Type of the document
+        download_url:
+          type: string
+          title: Download Url
+          description: Relative URL from the base URL to download the document
+          default: ''
+        subject_type:
+          type: string
+          title: Subject Type
+          description: Linked subject of the document
+        content_type:
           anyOf:
           - type: string
           - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/ResourceUnavailabilityOutput'
-          type: array
-          title: Items
+          title: Content Type
+          description: Content type of the document
       type: object
       required:
-      - items
-      title: ListResourceUnavailabilityOutput
+      - id
+      - name
+      - type
+      - subject_type
+      title: Document
     VehicleDocumentTypes:
       type: string
       enum:
@@ -5048,24 +3043,257 @@ components:
       - DocumentType.VEHICLE_UK_HGV_LEVY
       - DocumentType.XL_CERTIFICATE
       title: VehicleDocumentTypes
-    ValidationErrorResponse:
+    ContainerDocumentTypes:
+      type: string
+      enum:
+      - DocumentType.COMMUNICATION_SUBCONTRACTOR
+      - DocumentType.CONTAINER_CERTIFICATE
+      - DocumentType.CONTAINER_DAMAGE_REPORT
+      - DocumentType.CONTAINER_INSPECTION_REPORT
+      - DocumentType.CONTAINER_LEASE
+      - DocumentType.CONTAINER_MAINTENANCE_REPORT
+      - DocumentType.CONTAINER_REPAIR_REPORT
+      - DocumentType.CONTAINER_TANK_TEST_CERTIFICATE_2Y5
+      - DocumentType.CONTAINER_TANK_TEST_CERTIFICATE_5Y
+      - DocumentType.CONTAINER_TANK_TEST_CERTIFICATE
+      title: ContainerDocumentTypes
+    PartialDriverResourceInput:
       properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        driver:
+          anyOf:
+          - $ref: '#/components/schemas/DriverProperties'
+          - type: 'null'
+          description: Driver specific properties
+        resource_group:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceGroupReference'
+          - type: 'null'
+          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
       type: object
+      title: PartialDriverResourceInput
+    ResourceGroupOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Identifier of the resource group.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource group.
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource group.
+      type: object
+      required:
+      - id
+      title: ResourceGroupOutput
+    CompanyReference:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+      type: object
+      required:
+      - row_id
+      title: CompanyReference
+    VanResourceOutput:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntity'
+          - type: 'null'
+          description: Billing entity associated with the resource
+        extras:
+          items:
+            $ref: '#/components/schemas/ResourceExtraOutput'
+          type: array
+          title: Extras
+          description: Stop extras this resource is compatible with
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+          description: Is the resource active
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        timestamp_updated:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Timestamp Updated
+          description: Timestamp of the last update of the resource
+        resource_groups:
+          items:
+            $ref: '#/components/schemas/ResourceGroupOutput'
+          type: array
+          title: Resource Groups
+          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
+        van:
+          anyOf:
+          - $ref: '#/components/schemas/VanProperties-Output'
+          - type: 'null'
+          description: Van specific properties
+      type: object
+      required:
+      - row_id
+      - name
+      title: VanResourceOutput
+    ResourceExtraInput:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Code of the stop extra. Must match exactly one extra in the tenant.
+      type: object
+      required:
+      - code
+      title: ResourceExtraInput
     TruckProperties-Input:
       properties:
         capacity_pallet_spaces:
@@ -5218,7 +3446,177 @@ components:
           description: Roof type of the truck
       type: object
       title: TruckProperties
-    TractorResourceInput:
+    ChassisProperties-Input:
+      properties:
+        tare_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the chassis in kg
+          examples:
+          - 5000
+        exterior_length_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the chassis in meter
+          examples:
+          - 12
+        exterior_width_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the chassis in meter
+          examples:
+          - 2.5
+        exterior_height_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the chassis in meter
+          examples:
+          - 1.5
+        gross_weight_vehicle_rating_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Gross Weight Vehicle Rating Weight Kg
+          description: Gross vehicle weight rating of the chassis in kg
+          examples:
+          - 30000
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the chassis
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the chassis
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the chassis
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the chassis
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_12_TRAILER
+            - AC_10_TRAILER
+            - AC_8_TRAILER
+            - AC_6_TRAILER
+            - AC_4_TRAILER
+            - AC_2_TRAILER
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the chassis
+      type: object
+      title: ChassisProperties
+    PartialTrailerResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        trailer:
+          anyOf:
+          - $ref: '#/components/schemas/TrailerProperties-Input'
+          - type: 'null'
+          description: Trailer specific properties
+        resource_group:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceGroupReference'
+          - type: 'null'
+          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
+      type: object
+      title: PartialTrailerResourceInput
+    ContainerResourceInput:
       properties:
         billing_entity:
           anyOf:
@@ -5288,15 +3686,1617 @@ components:
           - addsecure1234:
               active: true
               object_id: '1234'
-        tractor:
+        container:
           anyOf:
-          - $ref: '#/components/schemas/TractorProperties-Input'
+          - $ref: '#/components/schemas/ContainerProperties'
           - type: 'null'
-          description: Tractor specific properties
+          description: Container specific properties
       type: object
       required:
       - name
-      title: TractorResourceInput
+      title: ContainerResourceInput
+    TractorProperties-Input:
+      properties:
+        tare_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the tractor in kg
+          examples:
+          - 10000
+        exterior_length_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the tractor in meter
+          examples:
+          - 10
+        exterior_width_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the tractor in meter
+          examples:
+          - 5
+        exterior_height_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the tractor in meter
+          examples:
+          - 3
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the tractor
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the tractor
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the tractor
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the tractor
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_4_X_2
+            - AC_4_X_4
+            - AC_6_X_2
+            - AC_6_X_4
+            - AC_6_X_6
+            - AC_8_X_2
+            - AC_8_X_4
+            - AC_8_X_6
+            - AC_10_X_4
+            - AC_12_X_4
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the tractor
+        emission_class:
+          anyOf:
+          - type: string
+            enum:
+            - EURO_1
+            - EURO_2
+            - EURO_3
+            - EURO_4
+            - EURO_5
+            - EURO_6
+          - type: 'null'
+          title: Emission Class
+          description: Emission class of the tractor
+        fuel_type:
+          anyOf:
+          - type: string
+            enum:
+            - DIESEL
+            - BIOFUELS
+            - LPG
+            - ELECTRIC
+            - HYBRID_ELECTRIC
+          - type: 'null'
+          title: Fuel Type
+          description: Fuel type of the tractor
+      type: object
+      title: TractorProperties
+    ChassisResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        chassis:
+          anyOf:
+          - $ref: '#/components/schemas/ChassisProperties-Input'
+          - type: 'null'
+          description: Chassis specific properties
+      type: object
+      required:
+      - name
+      title: ChassisResourceInput
+    TrailerResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        trailer:
+          anyOf:
+          - $ref: '#/components/schemas/TrailerProperties-Input'
+          - type: 'null'
+          description: Trailer specific properties
+      type: object
+      required:
+      - name
+      title: TrailerResourceInput
+    TrailerProperties-Output:
+      properties:
+        capacity_pallet_spaces:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Capacity Pallet Spaces
+          description: Capacity of the trailer in pallet spaces
+          examples:
+          - 10
+        capacity_volume_m3:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Capacity Volume M3
+          description: Capacity of the trailer in cubic meters
+          examples:
+          - 10
+        capacity_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Capacity Weight Kg
+          description: Capacity of the trailer in kg
+          examples:
+          - 10000
+        tare_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the trailer in kg
+          examples:
+          - 10000
+        exterior_length_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the trailer in meter
+          examples:
+          - 10
+        exterior_width_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the trailer in meter
+          examples:
+          - 5
+        exterior_height_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the trailer in meter
+          examples:
+          - 3
+        gross_weight_vehicle_rating_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gross Weight Vehicle Rating Weight Kg
+          description: Gross weight vehicle rating weight of the trailer in kg
+          examples:
+          - 10
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the trailer
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the trailer
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the trailer
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the trailer
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_12_TRAILER
+            - AC_10_TRAILER
+            - AC_8_TRAILER
+            - AC_6_TRAILER
+            - AC_4_TRAILER
+            - AC_2_TRAILER
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the trailer
+      type: object
+      title: TrailerProperties
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ResourceUnavailabilityInput:
+      properties:
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the unavailability
+        start_time:
+          type: string
+          format: date-time
+          title: Start Time
+          description: Start time of the unavailability
+        end_time:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: End Time
+          description: End time of the unavailability, leave empty for open interval
+        reason:
+          $ref: '#/components/schemas/UnavailabilityReason'
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - start_time
+      - reason
+      title: ResourceUnavailabilityInput
+    ResourceValidityOutput:
+      properties:
+        start_time:
+          type: string
+          format: date-time
+          title: Start Time
+          description: Start time of the validity
+        end_time:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: End Time
+          description: End time of the validity from a planning perspective
+        legal_end_time:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Legal End Time
+          description: End time of the validity from a legal perspective
+        generate_unavailability:
+          type: boolean
+          title: Generate Unavailability
+          description: Generate a planning unavailability once the validity end time has passed
+          default: false
+        type:
+          $ref: '#/components/schemas/ResourceValidityReason'
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: ID of the validity in the external master data system
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the validity
+      type: object
+      required:
+      - start_time
+      - type
+      - id
+      title: ResourceValidityOutput
+    PartialVanResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        van:
+          anyOf:
+          - $ref: '#/components/schemas/VanProperties-Input'
+          - type: 'null'
+          description: Van specific properties
+        resource_group:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceGroupReference'
+          - type: 'null'
+          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
+      type: object
+      title: PartialVanResourceInput
+    TruckProperties-Output:
+      properties:
+        capacity_pallet_spaces:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Capacity Pallet Spaces
+          description: Capacity of the truck in pallet spaces
+          examples:
+          - 10
+        capacity_volume_m3:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Capacity Volume M3
+          description: Capacity of the truck in cubic meters
+          examples:
+          - 10
+        capacity_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Capacity Weight Kg
+          description: Capacity of the truck in kg
+          examples:
+          - 10000
+        tare_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the truck in kg
+          examples:
+          - 10000
+        exterior_length_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the truck in meter
+          examples:
+          - 10
+        exterior_width_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the truck in meter
+          examples:
+          - 5
+        exterior_height_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the truck in meter
+          examples:
+          - 3
+        gross_weight_vehicle_rating_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gross Weight Vehicle Rating Weight Kg
+          description: Gross weight vehicle rating weight of the truck in kg
+          examples:
+          - 10
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the truck
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the truck
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the truck
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the truck
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_4_X_2
+            - AC_4_X_4
+            - AC_6_X_2
+            - AC_6_X_4
+            - AC_6_X_6
+            - AC_8_X_2
+            - AC_8_X_4
+            - AC_8_X_6
+            - AC_10_X_4
+            - AC_12_X_4
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the truck
+        emission_class:
+          anyOf:
+          - type: string
+            enum:
+            - EURO_1
+            - EURO_2
+            - EURO_3
+            - EURO_4
+            - EURO_5
+            - EURO_6
+          - type: 'null'
+          title: Emission Class
+          description: Emission class of the truck
+        fuel_type:
+          anyOf:
+          - type: string
+            enum:
+            - DIESEL
+            - BIOFUELS
+            - LPG
+            - ELECTRIC
+            - HYBRID_ELECTRIC
+          - type: 'null'
+          title: Fuel Type
+          description: Fuel type of the truck
+        roof_type:
+          anyOf:
+          - type: string
+            enum:
+            - CLOSED
+            - OPEN
+            - FLATBED
+          - type: 'null'
+          title: Roof Type
+          description: Roof type of the truck
+      type: object
+      title: TruckProperties
+    ResourceTypeEnum:
+      type: string
+      enum:
+      - CHASSIS
+      - COMPARTMENT
+      - CONTAINER
+      - DRIVER
+      - FERRY
+      - FULL_TRAILER
+      - HANDLING
+      - RIGID
+      - SUBCONTRACTOR
+      - TRACTOR
+      - TRAILER
+      - TRAIN
+      - VAN
+      title: ResourceTypeEnum
+    DriverResourceOutput:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntity'
+          - type: 'null'
+          description: Billing entity associated with the resource
+        extras:
+          items:
+            $ref: '#/components/schemas/ResourceExtraOutput'
+          type: array
+          title: Extras
+          description: Stop extras this resource is compatible with
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+          description: Is the resource active
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        timestamp_updated:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Timestamp Updated
+          description: Timestamp of the last update of the resource
+        resource_groups:
+          items:
+            $ref: '#/components/schemas/ResourceGroupOutput'
+          type: array
+          title: Resource Groups
+          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
+        driver:
+          anyOf:
+          - $ref: '#/components/schemas/DriverProperties'
+          - type: 'null'
+          description: Driver specific properties
+      type: object
+      required:
+      - row_id
+      - name
+      title: DriverResourceOutput
+    BillingEntityReference:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Code of the reference
+      type: object
+      required:
+      - code
+      title: BillingEntityReference
+    TruckResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        truck:
+          anyOf:
+          - $ref: '#/components/schemas/TruckProperties-Input'
+          - type: 'null'
+          description: Truck specific properties
+      type: object
+      required:
+      - name
+      title: TruckResourceInput
+    DriverProperties:
+      properties:
+        first_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: First Name
+          description: First name of the driver
+        last_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Name
+          description: Last name of the driver
+        email_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email Address
+          description: Email of the driver
+        date_of_birth:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Date Of Birth
+          description: Date of birth of the driver
+          examples:
+          - '2025-04-10'
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+          description: Phone number of the driver
+          examples:
+          - '+32412345678'
+        start_stop_location:
+          anyOf:
+          - $ref: '#/components/schemas/LocationReference'
+          - type: 'null'
+          description: Location used as the driver's start and stop location for planning. Must reference a valid location in the tenant's location master data. Set to null to remove the start/stop location.
+      type: object
+      title: DriverProperties
+    VanProperties-Input:
+      properties:
+        capacity_pallet_spaces:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Capacity Pallet Spaces
+          description: Capacity of the van in pallet spaces
+          examples:
+          - 10
+        capacity_volume_m3:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Capacity Volume M3
+          description: Capacity of the van in cubic meters
+          examples:
+          - 10
+        capacity_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Capacity Weight Kg
+          description: Capacity of the van in kg
+          examples:
+          - 10000
+        tare_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the van in kg
+          examples:
+          - 10000
+        exterior_length_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the van in meter
+          examples:
+          - 10
+        exterior_width_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the van in meter
+          examples:
+          - 5
+        exterior_height_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the van in meter
+          examples:
+          - 3
+        gross_weight_vehicle_rating_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Gross Weight Vehicle Rating Weight Kg
+          description: Gross weight vehicle rating weight of the van in kg
+          examples:
+          - 10
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the van
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the van
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the van
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the van
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_4_X_2
+            - AC_4_X_4
+            - AC_6_X_2
+            - AC_6_X_4
+            - AC_6_X_6
+            - AC_8_X_2
+            - AC_8_X_4
+            - AC_8_X_6
+            - AC_10_X_4
+            - AC_12_X_4
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the van
+        emission_class:
+          anyOf:
+          - type: string
+            enum:
+            - EURO_1
+            - EURO_2
+            - EURO_3
+            - EURO_4
+            - EURO_5
+            - EURO_6
+          - type: 'null'
+          title: Emission Class
+          description: Emission class of the van
+        fuel_type:
+          anyOf:
+          - type: string
+            enum:
+            - DIESEL
+            - BIOFUELS
+            - LPG
+            - ELECTRIC
+            - HYBRID_ELECTRIC
+          - type: 'null'
+          title: Fuel Type
+          description: Fuel type of the van
+        roof_type:
+          anyOf:
+          - type: string
+            enum:
+            - CLOSED
+            - OPEN
+            - FLATBED
+          - type: 'null'
+          title: Roof Type
+          description: Roof type of the van
+      type: object
+      title: VanProperties
+    TrailerProperties-Input:
+      properties:
+        capacity_pallet_spaces:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Capacity Pallet Spaces
+          description: Capacity of the trailer in pallet spaces
+          examples:
+          - 10
+        capacity_volume_m3:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Capacity Volume M3
+          description: Capacity of the trailer in cubic meters
+          examples:
+          - 10
+        capacity_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Capacity Weight Kg
+          description: Capacity of the trailer in kg
+          examples:
+          - 10000
+        tare_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the trailer in kg
+          examples:
+          - 10000
+        exterior_length_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the trailer in meter
+          examples:
+          - 10
+        exterior_width_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the trailer in meter
+          examples:
+          - 5
+        exterior_height_m:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the trailer in meter
+          examples:
+          - 3
+        gross_weight_vehicle_rating_weight_kg:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Gross Weight Vehicle Rating Weight Kg
+          description: Gross weight vehicle rating weight of the trailer in kg
+          examples:
+          - 10
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the trailer
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the trailer
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the trailer
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the trailer
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_12_TRAILER
+            - AC_10_TRAILER
+            - AC_8_TRAILER
+            - AC_6_TRAILER
+            - AC_4_TRAILER
+            - AC_2_TRAILER
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the trailer
+      type: object
+      title: TrailerProperties
+    PartialChassisResourceInput:
+      properties:
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity associated with the resource, defaults to default billing entity if not provided
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceExtraInput'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Stop extras this resource is compatible with. Replaces the existing list when provided. Send an empty list to clear all compatible extras.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        chassis:
+          anyOf:
+          - $ref: '#/components/schemas/ChassisProperties-Input'
+          - type: 'null'
+          description: Chassis specific properties
+        resource_group:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceGroupReference'
+          - type: 'null'
+          description: Resource group to allocate the resource to. Set to null to remove the resource from its current group; omit the field to leave the allocation unchanged. A resource can belong to multiple groups (see `resource_groups` on the resource); this field manages only its primary allocation.
+      type: object
+      title: PartialChassisResourceInput
+    ChassisProperties-Output:
+      properties:
+        tare_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tare Weight Kg
+          description: Tare weight of the chassis in kg
+          examples:
+          - 5000
+        exterior_length_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Length M
+          description: Exterior length of the chassis in meter
+          examples:
+          - 12
+        exterior_width_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Width M
+          description: Exterior width of the chassis in meter
+          examples:
+          - 2.5
+        exterior_height_m:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exterior Height M
+          description: Exterior height of the chassis in meter
+          examples:
+          - 1.5
+        gross_weight_vehicle_rating_weight_kg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gross Weight Vehicle Rating Weight Kg
+          description: Gross vehicle weight rating of the chassis in kg
+          examples:
+          - 30000
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+          description: License plate of the chassis
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model of the chassis
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the chassis
+        vin_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vin Number
+          description: VIN number of the chassis
+        axle_configuration:
+          anyOf:
+          - type: string
+            enum:
+            - AC_12_TRAILER
+            - AC_10_TRAILER
+            - AC_8_TRAILER
+            - AC_6_TRAILER
+            - AC_4_TRAILER
+            - AC_2_TRAILER
+          - type: 'null'
+          title: Axle Configuration
+          description: Axle configuration of the chassis
+      type: object
+      title: ChassisProperties
+    ChassisResourceOutput:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+        name:
+          type: string
+          title: Name
+          description: Name of the resource
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: External identifier of the resource
+        locale:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the resource. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the resource
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields for this resource
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReference'
+          - type: 'null'
+          description: Company linked to the resource
+        integrations:
+          anyOf:
+          - additionalProperties:
+              type: object
+            type: object
+          - type: 'null'
+          title: Integrations
+          description: Related integrations for the resource. The key is the unique code of the integration in Qargo
+          examples:
+          - addsecure1234:
+              active: true
+              object_id: '1234'
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntity'
+          - type: 'null'
+          description: Billing entity associated with the resource
+        extras:
+          items:
+            $ref: '#/components/schemas/ResourceExtraOutput'
+          type: array
+          title: Extras
+          description: Stop extras this resource is compatible with
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+          description: Is the resource active
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        timestamp_updated:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Timestamp Updated
+          description: Timestamp of the last update of the resource
+        resource_groups:
+          items:
+            $ref: '#/components/schemas/ResourceGroupOutput'
+          type: array
+          title: Resource Groups
+          description: Resource groups this resource currently belongs to (deduplicated and sorted by name). A resource can belong to more than one group. Active allocations are included regardless of their validity window (scheduled, future, or expired); archived allocations are excluded.
+        chassis:
+          anyOf:
+          - $ref: '#/components/schemas/ChassisProperties-Output'
+          - type: 'null'
+          description: Chassis specific properties
+      type: object
+      required:
+      - row_id
+      - name
+      title: ChassisResourceOutput
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    ListResourceValidityOutput:
+      properties:
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+        items:
+          items:
+            $ref: '#/components/schemas/ResourceValidityOutput'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: ListResourceValidityOutput
+    ListResourceOutput:
+      properties:
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+        items:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/DriverResourceOutput'
+            - $ref: '#/components/schemas/TractorResourceOutput'
+            - $ref: '#/components/schemas/TruckResourceOutput'
+            - $ref: '#/components/schemas/VanResourceOutput'
+            - $ref: '#/components/schemas/TrailerResourceOutput'
+            - $ref: '#/components/schemas/FullTrailerResourceOutput'
+            - $ref: '#/components/schemas/ChassisResourceOutput'
+            - $ref: '#/components/schemas/ContainerResourceOutput'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: ListResourceOutput
+    ResourceExtraOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the stop extra
+        code:
+          type: string
+          title: Code
+          description: Code of the stop extra
+        name:
+          type: string
+          title: Name
+          description: Name of the stop extra
+      type: object
+      required:
+      - id
+      - code
+      - name
+      title: ResourceExtraOutput
+    UploadedDocumentBase_Union_ContainerDocumentTypes__DriverDocumentTypes__VehicleDocumentTypes__:
+      properties:
+        upload_id:
+          type: string
+          format: uuid
+          title: Upload Id
+          description: Unique identifier of the uploaded file
+        document_type:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerDocumentTypes'
+          - $ref: '#/components/schemas/DriverDocumentTypes'
+          - $ref: '#/components/schemas/VehicleDocumentTypes'
+          title: Document Type
+          description: Type of the document
+        name:
+          type: string
+          title: Name
+          description: Name of the document
+      type: object
+      required:
+      - upload_id
+      - document_type
+      - name
+      title: UploadedDocumentBase[Union[ContainerDocumentTypes, DriverDocumentTypes, VehicleDocumentTypes]]
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

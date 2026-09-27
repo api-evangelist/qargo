@@ -109,15 +109,37 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    HTTPValidationError:
+    Body_Upload_document_content_v1_documents_document_upload_content_post:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        file:
+          type: string
+          format: binary
+          title: File
       type: object
-      title: HTTPValidationError
+      required:
+      - file
+      title: Body_Upload_document_content_v1_documents_document_upload_content_post
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ValidationErrorDetail:
       properties:
         message:
@@ -150,48 +172,6 @@ components:
       - message
       title: ValidationErrorDetail
       type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    Body_Upload_document_content_v1_documents_document_upload_content_post:
-      properties:
-        file:
-          type: string
-          format: binary
-          title: File
-      type: object
-      required:
-      - file
-      title: Body_Upload_document_content_v1_documents_document_upload_content_post
-    DocumentUploadResponse:
-      properties:
-        upload_id:
-          type: string
-          format: uuid
-          title: Upload Id
-          description: Unique identifier for the uploaded document
-      type: object
-      required:
-      - upload_id
-      title: DocumentUploadResponse
     ValidationErrorResponse:
       properties:
         message:
@@ -210,6 +190,26 @@ components:
       - errors
       title: ValidationErrorResponse
       type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DocumentUploadResponse:
+      properties:
+        upload_id:
+          type: string
+          format: uuid
+          title: Upload Id
+          description: Unique identifier for the uploaded document
+      type: object
+      required:
+      - upload_id
+      title: DocumentUploadResponse
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

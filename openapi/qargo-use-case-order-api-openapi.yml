@@ -132,269 +132,76 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    LocationInput:
+    ContainerType:
       properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
         name:
           anyOf:
           - type: string
           - type: 'null'
           title: Name
-        address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address
-        address_second_line:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address Second Line
-        postal_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Postal Code
-        city:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: City
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-        latitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Latitude
-        longitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Longitude
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        location_identifier:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Location Identifier
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-        location_search:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Location Search
-        place_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Place Id
-      type: object
-      title: LocationInput
-    TransitOffice:
-      properties:
+          description: Human readable identifier
         code:
           anyOf:
           - type: string
           - type: 'null'
           title: Code
-          description: Customs office code
-      type: object
-      title: TransitOffice
-    KuehneNagelExtraFields:
-      properties:
-        sender_depot_code:
+          description: Machine readable identifier
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        container_iso_code:
           anyOf:
           - type: string
           - type: 'null'
-          title: Sender Depot Code
-          description: Sender depot code
-        receiver_depot_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Receiver Depot Code
-          description: Receiver depot code
+          title: Container Iso Code
+          description: International standard ISO code identifying the container size and type (e.g. '22G1', '42G1')
       type: object
-      title: KuehneNagelExtraFields
-    PackagedItemsImportExportExtraFields:
+      title: ContainerType
+    StopActivityConfigInput:
       properties:
-        hs_code_import:
-          anyOf:
-          - $ref: '#/components/schemas/HSCode'
-          - type: 'null'
-          description: Harmonized System Code for importing the good
-        hs_code_export:
-          anyOf:
-          - $ref: '#/components/schemas/HSCode'
-          - type: 'null'
-          description: Harmonized System Code for exporting the good
-        shipping_marks:
+        resource_types:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Shipping Marks
-          description: Shipping marks for the good
-        commercial_invoice:
+          title: Resource Types
+        dpc_start_or_end_stop_location:
           anyOf:
-          - $ref: '#/components/schemas/PackagedItemCommercialInvoiceExtraField'
+          - $ref: '#/components/schemas/LocationInput'
           - type: 'null'
-        sps_flag:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Sps Flag
-          description: Sanitary & phytosanitary flag
-        sps_reference:
+        dpc_drop_collect_empty_date:
           anyOf:
           - type: string
+            format: date
           - type: 'null'
-          title: Sps Reference
-          description: CHED / IPAFFS reference
-        ggb_reference:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ggb Reference
-          description: GGB reference (NL only)
-      type: object
-      title: PackagedItemsImportExportExtraFields
-    Department:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the department
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the department
-      type: object
-      title: Department
-    GoodPackagingSize:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-      type: object
-      title: GoodPackagingSize
-    ConsignmentCommercialInvoiceExtraField:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the commercial invoice
-        value:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Value
-          description: Value of the commercial invoice
-        currency_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Currency Code
-          description: Currency code of the commercial invoice
-      type: object
-      title: ConsignmentCommercialInvoiceExtraField
-    PartialOrderStop:
-      properties:
-        updates:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/PartialOrderStopUpdate'
-            type: array
-          - type: 'null'
-          title: Updates
-      type: object
-      title: PartialOrderStop
-    PalletwaysConsignmentInput:
-      properties:
-        tracking_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tracking Id
-        consignment_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consignment Number
-      type: object
-      title: PalletwaysConsignmentInput
-    PackagedItemInput:
-      properties:
-        adr:
-          anyOf:
-          - $ref: '#/components/schemas/ADRInput'
-          - type: 'null'
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        quantity:
+          title: Dpc Drop Collect Empty Date
+        duration:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Quantity
-        total_volume_l:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Volume L
-        total_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Weight Kg
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/ImportExportInput'
-          - type: 'null'
+          title: Duration
       type: object
-      title: PackagedItemInput
+      title: StopActivityConfigInput
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
     ADRInput:
       properties:
         un_number:
@@ -456,1136 +263,22 @@ components:
           title: Physical State
       type: object
       title: ADRInput
-    UpdateOrderPricingInput:
+    OrderMatch:
       properties:
-        requested_price:
+        customer_reference_number:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/FieldMatchInput'
           - type: 'null'
-          title: Requested Price
-      type: object
-      title: UpdateOrderPricingInput
-    TimeWindowInput:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
         name:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/FieldMatchInput'
           - type: 'null'
-          title: Name
-        start_time:
-          anyOf:
-          - type: string
-            format: time
-          - type: 'null'
-          title: Start Time
-        end_time:
-          anyOf:
-          - type: string
-            format: time
-          - type: 'null'
-          title: End Time
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        is_enforced:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Enforced
-      type: object
-      title: TimeWindowInput
-    CommercialInvoiceInput:
-      properties:
-        value:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Value
-      type: object
-      title: CommercialInvoiceInput
-    PackagingType:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        export_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Export Alias
-          description: Alias defined in the Qargo config
-        packaging_size:
-          anyOf:
-          - $ref: '#/components/schemas/PackagingSize'
-          - type: 'null'
-          description: Size of packaging, for example Europallet
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-      type: object
-      title: PackagingType
-    TransporeonConsignmentExtraFields:
-      properties:
-        delivery_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Delivery Id
-          description: Transporeon Delivery ID
-      type: object
-      title: TransporeonConsignmentExtraFields
-    ShippeoOrderInput:
-      properties:
-        external_reference:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Reference
-      type: object
-      title: ShippeoOrderInput
-    PartialOrderGoodUpdate:
-      properties:
-        match:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderGoodMatchTarget'
-          - type: 'null'
-        handling_unit:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderGoodTrace'
-          - type: 'null'
-        question_answers:
-          type: object
-          title: Question Answers
-          description: Question answers to update on the good. Mapping is configured in Qargo
-        update:
-          anyOf:
-          - $ref: '#/components/schemas/GoodEntityUpdate'
-          - type: 'null'
-      type: object
-      title: PartialOrderGoodUpdate
-    Project44OrderInput:
-      properties:
-        bill_of_lading:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bill Of Lading
-        order_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Order Id
-      type: object
-      title: Project44OrderInput
-    BarcodeInput:
-      properties:
-        value:
-          anyOf:
-          - type: string
-            maxLength: 255
-          - type: 'null'
-          title: Value
-          description: Barcode value
-        source:
-          anyOf:
-          - $ref: '#/components/schemas/BarcodeSource'
-          - type: 'null'
-          description: Source system of the barcode
-      type: object
-      title: BarcodeInput
-    GoodProductInput:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        product_type:
-          anyOf:
-          - $ref: '#/components/schemas/GoodProductType'
-          - type: 'null'
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-      type: object
-      title: GoodProductInput
-    GoodMatch:
-      properties:
         id:
           anyOf:
           - $ref: '#/components/schemas/FieldMatchInput'
           - type: 'null'
       type: object
-      title: GoodMatch
-    ADR-Input:
-      properties:
-        adr_name_by_locale:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Adr Name By Locale
-          description: Name of the packaged item in different locales
-        un_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Un Number
-          description: See https://adr-tool.com/lists-of-un-numbers
-        packaging_type:
-          anyOf:
-          - $ref: '#/components/schemas/ADRPackagingType'
-          - type: 'null'
-          description: Packaging type
-        emergency_phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Emergency Phone Number
-          description: Emergency phone number
-        technical_name_by_locale:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Technical Name By Locale
-          description: Technical name of the packaged item
-        classification_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Classification Code
-          description: ADR classification code
-        transport_category_tunnel_restriction_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Transport Category Tunnel Restriction Code
-          description: A letter code (A-E) that reflects restrictions for carrying the substance through road tunnels - Helps improve ADR matching beyond just using UN number
-        packing_group:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Packing Group
-          description: Indicates danger level - Helps improve ADR matching beyond just using UN number
-        adr_class:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Adr Class
-          description: Identifies the primary hazard category of the substance - Helps improve ADR matching beyond just using UN number
-        physical_state:
-          anyOf:
-          - $ref: '#/components/schemas/ADRPhysicalState'
-          - type: 'null'
-          description: Describes the form of the substance. Indicates whether the substance is a solid, liquid or gas
-        hazard_identification_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Hazard Identification Number
-          description: Also known as Kemler code. Used in ADR labeling
-        division:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Division
-          description: ADR division/subclass (e.g. '1.2', '2.1'). Populated for classes 1, 2, 4, 5 and 6
-        labels:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Labels
-          description: 'Subsidiary hazard class labels (ADR), ''+''-separated when multiple. Example: ''6.1+5.1''.'
-        special_provisions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Special Provisions
-          description: 'ADR special provisions code(s) applying to this substance. Example: ''274 640D''.'
-      type: object
-      title: ADR
-    OrderStatus:
-      type: string
-      enum:
-      - QUOTE
-      - TO_PLAN
-      title: OrderStatus
-    AmazonExtraFields:
-      properties:
-        asn_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Asn Number
-          description: Amazon Shipment ID
-        fba_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Fba Number
-          description: Amazon FBA ID
-        po_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Po Number
-          description: Amazon PO ID
-        amazon_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Amazon Number
-          description: Amazon order number
-        carton_count:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Carton Count
-          description: Number of cartons
-        unit_count:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Unit Count
-          description: Number of units
-        booking_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Booking Date
-          description: Amazon booking date
-        booking_time:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Booking Time
-          description: Amazon booking time
-      type: object
-      title: AmazonExtraFields
-    Project44ConsignmentInput:
-      properties:
-        bill_of_lading:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bill Of Lading
-        order_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Order Id
-      type: object
-      title: Project44ConsignmentInput
-    PartialOrderMatchTarget:
-      properties:
-        matches_all:
-          items:
-            $ref: '#/components/schemas/PartialOrderMatchInput'
-          type: array
-          title: Matches All
-      type: object
-      title: PartialOrderMatchTarget
-    AdditionalImportBorderProcessEnum:
-      type: string
-      enum:
-      - GVMS
-      - ELO
-      - PBN
-      - TEMPORARY_STORAGE
-      - EIDR
-      title: AdditionalImportBorderProcessEnum
-    ADRPhysicalState:
-      type: string
-      enum:
-      - UNKNOWN
-      - SOLID
-      - LIQUID
-      - GAS
-      - GAS_OR_LIQUID
-      title: ADRPhysicalState
-    OrderImportExportInput:
-      properties:
-        incoterm:
-          anyOf:
-          - $ref: '#/components/schemas/Incoterm'
-          - type: 'null'
-        mrns:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mrns
-        ens_mrns:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Ens Mrns
-        exs_mrns:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Exs Mrns
-        ducrs:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Ducrs
-      type: object
-      title: OrderImportExportInput
-    ConsignmentImportExportExtraFieldsInput-Input:
-      properties:
-        commercial_invoice:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentCommercialInvoiceExtraField'
-          - type: 'null'
-        export_declaration:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentCustomsExportInfo'
-          - type: 'null'
-        import_declaration:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentCustomsImportInfo'
-          - type: 'null'
-        transit_declarations:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ConsignmentCustomsTransitInfoInput'
-            type: array
-            maxItems: 1
-          - type: 'null'
-          title: Transit Declarations
-          description: At most one transit declaration on input. (Multi-transit available via UI; the public API will lift this cap in a later release.)
-      type: object
-      title: ConsignmentImportExportExtraFieldsInput
-    StopActivityInput:
-      properties:
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Label
-        config:
-          anyOf:
-          - $ref: '#/components/schemas/StopActivityConfigInput'
-          - type: 'null'
-      type: object
-      title: StopActivityInput
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OperationEnum:
-      type: string
-      enum:
-      - CREATE
-      - UPDATE
-      - DELETE
-      title: OperationEnum
-    ErrorStatus:
-      properties:
-        error_type:
-          $ref: '#/components/schemas/ErrorType'
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Message
-          description: (User visible) error message
-      type: object
-      required:
-      - error_type
-      title: ErrorStatus
-    ContainerExtraFields:
-      properties:
-        seal_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Seal Number
-          description: Container seal number
-        port_of_loading:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Port Of Loading
-          description: Port of loading
-        port_of_unloading:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Port Of Unloading
-          description: Port of unloading
-        origin_of_goods:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Origin Of Goods
-          description: Origin of goods
-        unique_consignment_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Unique Consignment Number
-          description: Unique consignment number
-        ocean_liner_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ocean Liner Name
-          description: Ocean liner name
-        ocean_liner_scac:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ocean Liner Scac
-          description: Ocean liner SCAC
-        pin_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pin Code
-          description: PIN code
-        ship_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ship Name
-          description: Ship name
-        closing_date:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Closing Date
-          description: Closing date
-        tare_weight:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Tare Weight
-          description: Tare weight
-        container_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Container Number
-          description: Number of the container
-        container_type:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerType'
-          - type: 'null'
-          description: Type of the container
-        container_scenario:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerScenario'
-          - type: 'null'
-          description: Scenario of the container
-        secure_release:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Secure Release
-          description: Is secure release enabled
-      type: object
-      title: ContainerExtraFields
-    HandlingUnitData:
-      properties:
-        barcode:
-          anyOf:
-          - $ref: '#/components/schemas/UpdateBarcodeInput'
-          - type: 'null'
-        alternative_barcodes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/UpdateBarcodeInput'
-            type: array
-          - type: 'null'
-          title: Alternative Barcodes
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-      type: object
-      title: HandlingUnitData
-    ConsignmentCustomsTransitInfoInput:
-      properties:
-        sequence_number:
-          type: integer
-          title: Sequence Number
-          description: Identifier and ordering key for partial updates (required)
-        declaration_type:
-          anyOf:
-          - $ref: '#/components/schemas/TransitDeclarationTypeEnum'
-          - type: 'null'
-          description: Declaration type code (e.g. T1, T2)
-        additional_border_processes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AdditionalTransitBorderProcessEnum'
-            type: array
-          - type: 'null'
-          title: Additional Border Processes
-          description: Additional border processes for this declaration
-        lrn:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Lrn
-          description: Local Reference Number
-        mrn:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Mrn
-          description: Movement Reference Number
-        start_office:
-          anyOf:
-          - $ref: '#/components/schemas/TransitOffice'
-          - type: 'null'
-          description: Office of departure
-        end_office:
-          anyOf:
-          - $ref: '#/components/schemas/TransitOffice'
-          - type: 'null'
-          description: Office of destination
-        valid_to_date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Valid To Date
-          description: Validity end date (ISO 8601)
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Existing transit declaration identifier (for updates)
-      type: object
-      required:
-      - sequence_number
-      title: ConsignmentCustomsTransitInfoInput
-    ChepOrderInput:
-      properties:
-        load_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Load Id
-      type: object
-      title: ChepOrderInput
-    PartialOrderConsignment:
-      properties:
-        updates:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/PartialOrderConsignmentUpdate'
-            type: array
-          - type: 'null'
-          title: Updates
-      type: object
-      title: PartialOrderConsignment
-    ADRType:
-      type: string
-      enum:
-      - ADR
-      - LIMITED_QUANTITY
-      title: ADRType
-    PlanningGroup:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the planning group
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the planning group
-      type: object
-      title: PlanningGroup
-    PartialOrderStopUpdate:
-      properties:
-        match:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderStopMatchTarget'
-          - type: 'null'
-        question_answers:
-          type: object
-          title: Question Answers
-          description: Question answers to update on the stop. Mapping is configured in Qargo
-        update:
-          anyOf:
-          - $ref: '#/components/schemas/StopEntityUpdate'
-          - type: 'null'
-      type: object
-      title: PartialOrderStopUpdate
-    UpdateDropCollectEmptyInput:
-      properties:
-        requested_date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Requested Date
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/LocationInput'
-          - type: 'null'
-      type: object
-      title: UpdateDropCollectEmptyInput
-    FieldMatchInput:
-      properties:
-        matches_any:
-          items:
-            type: string
-          type: array
-          title: Matches Any
-      type: object
-      title: FieldMatchInput
-    ConsignmentEntityUpdate:
-      properties:
-        operation:
-          type: string
-          enum:
-          - CREATE
-          - UPDATE
-          - DELETE
-          title: Operation
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentUpdateData'
-          - $ref: '#/components/schemas/ConsignmentData'
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - operation
-      title: ConsignmentEntityUpdate
-    ConsignmentInput-Input:
-      properties:
-        consignment_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consignment Reference Number
-          description: Consignment reference number
-        cmr_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cmr Reference Number
-        planning_instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Planning Instructions
-          description: Additional freeform instructions for the planner.
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Additional user defined fields to fill in
-        transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentTransportNetwork'
-          - type: 'null'
-          description: Transport network
-        central_transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/CentralTransportNetworkConsignmentExtraFields'
-          - type: 'null'
-        palletline:
-          anyOf:
-          - $ref: '#/components/schemas/PalletlineConsignmentExtraFields'
-          - type: 'null'
-        palletforce:
-          anyOf:
-          - $ref: '#/components/schemas/PalletforceConsignmentExtraFields'
-          - type: 'null'
-        transporeon:
-          anyOf:
-          - $ref: '#/components/schemas/TransporeonConsignmentExtraFields'
-          - type: 'null'
-        pickup_stop:
-          $ref: '#/components/schemas/StopInput-Input'
-          description: First stop on this consignment.
-        delivery_stop:
-          $ref: '#/components/schemas/StopInput-Input'
-          description: Last stop on this consignment.
-        goods:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/GoodInput-Input'
-            type: array
-          - type: 'null'
-          title: Goods
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentImportExportExtraFieldsInput-Input'
-          - type: 'null'
-        buyer:
-          anyOf:
-          - $ref: '#/components/schemas/Entity'
-          - type: 'null'
-          description: Buyer information for this consignment
-        seller:
-          anyOf:
-          - $ref: '#/components/schemas/Entity'
-          - type: 'null'
-          description: Seller information for this consignment
-      type: object
-      required:
-      - pickup_stop
-      - delivery_stop
-      title: ConsignmentInput
-    OrderUpdatePayload:
-      properties:
-        updates:
-          items:
-            $ref: '#/components/schemas/PartialOrderUpdate'
-          type: array
-          title: Updates
-          description: List of orders to update
-      type: object
-      title: OrderUpdatePayload
-    RawInput:
-      properties:
-        content:
-          type: string
-          title: Content
-          default: base64 encoded raw data
-        mime_type:
-          type: string
-          title: Mime Type
-          default: mime type of content
-        filename:
-          type: string
-          title: Filename
-          default: Filename of content
-      type: object
-      title: RawInput
-    ImportConfiguration:
-      properties:
-        code:
-          type: string
-          title: Code
-          description: Import source in Qargo to route the order uploads to
-          default: API
-      type: object
-      title: ImportConfiguration
-    HSCodeField:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-      type: object
-      title: HSCodeField
-    PartialOrderGoodTraceMatchTarget:
-      properties:
-        matches_all:
-          items:
-            $ref: '#/components/schemas/PartialOrderGoodTraceMatchInput'
-          type: array
-          title: Matches All
-      type: object
-      title: PartialOrderGoodTraceMatchTarget
-    PalletforceConsignmentExtraFields:
-      properties:
-        palletforce_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Palletforce Id
-          description: Palletforce ID
-      type: object
-      title: PalletforceConsignmentExtraFields
-    OrderEntityUpdate:
-      properties:
-        operation:
-          type: string
-          enum:
-          - UPDATE
-          - DELETE
-          title: Operation
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/OrderUpdateData'
-          - type: 'null'
-      type: object
-      required:
-      - operation
-      title: OrderEntityUpdate
-    HazchemConsignmentInput:
-      properties:
-        consignment_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consignment Number
-        tracking_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tracking Code
-      type: object
-      title: HazchemConsignmentInput
-    StopUpdateData:
-      properties:
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-        date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Date
-        reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reference Number
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        mobile_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Mobile Number
-        planning_instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Planning Instructions
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/LocationInput'
-          - type: 'null'
-        time_window:
-          anyOf:
-          - $ref: '#/components/schemas/TimeWindowInput'
-          - type: 'null'
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-      type: object
-      title: StopUpdateData
-    PalletlineConsignmentExtraFields:
-      properties:
-        palletline_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Palletline Id
-          description: Palletline ID
-      type: object
-      title: PalletlineConsignmentExtraFields
-    StopInput-Input:
-      properties:
-        activity_label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Activity Label
-          description: Activity to execute at this location, ie. pickup/collect, couple/uncouple trailer
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Additional freeform data for this stop
-        reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: stop reference number
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        mobile_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Mobile Number
-        time_window:
-          anyOf:
-          - $ref: '#/components/schemas/TimeWindow'
-          - type: 'null'
-          title: time_window
-        planning_instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Planning Instructions
-          description: Additional freeform instructions for the planner.
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/StopExtra'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Additional services/options for stop
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Additional user defined fields to fill in
-        date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Date
-          description: Date on which stop happens. Optional for delivery stops when a service level is set on the order
-          examples:
-          - '2024-12-31'
-        custom_activity_label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Activity Label
-          description: Custom activity related to the order
-        duration:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Duration
-          description: Duration of the stop in seconds
-        location:
-          $ref: '#/components/schemas/Location'
-          description: Location of the stop
-        drop_collect_empty:
-          anyOf:
-          - $ref: '#/components/schemas/DropCollectEmptyInput'
-          - type: 'null'
-          description: Information for drop/collect empty stops
-      type: object
-      required:
-      - location
-      title: StopInput
-    CompanyMatch:
-      properties:
-        name:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-        code:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-      type: object
-      title: CompanyMatch
-    Position:
-      properties:
-        longitude:
-          type: number
-          title: Longitude
-          description: The longitude of the position
-        latitude:
-          type: number
-          title: Latitude
-          description: The latitude of the position
-      type: object
-      required:
-      - longitude
-      - latitude
-      title: Position
-    DachserExtraFields:
-      properties:
-        consolidator_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consolidator Reference Number
-          description: Consolidator reference number
-      type: object
-      title: DachserExtraFields
-    Incoterm:
-      type: string
-      enum:
-      - EXW
-      - FCA
-      - FAS
-      - FOB
-      - CFR
-      - CIF
-      - CPT
-      - CIP
-      - DAP
-      - DPU
-      - DDP
-      title: Incoterm
+      title: OrderMatch
     PartialOrderGoodTrace:
       properties:
         updates:
@@ -1597,7 +290,31 @@ components:
           title: Updates
       type: object
       title: PartialOrderGoodTrace
-    Product:
+    PalletlineConsignmentExtraFields:
+      properties:
+        palletline_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Palletline Id
+          description: Palletline ID
+      type: object
+      title: PalletlineConsignmentExtraFields
+    PartialOrderGoodTraceMatchInput:
+      properties:
+        handling_unit:
+          anyOf:
+          - $ref: '#/components/schemas/HandlingUnitMatch'
+          - type: 'null'
+      type: object
+      title: PartialOrderGoodTraceMatchInput
+    ExportDeclarationTypeEnum:
+      type: string
+      enum:
+      - EU
+      - EX
+      title: ExportDeclarationTypeEnum
+    ServiceLevel:
       properties:
         name:
           anyOf:
@@ -1611,41 +328,12 @@ components:
           - type: 'null'
           title: Code
           description: Machine readable identifier
-        product_type:
-          anyOf:
-          - $ref: '#/components/schemas/Entity'
-          - type: 'null'
-          description: Product type
         custom_fields:
           type: object
           title: Custom Fields
           description: Store values for user defined fields
       type: object
-      title: Product
-    BarcodeSource:
-      type: string
-      enum:
-      - EXTERNAL
-      - QARGO
-      - HAZCHEM
-      - PALLETFORCE
-      - PALLETLINE
-      - PALLETWAYS
-      - PALLETXPRESS_IE
-      - PALLET_TRACK
-      - PALLEX
-      - POLE
-      - TPN
-      - UPN
-      title: BarcodeSource
-    PartialOrderGoodMatchInput:
-      properties:
-        good:
-          anyOf:
-          - $ref: '#/components/schemas/GoodMatch'
-          - type: 'null'
-      type: object
-      title: PartialOrderGoodMatchInput
+      title: ServiceLevel
     ConsignmentTransportNetwork:
       properties:
         requesting_depot_code:
@@ -1668,114 +356,49 @@ components:
           description: Depot code of the delivery depot
       type: object
       title: ConsignmentTransportNetwork
-    PartialOrderUpdateResponse:
-      properties:
-        errors:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ErrorStatus'
-            type: array
-          - type: 'null'
-          title: Errors
-          description: List of errors that occurred during the webhook processing. If empty/omitted, the webhook was processed successfully.
-          examples:
-          - error_message: The payload is invalid.
-            error_type: USER_INPUT_ERROR
-          - error_message: Not supported.
-            error_type: NOT_SUPPORTED
-          - error_message: Unknown error.
-            error_type: INTERNAL_ERROR
-      type: object
-      title: PartialOrderUpdateResponse
-      description: 'Response schema for the partial order update webhook.
-
-        This schema is used to return errors or success messages.'
-    UpdateOperation:
+    ADRPhysicalState:
       type: string
       enum:
-      - REPLACE
-      - CREATE
-      - UPDATE
-      - DELETE
-      title: UpdateOperation
-      description: Operation type for partial order structural updates.
-    Entity:
+      - UNKNOWN
+      - SOLID
+      - LIQUID
+      - GAS
+      - GAS_OR_LIQUID
+      title: ADRPhysicalState
+    ConsignmentEntityUpdate:
       properties:
-        name:
+        operation:
+          type: string
+          enum:
+          - CREATE
+          - UPDATE
+          - DELETE
+          title: Operation
+        data:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/ConsignmentUpdateData'
+          - $ref: '#/components/schemas/ConsignmentData'
           - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
+          title: Data
       type: object
-      title: Entity
-    PartialOrderGood:
+      required:
+      - operation
+      title: ConsignmentEntityUpdate
+    ShippeoOrderInput:
       properties:
-        updates:
+        external_reference:
           anyOf:
-          - items:
-              $ref: '#/components/schemas/PartialOrderGoodUpdate'
-            type: array
+          - type: string
           - type: 'null'
-          title: Updates
+          title: External Reference
       type: object
-      title: PartialOrderGood
-    TimeWindow:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        start_time:
-          anyOf:
-          - type: string
-            format: time
-          - type: 'null'
-          title: Start Time
-          description: Start of time window
-          examples:
-          - 09:30
-        end_time:
-          anyOf:
-          - type: string
-            format: time
-          - type: 'null'
-          title: End Time
-          description: End of time window
-          examples:
-          - '16:30'
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        is_enforced:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Enforced
-          description: Enforce the time window for this stop
-        use_location_opening_hours:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Use Location Opening Hours
-          description: When true, the stop's time window is derived from the location's opening hours instead of explicit start/end times
-      type: object
-      title: TimeWindow
+      title: ShippeoOrderInput
+    ContainerScenario:
+      type: string
+      enum:
+      - IMPORT
+      - EXPORT
+      title: ContainerScenario
     PackagedItemCommercialInvoiceExtraField:
       properties:
         value:
@@ -1786,20 +409,127 @@ components:
           description: Value of the commercial invoice
       type: object
       title: PackagedItemCommercialInvoiceExtraField
-    CentralTransportNetworkConsignmentInput:
+    Department:
       properties:
-        hub:
+        name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Hub
-        trunk:
+          title: Name
+          description: Name of the department
+        code:
           anyOf:
           - type: string
           - type: 'null'
-          title: Trunk
+          title: Code
+          description: Code of the department
       type: object
-      title: CentralTransportNetworkConsignmentInput
+      title: Department
+    ConsignmentUpdateData:
+      properties:
+        consignment_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consignment Reference Number
+        cmr_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cmr Reference Number
+        planning_instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Planning Instructions
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentTransportNetwork'
+          - type: 'null'
+        central_transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/CentralTransportNetworkConsignmentInput'
+          - type: 'null'
+        palletline:
+          anyOf:
+          - $ref: '#/components/schemas/PalletlineConsignmentInput'
+          - type: 'null'
+        palletforce:
+          anyOf:
+          - $ref: '#/components/schemas/PalletforceConsignmentInput'
+          - type: 'null'
+        palletxpress_ie:
+          anyOf:
+          - $ref: '#/components/schemas/PalletXpressIeConsignmentInput'
+          - type: 'null'
+        tpn:
+          anyOf:
+          - $ref: '#/components/schemas/TPNConsignmentInput'
+          - type: 'null'
+        pallet_track:
+          anyOf:
+          - $ref: '#/components/schemas/PalletTrackConsignmentInput'
+          - type: 'null'
+        palletways:
+          anyOf:
+          - $ref: '#/components/schemas/PalletwaysConsignmentInput'
+          - type: 'null'
+        project44:
+          anyOf:
+          - $ref: '#/components/schemas/Project44ConsignmentInput'
+          - type: 'null'
+        hazchem:
+          anyOf:
+          - $ref: '#/components/schemas/HazchemConsignmentInput'
+          - type: 'null'
+        transporeon:
+          anyOf:
+          - $ref: '#/components/schemas/TransporeonConsignmentExtraFields'
+          - type: 'null'
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentImportExportExtraFieldsInput-Input'
+          - type: 'null'
+        shipper_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shipper Name
+        shipper_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shipper Reference Number
+        buyer_eori_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Buyer Eori Number
+        seller_eori_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seller Eori Number
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+        consignee_signature:
+          anyOf:
+          - $ref: '#/components/schemas/SignatureInput'
+          - type: 'null'
+        consignor_signature:
+          anyOf:
+          - $ref: '#/components/schemas/SignatureInput'
+          - type: 'null'
+      type: object
+      title: ConsignmentUpdateData
     GoodUpdateData:
       properties:
         description:
@@ -1910,7 +640,79 @@ components:
           title: External Id
       type: object
       title: GoodUpdateData
-    VehicleCategory:
+    PalletlineConsignmentInput:
+      properties:
+        palletline_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Palletline Id
+        third_party_label_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Third Party Label Id
+      type: object
+      title: PalletlineConsignmentInput
+    HandlingUnitEntityUpdate:
+      properties:
+        operation:
+          $ref: '#/components/schemas/UpdateOperation'
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/HandlingUnitUpdateData'
+          - $ref: '#/components/schemas/HandlingUnitData'
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - operation
+      title: HandlingUnitEntityUpdate
+    Position:
+      properties:
+        longitude:
+          type: number
+          title: Longitude
+          description: The longitude of the position
+        latitude:
+          type: number
+          title: Latitude
+          description: The latitude of the position
+      type: object
+      required:
+      - longitude
+      - latitude
+      title: Position
+    AdditionalImportBorderProcessEnum:
+      type: string
+      enum:
+      - GVMS
+      - ELO
+      - PBN
+      - TEMPORARY_STORAGE
+      - EIDR
+      title: AdditionalImportBorderProcessEnum
+    PartialOrderGoodUpdate:
+      properties:
+        match:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderGoodMatchTarget'
+          - type: 'null'
+        handling_unit:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderGoodTrace'
+          - type: 'null'
+        question_answers:
+          type: object
+          title: Question Answers
+          description: Question answers to update on the good. Mapping is configured in Qargo
+        update:
+          anyOf:
+          - $ref: '#/components/schemas/GoodEntityUpdate'
+          - type: 'null'
+      type: object
+      title: PartialOrderGoodUpdate
+    PackagingSize:
       properties:
         name:
           anyOf:
@@ -1924,25 +726,113 @@ components:
           - type: 'null'
           title: Code
           description: Machine readable identifier
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-      type: object
-      title: VehicleCategory
-    PartialOrderStopMatchInput:
-      properties:
-        stop:
+        height_m:
           anyOf:
-          - $ref: '#/components/schemas/StopMatch'
+          - type: number
           - type: 'null'
+          title: Height M
+          description: Height in meters
+        length_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Length M
+          description: Length in meters
+        width_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Width M
+          description: Width in meters
+        weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Weight Kg
+          description: Weight in kg
+        loading_meters:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Loading Meters
+          description: Loading meters
+        pallet_spaces:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Pallet Spaces
+          description: Pallet spaces
       type: object
-      title: PartialOrderStopMatchInput
-    AdditionalTransitBorderProcessEnum:
+      title: PackagingSize
+    UpdateOperation:
       type: string
       enum:
-      - LRN
-      title: AdditionalTransitBorderProcessEnum
+      - REPLACE
+      - CREATE
+      - UPDATE
+      - DELETE
+      title: UpdateOperation
+      description: Operation type for partial order structural updates.
+    ConsignmentCommercialInvoiceExtraField:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the commercial invoice
+        value:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Value
+          description: Value of the commercial invoice
+        currency_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Currency Code
+          description: Currency code of the commercial invoice
+      type: object
+      title: ConsignmentCommercialInvoiceExtraField
+    PartialOrderGoodMatchTarget:
+      properties:
+        matches_all:
+          items:
+            $ref: '#/components/schemas/PartialOrderGoodMatchInput'
+          type: array
+          title: Matches All
+      type: object
+      title: PartialOrderGoodMatchTarget
+    ManuportOrderInput:
+      properties:
+        delivery_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Delivery Number
+        seal_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seal Number
+        order_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Order Number
+        customer_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Id
+        sender_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender Id
+      type: object
+      title: ManuportOrderInput
     TransporeonOrderExtraFields:
       properties:
         transport_id:
@@ -1959,59 +849,27 @@ components:
           description: Transporeon Transport Number
       type: object
       title: TransporeonOrderExtraFields
-    ServiceLevel:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-      type: object
-      title: ServiceLevel
-    ContainerScenario:
+    ErrorType:
       type: string
       enum:
-      - IMPORT
-      - EXPORT
-      title: ContainerScenario
-    StopTypeField:
+      - USER_INPUT_ERROR
+      - INTERNAL_ERROR
+      - NOT_SUPPORTED
+      title: ErrorType
+    UpdateBarcodeInput:
       properties:
-        name:
+        value:
           anyOf:
           - type: string
           - type: 'null'
-          title: Name
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        row_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Row Id
+          title: Value
+        source:
+          type: string
+          const: EXTERNAL
+          title: Source
+          default: EXTERNAL
       type: object
-      title: StopTypeField
-    PartialOrderGoodTraceMatchInput:
-      properties:
-        handling_unit:
-          anyOf:
-          - $ref: '#/components/schemas/HandlingUnitMatch'
-          - type: 'null'
-      type: object
-      title: PartialOrderGoodTraceMatchInput
+      title: UpdateBarcodeInput
     OrderImportResponse:
       properties:
         errors:
@@ -2034,18 +892,87 @@ components:
       description: 'Response schema for the order import webhook.
 
         This schema is used to return errors or success messages.'
-    StopMatch:
+    PackagedItemsImportExportExtraFields:
       properties:
-        reference_number:
+        hs_code_import:
           anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
+          - $ref: '#/components/schemas/HSCode'
           - type: 'null'
-        stop_type:
+          description: Harmonized System Code for importing the good
+        hs_code_export:
           anyOf:
-          - $ref: '#/components/schemas/StopType'
+          - $ref: '#/components/schemas/HSCode'
           - type: 'null'
+          description: Harmonized System Code for exporting the good
+        shipping_marks:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Shipping Marks
+          description: Shipping marks for the good
+        commercial_invoice:
+          anyOf:
+          - $ref: '#/components/schemas/PackagedItemCommercialInvoiceExtraField'
+          - type: 'null'
+        sps_flag:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Sps Flag
+          description: Sanitary & phytosanitary flag
+        sps_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sps Reference
+          description: CHED / IPAFFS reference
+        ggb_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ggb Reference
+          description: GGB reference (NL only)
       type: object
-      title: StopMatch
+      title: PackagedItemsImportExportExtraFields
+    GoodEntityUpdate:
+      properties:
+        operation:
+          $ref: '#/components/schemas/UpdateOperation'
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/GoodUpdateData'
+          - $ref: '#/components/schemas/GoodData'
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - operation
+      title: GoodEntityUpdate
+    AdditionalExportBorderProcessEnum:
+      type: string
+      enum:
+      - GVMS
+      - ELO
+      - PBN
+      - EIDR
+      title: AdditionalExportBorderProcessEnum
+    HandlingUnitInput-Input:
+      properties:
+        barcode:
+          anyOf:
+          - $ref: '#/components/schemas/BarcodeInput'
+          - type: 'null'
+          description: Barcode information
+      type: object
+      title: HandlingUnitInput
+    ADRType:
+      type: string
+      enum:
+      - ADR
+      - LIMITED_QUANTITY
+      title: ADRType
     ExtraField:
       properties:
         name:
@@ -2066,15 +993,796 @@ components:
           description: Store values for user defined fields
       type: object
       title: ExtraField
-    HandlingUnitInput-Input:
+    Project44OrderInput:
       properties:
-        barcode:
+        bill_of_lading:
           anyOf:
-          - $ref: '#/components/schemas/BarcodeInput'
+          - type: string
           - type: 'null'
-          description: Barcode information
+          title: Bill Of Lading
+        order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Order Id
       type: object
-      title: HandlingUnitInput
+      title: Project44OrderInput
+    FieldMatchInput:
+      properties:
+        matches_any:
+          items:
+            type: string
+          type: array
+          title: Matches Any
+      type: object
+      title: FieldMatchInput
+    ErrorStatus:
+      properties:
+        error_type:
+          $ref: '#/components/schemas/ErrorType'
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+          description: (User visible) error message
+      type: object
+      required:
+      - error_type
+      title: ErrorStatus
+    ConsignmentCustomsExportInfo:
+      properties:
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: ISO 3166-1 alpha-2 country of the export declaration
+        declaration_type:
+          anyOf:
+          - $ref: '#/components/schemas/ExportDeclarationTypeEnum'
+          - type: 'null'
+          description: Declaration type code (e.g. EU, EX)
+        additional_border_processes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AdditionalExportBorderProcessEnum'
+            type: array
+          - type: 'null'
+          title: Additional Border Processes
+          description: Additional border processes for this declaration
+        mrn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mrn
+          description: Movement Reference Number of the export declaration
+        exs_mrn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Exs Mrn
+          description: Exit Summary Declaration MRN
+        ducr:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ducr
+          description: Declaration Unique Consignment Reference (UK only)
+        location_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Location Id
+          description: Identifier of the customs location
+        emails:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Emails
+          description: Email addresses associated with this declaration
+      type: object
+      title: ConsignmentCustomsExportInfo
+    GoodPackagingType:
+      properties:
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        packaging_size:
+          anyOf:
+          - $ref: '#/components/schemas/GoodPackagingSize'
+          - type: 'null'
+      type: object
+      title: GoodPackagingType
+    PackagedItemInput:
+      properties:
+        adr:
+          anyOf:
+          - $ref: '#/components/schemas/ADRInput'
+          - type: 'null'
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        quantity:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Quantity
+        total_volume_l:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Volume L
+        total_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Weight Kg
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/ImportExportInput'
+          - type: 'null'
+      type: object
+      title: PackagedItemInput
+    StopTypeField:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        row_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Row Id
+      type: object
+      title: StopTypeField
+    StopEntityUpdate:
+      properties:
+        operation:
+          type: string
+          enum:
+          - CREATE
+          - UPDATE
+          - DELETE
+          title: Operation
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/StopUpdateData'
+          - $ref: '#/components/schemas/StopData'
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - operation
+      title: StopEntityUpdate
+    ChepOrderInput:
+      properties:
+        load_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Load Id
+      type: object
+      title: ChepOrderInput
+    ContainerExtraFields:
+      properties:
+        seal_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seal Number
+          description: Container seal number
+        port_of_loading:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Port Of Loading
+          description: Port of loading
+        port_of_unloading:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Port Of Unloading
+          description: Port of unloading
+        origin_of_goods:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Origin Of Goods
+          description: Origin of goods
+        unique_consignment_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unique Consignment Number
+          description: Unique consignment number
+        ocean_liner_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ocean Liner Name
+          description: Ocean liner name
+        ocean_liner_scac:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ocean Liner Scac
+          description: Ocean liner SCAC
+        pin_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pin Code
+          description: PIN code
+        ship_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ship Name
+          description: Ship name
+        closing_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Closing Date
+          description: Closing date
+        tare_weight:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Tare Weight
+          description: Tare weight
+        container_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Container Number
+          description: Number of the container
+        container_type:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerType'
+          - type: 'null'
+          description: Type of the container
+        container_scenario:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerScenario'
+          - type: 'null'
+          description: Scenario of the container
+        secure_release:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Secure Release
+          description: Is secure release enabled
+      type: object
+      title: ContainerExtraFields
+    OrderUpdatePayload:
+      properties:
+        updates:
+          items:
+            $ref: '#/components/schemas/PartialOrderUpdate'
+          type: array
+          title: Updates
+          description: List of orders to update
+      type: object
+      title: OrderUpdatePayload
+    DachserExtraFields:
+      properties:
+        consolidator_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consolidator Reference Number
+          description: Consolidator reference number
+      type: object
+      title: DachserExtraFields
+    ConsignmentData:
+      properties:
+        pickup_stop:
+          anyOf:
+          - $ref: '#/components/schemas/StopData'
+          - type: 'null'
+        delivery_stop:
+          anyOf:
+          - $ref: '#/components/schemas/StopData'
+          - type: 'null'
+        consignment_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consignment Reference Number
+        cmr_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cmr Reference Number
+        planning_instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Planning Instructions
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentTransportNetwork'
+          - type: 'null'
+        central_transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/CentralTransportNetworkConsignmentInput'
+          - type: 'null'
+        palletline:
+          anyOf:
+          - $ref: '#/components/schemas/PalletlineConsignmentInput'
+          - type: 'null'
+        palletforce:
+          anyOf:
+          - $ref: '#/components/schemas/PalletforceConsignmentInput'
+          - type: 'null'
+        palletxpress_ie:
+          anyOf:
+          - $ref: '#/components/schemas/PalletXpressIeConsignmentInput'
+          - type: 'null'
+        tpn:
+          anyOf:
+          - $ref: '#/components/schemas/TPNConsignmentInput'
+          - type: 'null'
+        pallet_track:
+          anyOf:
+          - $ref: '#/components/schemas/PalletTrackConsignmentInput'
+          - type: 'null'
+        palletways:
+          anyOf:
+          - $ref: '#/components/schemas/PalletwaysConsignmentInput'
+          - type: 'null'
+        project44:
+          anyOf:
+          - $ref: '#/components/schemas/Project44ConsignmentInput'
+          - type: 'null'
+        hazchem:
+          anyOf:
+          - $ref: '#/components/schemas/HazchemConsignmentInput'
+          - type: 'null'
+        transporeon:
+          anyOf:
+          - $ref: '#/components/schemas/TransporeonConsignmentExtraFields'
+          - type: 'null'
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentImportExportExtraFieldsInput-Input'
+          - type: 'null'
+        goods:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/GoodData'
+            type: array
+          - type: 'null'
+          title: Goods
+        standalone_stops:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/StopData'
+            type: array
+          - type: 'null'
+          title: Standalone Stops
+        shipper_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shipper Name
+        shipper_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shipper Reference Number
+        buyer:
+          anyOf:
+          - $ref: '#/components/schemas/BuyerSellerField'
+          - type: 'null'
+        seller:
+          anyOf:
+          - $ref: '#/components/schemas/BuyerSellerField'
+          - type: 'null'
+        buyer_eori_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Buyer Eori Number
+        seller_eori_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seller Eori Number
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+        consignee_signature:
+          anyOf:
+          - $ref: '#/components/schemas/SignatureInput'
+          - type: 'null'
+        consignor_signature:
+          anyOf:
+          - $ref: '#/components/schemas/SignatureInput'
+          - type: 'null'
+      type: object
+      title: ConsignmentData
+    GoodProductType:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+      type: object
+      title: GoodProductType
+    GoodInput-Input:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        quantity:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Quantity
+        total_loading_meters:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Loading Meters
+        total_pallet_spaces:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Pallet Spaces
+        total_volume_m3:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Volume M3
+        total_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Weight Kg
+        unit_height_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Height M
+        unit_length_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Length M
+        unit_loading_meters:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Loading Meters
+        unit_pallet_spaces:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Pallet Spaces
+        unit_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Weight Kg
+        unit_width_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Width M
+        stackable:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Stackable
+        packaged_items:
+          items:
+            $ref: '#/components/schemas/PackagedItem-Input'
+          type: array
+          title: List of packaged items
+        adr_type:
+          anyOf:
+          - $ref: '#/components/schemas/ADRType'
+          - type: 'null'
+        absolute_min_temperature_degrees:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Absolute Min Temperature Degrees
+        absolute_max_temperature_degrees:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Absolute Max Temperature Degrees
+        ordered_transport_temperature_degrees:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Ordered Transport Temperature Degrees
+        specific_gravity:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Specific Gravity
+        product:
+          anyOf:
+          - $ref: '#/components/schemas/Product'
+          - type: 'null'
+          description: Product information
+        packaging_type:
+          anyOf:
+          - $ref: '#/components/schemas/PackagingType'
+          - type: 'null'
+          description: Packaging type, for example Pallet
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ExtraField'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Additional extra services/options for good
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        handling_units:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/HandlingUnitInput-Input'
+            type: array
+          - type: 'null'
+          title: Handling Units
+          description: List of handling units. A handling unit is used to transport, store or handle goods
+          default: []
+      type: object
+      title: GoodInput
+    RawInput:
+      properties:
+        content:
+          type: string
+          title: Content
+          default: base64 encoded raw data
+        mime_type:
+          type: string
+          title: Mime Type
+          default: mime type of content
+        filename:
+          type: string
+          title: Filename
+          default: Filename of content
+      type: object
+      title: RawInput
+    ConsignmentCustomsTransitInfoInput:
+      properties:
+        sequence_number:
+          type: integer
+          title: Sequence Number
+          description: Identifier and ordering key for partial updates (required)
+        declaration_type:
+          anyOf:
+          - $ref: '#/components/schemas/TransitDeclarationTypeEnum'
+          - type: 'null'
+          description: Declaration type code (e.g. T1, T2)
+        additional_border_processes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AdditionalTransitBorderProcessEnum'
+            type: array
+          - type: 'null'
+          title: Additional Border Processes
+          description: Additional border processes for this declaration
+        lrn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Lrn
+          description: Local Reference Number
+        mrn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mrn
+          description: Movement Reference Number
+        start_office:
+          anyOf:
+          - $ref: '#/components/schemas/TransitOffice'
+          - type: 'null'
+          description: Office of departure
+        end_office:
+          anyOf:
+          - $ref: '#/components/schemas/TransitOffice'
+          - type: 'null'
+          description: Office of destination
+        valid_to_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid To Date
+          description: Validity end date (ISO 8601)
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Existing transit declaration identifier (for updates)
+      type: object
+      required:
+      - sequence_number
+      title: ConsignmentCustomsTransitInfoInput
+    CentralTransportNetworkConsignmentExtraFields:
+      properties:
+        hub:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Hub
+          description: Central Transport Network hub
+        trunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk
+          description: Central Transport Network trunk
+        alternative_hubs:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alternative Hubs
+          description: Alternative hubs as a comma separated list e.g. `Central,South`
+      type: object
+      title: CentralTransportNetworkConsignmentExtraFields
+    ConsignmentImportExportExtraFieldsInput-Input:
+      properties:
+        commercial_invoice:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentCommercialInvoiceExtraField'
+          - type: 'null'
+        export_declaration:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentCustomsExportInfo'
+          - type: 'null'
+        import_declaration:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentCustomsImportInfo'
+          - type: 'null'
+        transit_declarations:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ConsignmentCustomsTransitInfoInput'
+            type: array
+            maxItems: 1
+          - type: 'null'
+          title: Transit Declarations
+          description: At most one transit declaration on input. (Multi-transit available via UI; the public API will lift this cap in a later release.)
+      type: object
+      title: ConsignmentImportExportExtraFieldsInput
+    PartialOrderGood:
+      properties:
+        updates:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/PartialOrderGoodUpdate'
+            type: array
+          - type: 'null'
+          title: Updates
+      type: object
+      title: PartialOrderGood
+    OrderPricingInput:
+      properties:
+        requested_price:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+          title: Requested Price
+          description: Requested price
+      type: object
+      title: OrderPricingInput
+    PlanningGroup:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the planning group
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the planning group
+      type: object
+      title: PlanningGroup
+    ImportConfiguration:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Import source in Qargo to route the order uploads to
+          default: API
+      type: object
+      title: ImportConfiguration
+    HSCodeField:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      title: HSCodeField
+    PartialOrderStopUpdate:
+      properties:
+        match:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderStopMatchTarget'
+          - type: 'null'
+        question_answers:
+          type: object
+          title: Question Answers
+          description: Question answers to update on the stop. Mapping is configured in Qargo
+        update:
+          anyOf:
+          - $ref: '#/components/schemas/StopEntityUpdate'
+          - type: 'null'
+      type: object
+      title: PartialOrderStopUpdate
     ContainerTypeInput:
       properties:
         code:
@@ -2094,73 +1802,22 @@ components:
           title: Custom Fields
       type: object
       title: ContainerTypeInput
-    PalletforceConsignmentInput:
+    ImportExportInput:
       properties:
-        customer_account_number:
+        hs_code_import:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/HSCodeField'
           - type: 'null'
-          title: Customer Account Number
-        palletforce_id:
+        hs_code_export:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/HSCodeField'
           - type: 'null'
-          title: Palletforce Id
-      type: object
-      title: PalletforceConsignmentInput
-    StopExtra:
-      properties:
-        name:
+        commercial_invoice:
           anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          default: ''
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          default: ''
-        amazon:
-          anyOf:
-          - $ref: '#/components/schemas/AmazonExtraFields'
+          - $ref: '#/components/schemas/CommercialInvoiceInput'
           - type: 'null'
       type: object
-      title: StopExtra
-    UpdateBarcodeInput:
-      properties:
-        value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Value
-        source:
-          type: string
-          const: EXTERNAL
-          title: Source
-          default: EXTERNAL
-      type: object
-      title: UpdateBarcodeInput
-    CustomerField:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        row_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Row Id
-      type: object
-      title: CustomerField
+      title: ImportExportInput
     OrderInput:
       properties:
         transport_service:
@@ -2335,6 +1992,821 @@ components:
       - consignments
       - customer
       title: OrderInput
+    PartialOrderMatchInput:
+      properties:
+        order:
+          anyOf:
+          - $ref: '#/components/schemas/OrderMatch'
+          - type: 'null'
+        company:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyMatch'
+          - type: 'null'
+      type: object
+      title: PartialOrderMatchInput
+    CentralTransportNetworkConsignmentInput:
+      properties:
+        hub:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Hub
+        trunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk
+      type: object
+      title: CentralTransportNetworkConsignmentInput
+    PalletlineExtraFields:
+      properties:
+        terms_of_carriage:
+          anyOf:
+          - type: string
+            enum:
+            - '1300'
+            - '5000'
+            - '10000'
+            - cmr
+            - other
+          - type: 'null'
+          title: Terms Of Carriage
+      type: object
+      title: PalletlineExtraFields
+    OrderEntityUpdate:
+      properties:
+        operation:
+          type: string
+          enum:
+          - UPDATE
+          - DELETE
+          title: Operation
+        data:
+          anyOf:
+          - $ref: '#/components/schemas/OrderUpdateData'
+          - type: 'null'
+      type: object
+      required:
+      - operation
+      title: OrderEntityUpdate
+    Product:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        product_type:
+          anyOf:
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
+          description: Product type
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+      type: object
+      title: Product
+    HSCode:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Harmonized System Code for the good
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the HS code
+      type: object
+      title: HSCode
+    PackagedItem-Input:
+      properties:
+        adr:
+          anyOf:
+          - $ref: '#/components/schemas/ADR-Input'
+          - type: 'null'
+        barcodes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Barcodes
+          description: List of barcodes associated with the packaged item
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/PackagedItemsImportExportExtraFields'
+          - type: 'null'
+        packaging_type:
+          anyOf:
+          - $ref: '#/components/schemas/PackagingType'
+          - type: 'null'
+          description: Packaging type, for example Pallet
+        quantity:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Quantity
+          description: Quantity of packaged items
+        total_net_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Net Weight Kg
+          description: Total net weight of packaged items in KG
+        total_volume_l:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Volume L
+          description: Total volume of packaged items in liter
+        total_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Weight Kg
+          description: Total weight of packaged items in KG
+        unit_height_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Height M
+        unit_length_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Length M
+        unit_width_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Width M
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the packaged item
+      type: object
+      title: PackagedItem
+      description: 'Synonym: GoodItem'
+    ConsignmentCustomsImportInfo:
+      properties:
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: ISO 3166-1 alpha-2 country of the import declaration
+        declaration_type:
+          anyOf:
+          - $ref: '#/components/schemas/ImportDeclarationTypeEnum'
+          - type: 'null'
+          description: Declaration type code (e.g. IM)
+        additional_border_processes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AdditionalImportBorderProcessEnum'
+            type: array
+          - type: 'null'
+          title: Additional Border Processes
+          description: Additional border processes for this declaration
+        mrn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mrn
+          description: Movement Reference Number of the import declaration
+        ens_mrn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ens Mrn
+          description: Entry Summary Declaration MRN
+        ducr:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ducr
+          description: Declaration Unique Consignment Reference (UK only)
+        temporary_storage_ucn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Temporary Storage Ucn
+          description: Temporary storage UCN
+        temporary_storage_crn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Temporary Storage Crn
+          description: Temporary storage CRN (BE only)
+        emails:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Emails
+          description: Email addresses associated with this declaration
+      type: object
+      title: ConsignmentCustomsImportInfo
+    StopInput-Input:
+      properties:
+        activity_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Activity Label
+          description: Activity to execute at this location, ie. pickup/collect, couple/uncouple trailer
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Additional freeform data for this stop
+        reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: stop reference number
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        mobile_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mobile Number
+        time_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+          title: time_window
+        planning_instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Planning Instructions
+          description: Additional freeform instructions for the planner.
+        extras:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/StopExtra'
+            type: array
+          - type: 'null'
+          title: Extras
+          description: Additional services/options for stop
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Additional user defined fields to fill in
+        date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Date
+          description: Date on which stop happens. Optional for delivery stops when a service level is set on the order
+          examples:
+          - '2024-12-31'
+        custom_activity_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Activity Label
+          description: Custom activity related to the order
+        duration:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration
+          description: Duration of the stop in seconds
+        location:
+          $ref: '#/components/schemas/Location'
+          description: Location of the stop
+        drop_collect_empty:
+          anyOf:
+          - $ref: '#/components/schemas/DropCollectEmptyInput'
+          - type: 'null'
+          description: Information for drop/collect empty stops
+      type: object
+      required:
+      - location
+      title: StopInput
+    PartialOrderUpdate:
+      properties:
+        match:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderMatchTarget'
+          - type: 'null'
+          description: Matching criteria for the order to update
+        consignment:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderConsignment'
+          - type: 'null'
+        question_answers:
+          type: object
+          title: Question Answers
+          description: Question answers to update on the order. Mapping is configured in Qargo
+        update:
+          anyOf:
+          - $ref: '#/components/schemas/OrderEntityUpdate'
+          - type: 'null'
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Replaced by `match > order > id`. Please use `match > order > id` instead
+          deprecated: true
+      type: object
+      title: PartialOrderUpdate
+    StopUpdateData:
+      properties:
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+        date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Date
+        reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reference Number
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        mobile_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mobile Number
+        planning_instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Planning Instructions
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/LocationInput'
+          - type: 'null'
+        time_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindowInput'
+          - type: 'null'
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+      type: object
+      title: StopUpdateData
+    CompanyMatch:
+      properties:
+        name:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+        code:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+      type: object
+      title: CompanyMatch
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PartialOrderStop:
+      properties:
+        updates:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/PartialOrderStopUpdate'
+            type: array
+          - type: 'null'
+          title: Updates
+      type: object
+      title: PartialOrderStop
+    TimeWindowInput:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        start_time:
+          anyOf:
+          - type: string
+            format: time
+          - type: 'null'
+          title: Start Time
+        end_time:
+          anyOf:
+          - type: string
+            format: time
+          - type: 'null'
+          title: End Time
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        is_enforced:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Enforced
+      type: object
+      title: TimeWindowInput
+    PalletforceExtraFields:
+      properties:
+        ni_company_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ni Company Name
+          description: Northern Ireland company name
+        ni_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ni Description
+          description: Northern Ireland shipping info
+        ni_gbeori:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ni Gbeori
+          description: Northern Ireland GBEORI
+        ni_tss_job_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ni Tss Job Reference
+          description: Northern Ireland TSS JON reference
+        ni_tss_registration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ni Tss Registration
+          description: Northern Ireland TSS registration
+      type: object
+      title: PalletforceExtraFields
+    PackagingType:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        export_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Export Alias
+          description: Alias defined in the Qargo config
+        packaging_size:
+          anyOf:
+          - $ref: '#/components/schemas/PackagingSize'
+          - type: 'null'
+          description: Size of packaging, for example Europallet
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+      type: object
+      title: PackagingType
+    VehicleCategory:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+      type: object
+      title: VehicleCategory
+    OperationEnum:
+      type: string
+      enum:
+      - CREATE
+      - UPDATE
+      - DELETE
+      title: OperationEnum
+    PartialOrderGoodTraceUpdate:
+      properties:
+        match:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderGoodTraceMatchTarget'
+          - type: 'null'
+        question_answers:
+          type: object
+          title: Question Answers
+          description: Question answers to update on the handling unit. Mapping is configured in Qargo
+        update:
+          anyOf:
+          - $ref: '#/components/schemas/HandlingUnitEntityUpdate'
+          - type: 'null'
+      type: object
+      title: PartialOrderGoodTraceUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Project44ConsignmentInput:
+      properties:
+        bill_of_lading:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bill Of Lading
+        order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Order Id
+      type: object
+      title: Project44ConsignmentInput
+    StopPosition:
+      properties:
+        position:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Position
+      type: object
+      title: StopPosition
+    Incoterm:
+      type: string
+      enum:
+      - EXW
+      - FCA
+      - FAS
+      - FOB
+      - CFR
+      - CIF
+      - CPT
+      - CIP
+      - DAP
+      - DPU
+      - DDP
+      title: Incoterm
+    KuehneNagelExtraFields:
+      properties:
+        sender_depot_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender Depot Code
+          description: Sender depot code
+        receiver_depot_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Receiver Depot Code
+          description: Receiver depot code
+      type: object
+      title: KuehneNagelExtraFields
+    ConsignmentMatch:
+      properties:
+        reference_number:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+        order_sequence_number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Order Sequence Number
+      type: object
+      title: ConsignmentMatch
+    TransitOffice:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Customs office code
+      type: object
+      title: TransitOffice
+    StopType:
+      type: string
+      enum:
+      - PICKUP
+      - DELIVERY
+      title: StopType
+    ContainerOrderInput:
+      properties:
+        seal_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Seal Number
+        port_of_loading:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Port Of Loading
+        port_of_unloading:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Port Of Unloading
+        origin_of_goods:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Origin Of Goods
+        unique_consignment_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unique Consignment Number
+        ocean_liner_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ocean Liner Name
+        ocean_liner_scac:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ocean Liner Scac
+        pin_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pin Code
+        ship_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ship Name
+        closing_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Closing Date
+        tare_weight:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tare Weight
+        container_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Container Number
+        container_type:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerTypeInput'
+          - type: 'null'
+        container_scenario:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerScenario'
+          - type: 'null'
+        secure_release:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Secure Release
+      type: object
+      title: ContainerOrderInput
+    PartialOrderConsignmentUpdate:
+      properties:
+        match:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderConsignmentMatchTarget'
+          - type: 'null'
+        good:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderGood'
+          - type: 'null'
+        stop:
+          anyOf:
+          - $ref: '#/components/schemas/PartialOrderStop'
+          - type: 'null'
+        question_answers:
+          type: object
+          title: Question Answers
+          description: Question answers to update on the consignment. Mapping is configured in Qargo
+        update:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentEntityUpdate'
+          - type: 'null'
+      type: object
+      title: PartialOrderConsignmentUpdate
+    GoodProductInput:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        product_type:
+          anyOf:
+          - $ref: '#/components/schemas/GoodProductType'
+          - type: 'null'
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+      type: object
+      title: GoodProductInput
     ImportExportExtraFields:
       properties:
         incoterm:
@@ -2362,75 +2834,1112 @@ components:
           - FR
       type: object
       title: ImportExportExtraFields
-    ConsignmentCustomsExportInfo:
+    AmazonExtraFields:
       properties:
-        country:
+        asn_number:
           anyOf:
           - type: string
           - type: 'null'
-          title: Country
-          description: ISO 3166-1 alpha-2 country of the export declaration
-        declaration_type:
+          title: Asn Number
+          description: Amazon Shipment ID
+        fba_number:
           anyOf:
-          - $ref: '#/components/schemas/ExportDeclarationTypeEnum'
+          - type: string
           - type: 'null'
-          description: Declaration type code (e.g. EU, EX)
-        additional_border_processes:
+          title: Fba Number
+          description: Amazon FBA ID
+        po_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Po Number
+          description: Amazon PO ID
+        amazon_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Amazon Number
+          description: Amazon order number
+        carton_count:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Carton Count
+          description: Number of cartons
+        unit_count:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Count
+          description: Number of units
+        booking_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Booking Date
+          description: Amazon booking date
+        booking_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Booking Time
+          description: Amazon booking time
+      type: object
+      title: AmazonExtraFields
+    CommercialInvoiceInput:
+      properties:
+        value:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Value
+      type: object
+      title: CommercialInvoiceInput
+    PalletXpressIeConsignmentInput:
+      properties:
+        job_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Job Number
+      type: object
+      title: PalletXpressIeConsignmentInput
+    HandlingUnitUpdateData:
+      properties:
+        barcode:
+          anyOf:
+          - $ref: '#/components/schemas/UpdateBarcodeInput'
+          - type: 'null'
+        alternative_barcodes:
           anyOf:
           - items:
-              $ref: '#/components/schemas/AdditionalExportBorderProcessEnum'
+              $ref: '#/components/schemas/UpdateBarcodeInput'
             type: array
           - type: 'null'
-          title: Additional Border Processes
-          description: Additional border processes for this declaration
-        mrn:
+          title: Alternative Barcodes
+        external_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Mrn
-          description: Movement Reference Number of the export declaration
-        exs_mrn:
+          title: External Id
+      type: object
+      title: HandlingUnitUpdateData
+    GoodMatch:
+      properties:
+        id:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+      type: object
+      title: GoodMatch
+    CustomerField:
+      properties:
+        name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Exs Mrn
-          description: Exit Summary Declaration MRN
-        ducr:
+          title: Name
+        code:
           anyOf:
           - type: string
           - type: 'null'
-          title: Ducr
-          description: Declaration Unique Consignment Reference (UK only)
-        location_id:
+          title: Code
+        row_id:
           anyOf:
           - type: string
-            format: uuid
           - type: 'null'
-          title: Location Id
-          description: Identifier of the customs location
-        emails:
+          title: Row Id
+      type: object
+      title: CustomerField
+    Entity:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+      type: object
+      title: Entity
+    GoodPackagingSize:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      title: GoodPackagingSize
+    DropCollectEmptyInput:
+      properties:
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+          description: Location of an additional drop/collect. This location will be added after the stop this is associated with.
+        date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Date
+          description: Date the main drop/collect
+          examples:
+          - '2024-12-31'
+      type: object
+      title: DropCollectEmptyInput
+    PartialOrderGoodTraceMatchTarget:
+      properties:
+        matches_all:
+          items:
+            $ref: '#/components/schemas/PartialOrderGoodTraceMatchInput'
+          type: array
+          title: Matches All
+      type: object
+      title: PartialOrderGoodTraceMatchTarget
+    ADRPackagingType:
+      type: string
+      enum:
+      - BOX
+      - COMPOSITE_PACKAGING
+      - DRUM
+      - GAS_RECEPTABLE
+      - INTERMEDIATE_BULK_CONTAINER
+      - JERRICAN
+      - LARGE_PACKAGING
+      - LIGHT_GAUGE_METAL_PACKAGINGS
+      - BAG
+      - TANK_CONTAINER
+      title: ADRPackagingType
+    BarcodeSource:
+      type: string
+      enum:
+      - EXTERNAL
+      - QARGO
+      - HAZCHEM
+      - PALLETFORCE
+      - PALLETLINE
+      - PALLETWAYS
+      - PALLETXPRESS_IE
+      - PALLET_TRACK
+      - PALLEX
+      - POLE
+      - TPN
+      - UPN
+      title: BarcodeSource
+    TPNConsignmentInput:
+      properties:
+        consignment_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consignment Number
+      type: object
+      title: TPNConsignmentInput
+    PalletwaysConsignmentInput:
+      properties:
+        tracking_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tracking Id
+        consignment_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consignment Number
+      type: object
+      title: PalletwaysConsignmentInput
+    PalletTrackConsignmentInput:
+      properties:
+        tracking_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tracking Code
+        job_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Job Number
+      type: object
+      title: PalletTrackConsignmentInput
+    PalletforceConsignmentExtraFields:
+      properties:
+        palletforce_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Palletforce Id
+          description: Palletforce ID
+      type: object
+      title: PalletforceConsignmentExtraFields
+    ImportDeclarationTypeEnum:
+      type: string
+      enum:
+      - IM
+      title: ImportDeclarationTypeEnum
+    OrderUpdateData:
+      properties:
+        transport_service:
+          anyOf:
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
+        transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
+        service_level:
+          anyOf:
+          - $ref: '#/components/schemas/ServiceLevel'
+          - type: 'null'
+        customer:
+          anyOf:
+          - $ref: '#/components/schemas/CustomerField'
+          - type: 'null'
+        customer_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Reference Number
+        order_group:
+          anyOf:
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
+        planning_instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Planning Instructions
+        planning_group:
+          anyOf:
+          - $ref: '#/components/schemas/PlanningGroup'
+          - type: 'null'
+        department:
+          anyOf:
+          - $ref: '#/components/schemas/Department'
+          - type: 'null'
+        vehicle_category:
+          anyOf:
+          - $ref: '#/components/schemas/VehicleCategory'
+          - type: 'null'
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        neutral_order_type:
+          anyOf:
+          - type: string
+            enum:
+            - NO_NEUTRAL_ORDER
+            - MASK_DELIVERY
+            - MASK_PICKUP
+          - type: 'null'
+          title: Neutral Order Type
+        pricing:
+          anyOf:
+          - $ref: '#/components/schemas/UpdateOrderPricingInput'
+          - type: 'null'
+        container:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerOrderInput'
+          - type: 'null'
+        palletforce:
+          anyOf:
+          - $ref: '#/components/schemas/PalletforceExtraFields'
+          - type: 'null'
+        palletline:
+          anyOf:
+          - $ref: '#/components/schemas/PalletlineExtraFields'
+          - type: 'null'
+        dachser:
+          anyOf:
+          - $ref: '#/components/schemas/DachserExtraFields'
+          - type: 'null'
+        kuehne_nagel:
+          anyOf:
+          - $ref: '#/components/schemas/KuehneNagelExtraFields'
+          - type: 'null'
+        chep:
+          anyOf:
+          - $ref: '#/components/schemas/ChepOrderInput'
+          - type: 'null'
+        project44:
+          anyOf:
+          - $ref: '#/components/schemas/Project44OrderInput'
+          - type: 'null'
+        shippeo:
+          anyOf:
+          - $ref: '#/components/schemas/ShippeoOrderInput'
+          - type: 'null'
+        manuport:
+          anyOf:
+          - $ref: '#/components/schemas/ManuportOrderInput'
+          - type: 'null'
+        transporeon:
+          anyOf:
+          - $ref: '#/components/schemas/TransporeonOrderExtraFields'
+          - type: 'null'
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/OrderImportExportInput'
+          - type: 'null'
+        origin_country_of_goods:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Origin Country Of Goods
+        destination_country_of_goods:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Destination Country Of Goods
+        contact_emails:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Emails
-          description: Email addresses associated with this declaration
+          title: Contact Emails
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
       type: object
-      title: ConsignmentCustomsExportInfo
-    ConsignmentMatch:
+      title: OrderUpdateData
+    OrderImportExportInput:
+      properties:
+        incoterm:
+          anyOf:
+          - $ref: '#/components/schemas/Incoterm'
+          - type: 'null'
+        mrns:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mrns
+        ens_mrns:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Ens Mrns
+        exs_mrns:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Exs Mrns
+        ducrs:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Ducrs
+      type: object
+      title: OrderImportExportInput
+    HandlingUnitData:
+      properties:
+        barcode:
+          anyOf:
+          - $ref: '#/components/schemas/UpdateBarcodeInput'
+          - type: 'null'
+        alternative_barcodes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/UpdateBarcodeInput'
+            type: array
+          - type: 'null'
+          title: Alternative Barcodes
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+      type: object
+      title: HandlingUnitData
+    PartialOrderConsignmentMatchTarget:
+      properties:
+        matches_all:
+          items:
+            $ref: '#/components/schemas/PartialOrderConsignmentMatchInput'
+          type: array
+          title: Matches All
+      type: object
+      title: PartialOrderConsignmentMatchTarget
+    HazchemConsignmentInput:
+      properties:
+        consignment_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consignment Number
+        tracking_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tracking Code
+      type: object
+      title: HazchemConsignmentInput
+    AdditionalTransitBorderProcessEnum:
+      type: string
+      enum:
+      - LRN
+      title: AdditionalTransitBorderProcessEnum
+    PartialOrderGoodMatchInput:
+      properties:
+        good:
+          anyOf:
+          - $ref: '#/components/schemas/GoodMatch'
+          - type: 'null'
+      type: object
+      title: PartialOrderGoodMatchInput
+    PartialOrderUpdateResponse:
+      properties:
+        errors:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ErrorStatus'
+            type: array
+          - type: 'null'
+          title: Errors
+          description: List of errors that occurred during the webhook processing. If empty/omitted, the webhook was processed successfully.
+          examples:
+          - error_message: The payload is invalid.
+            error_type: USER_INPUT_ERROR
+          - error_message: Not supported.
+            error_type: NOT_SUPPORTED
+          - error_message: Unknown error.
+            error_type: INTERNAL_ERROR
+      type: object
+      title: PartialOrderUpdateResponse
+      description: 'Response schema for the partial order update webhook.
+
+        This schema is used to return errors or success messages.'
+    TransporeonConsignmentExtraFields:
+      properties:
+        delivery_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Delivery Id
+          description: Transporeon Delivery ID
+      type: object
+      title: TransporeonConsignmentExtraFields
+    HandlingUnitMatch:
+      properties:
+        barcode:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+      type: object
+      title: HandlingUnitMatch
+    StopActivityInput:
+      properties:
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        config:
+          anyOf:
+          - $ref: '#/components/schemas/StopActivityConfigInput'
+          - type: 'null'
+      type: object
+      title: StopActivityInput
+    StopExtra:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          default: ''
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          default: ''
+        amazon:
+          anyOf:
+          - $ref: '#/components/schemas/AmazonExtraFields'
+          - type: 'null'
+      type: object
+      title: StopExtra
+    ADR-Input:
+      properties:
+        adr_name_by_locale:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Adr Name By Locale
+          description: Name of the packaged item in different locales
+        un_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Un Number
+          description: See https://adr-tool.com/lists-of-un-numbers
+        packaging_type:
+          anyOf:
+          - $ref: '#/components/schemas/ADRPackagingType'
+          - type: 'null'
+          description: Packaging type
+        emergency_phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emergency Phone Number
+          description: Emergency phone number
+        technical_name_by_locale:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Technical Name By Locale
+          description: Technical name of the packaged item
+        classification_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Classification Code
+          description: ADR classification code
+        transport_category_tunnel_restriction_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Transport Category Tunnel Restriction Code
+          description: A letter code (A-E) that reflects restrictions for carrying the substance through road tunnels - Helps improve ADR matching beyond just using UN number
+        packing_group:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Packing Group
+          description: Indicates danger level - Helps improve ADR matching beyond just using UN number
+        adr_class:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Adr Class
+          description: Identifies the primary hazard category of the substance - Helps improve ADR matching beyond just using UN number
+        physical_state:
+          anyOf:
+          - $ref: '#/components/schemas/ADRPhysicalState'
+          - type: 'null'
+          description: Describes the form of the substance. Indicates whether the substance is a solid, liquid or gas
+        hazard_identification_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Hazard Identification Number
+          description: Also known as Kemler code. Used in ADR labeling
+        division:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Division
+          description: ADR division/subclass (e.g. '1.2', '2.1'). Populated for classes 1, 2, 4, 5 and 6
+        labels:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Labels
+          description: 'Subsidiary hazard class labels (ADR), ''+''-separated when multiple. Example: ''6.1+5.1''.'
+        special_provisions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Special Provisions
+          description: 'ADR special provisions code(s) applying to this substance. Example: ''274 640D''.'
+      type: object
+      title: ADR
+    PartialOrderConsignment:
+      properties:
+        updates:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/PartialOrderConsignmentUpdate'
+            type: array
+          - type: 'null'
+          title: Updates
+      type: object
+      title: PartialOrderConsignment
+    PartialOrderStopMatchTarget:
+      properties:
+        matches_all:
+          items:
+            $ref: '#/components/schemas/PartialOrderStopMatchInput'
+          type: array
+          title: Matches All
+      type: object
+      title: PartialOrderStopMatchTarget
+    BarcodeInput:
+      properties:
+        value:
+          anyOf:
+          - type: string
+            maxLength: 255
+          - type: 'null'
+          title: Value
+          description: Barcode value
+        source:
+          anyOf:
+          - $ref: '#/components/schemas/BarcodeSource'
+          - type: 'null'
+          description: Source system of the barcode
+      type: object
+      title: BarcodeInput
+    PartialOrderMatchTarget:
+      properties:
+        matches_all:
+          items:
+            $ref: '#/components/schemas/PartialOrderMatchInput'
+          type: array
+          title: Matches All
+      type: object
+      title: PartialOrderMatchTarget
+    StopMatch:
       properties:
         reference_number:
           anyOf:
           - $ref: '#/components/schemas/FieldMatchInput'
           - type: 'null'
-        order_sequence_number:
+        stop_type:
           anyOf:
-          - type: integer
+          - $ref: '#/components/schemas/StopType'
           - type: 'null'
-          title: Order Sequence Number
       type: object
-      title: ConsignmentMatch
+      title: StopMatch
+    Location:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Technical code for integrations/mapping logic; should be treated as stable once set.
+          examples:
+          - LOC123
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+          description: Human-readable label for a location in operational views.
+          examples:
+          - Main Office
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: Identifier from an external (master data) system.
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: First address line of the location
+          examples:
+          - Gaston Crommenlaan 4
+        address_second_line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Second Line
+          description: Second address line of the location
+          examples:
+          - ''
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+          description: City of the location
+          examples:
+          - Ghent
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+          description: State of the location
+          examples:
+          - ''
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: Country code (ISO 3166-1 alpha-2) of the location
+          examples:
+          - BE
+        postal_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Postal Code
+          description: Postal code of the location
+          examples:
+          - '9050'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the location
+          examples:
+          - Qargo HQ
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Identifier of the location
+        latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latitude
+        longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Longitude
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Location description
+        location_identifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location Identifier
+          description: External location identifier
+      type: object
+      title: Location
+    PalletforceConsignmentInput:
+      properties:
+        customer_account_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Account Number
+        palletforce_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Palletforce Id
+      type: object
+      title: PalletforceConsignmentInput
+    LocationInput:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+        address_second_line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Second Line
+        postal_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Postal Code
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+        latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latitude
+        longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Longitude
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        location_identifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location Identifier
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+        location_search:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location Search
+        place_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Place Id
+      type: object
+      title: LocationInput
+    UpdateOrderPricingInput:
+      properties:
+        requested_price:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Requested Price
+      type: object
+      title: UpdateOrderPricingInput
+    UpdateDropCollectEmptyInput:
+      properties:
+        requested_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Requested Date
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/LocationInput'
+          - type: 'null'
+      type: object
+      title: UpdateDropCollectEmptyInput
+    PartialOrderConsignmentMatchInput:
+      properties:
+        consignment:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentMatch'
+          - type: 'null'
+      type: object
+      title: PartialOrderConsignmentMatchInput
+    ConsignmentInput-Input:
+      properties:
+        consignment_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Consignment Reference Number
+          description: Consignment reference number
+        cmr_reference_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cmr Reference Number
+        planning_instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Planning Instructions
+          description: Additional freeform instructions for the planner.
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Additional user defined fields to fill in
+        transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentTransportNetwork'
+          - type: 'null'
+          description: Transport network
+        central_transport_network:
+          anyOf:
+          - $ref: '#/components/schemas/CentralTransportNetworkConsignmentExtraFields'
+          - type: 'null'
+        palletline:
+          anyOf:
+          - $ref: '#/components/schemas/PalletlineConsignmentExtraFields'
+          - type: 'null'
+        palletforce:
+          anyOf:
+          - $ref: '#/components/schemas/PalletforceConsignmentExtraFields'
+          - type: 'null'
+        transporeon:
+          anyOf:
+          - $ref: '#/components/schemas/TransporeonConsignmentExtraFields'
+          - type: 'null'
+        pickup_stop:
+          $ref: '#/components/schemas/StopInput-Input'
+          description: First stop on this consignment.
+        delivery_stop:
+          $ref: '#/components/schemas/StopInput-Input'
+          description: Last stop on this consignment.
+        goods:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/GoodInput-Input'
+            type: array
+          - type: 'null'
+          title: Goods
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/ConsignmentImportExportExtraFieldsInput-Input'
+          - type: 'null'
+        buyer:
+          anyOf:
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
+          description: Buyer information for this consignment
+        seller:
+          anyOf:
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
+          description: Seller information for this consignment
+      type: object
+      required:
+      - pickup_stop
+      - delivery_stop
+      title: ConsignmentInput
+    TimeWindow:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        start_time:
+          anyOf:
+          - type: string
+            format: time
+          - type: 'null'
+          title: Start Time
+          description: Start of time window
+          examples:
+          - 09:30
+        end_time:
+          anyOf:
+          - type: string
+            format: time
+          - type: 'null'
+          title: End Time
+          description: End of time window
+          examples:
+          - '16:30'
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        is_enforced:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Enforced
+          description: Enforce the time window for this stop
+        use_location_opening_hours:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use Location Opening Hours
+          description: When true, the stop's time window is derived from the location's opening hours instead of explicit start/end times
+      type: object
+      title: TimeWindow
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    BuyerSellerField:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        row_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Row Id
+      type: object
+      title: BuyerSellerField
     GoodData:
       properties:
         description:
@@ -2562,561 +4071,6 @@ components:
           title: External Id
       type: object
       title: GoodData
-    BuyerSellerField:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        row_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Row Id
-      type: object
-      title: BuyerSellerField
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    Location:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Technical code for integrations/mapping logic; should be treated as stable once set.
-          examples:
-          - LOC123
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-          description: Human-readable label for a location in operational views.
-          examples:
-          - Main Office
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: Identifier from an external (master data) system.
-        address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address
-          description: First address line of the location
-          examples:
-          - Gaston Crommenlaan 4
-        address_second_line:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address Second Line
-          description: Second address line of the location
-          examples:
-          - ''
-        city:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: City
-          description: City of the location
-          examples:
-          - Ghent
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-          description: State of the location
-          examples:
-          - ''
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-          description: Country code (ISO 3166-1 alpha-2) of the location
-          examples:
-          - BE
-        postal_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Postal Code
-          description: Postal code of the location
-          examples:
-          - '9050'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the location
-          examples:
-          - Qargo HQ
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Identifier of the location
-        latitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Latitude
-        longitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Longitude
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Location description
-        location_identifier:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Location Identifier
-          description: External location identifier
-      type: object
-      title: Location
-    StopEntityUpdate:
-      properties:
-        operation:
-          type: string
-          enum:
-          - CREATE
-          - UPDATE
-          - DELETE
-          title: Operation
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/StopUpdateData'
-          - $ref: '#/components/schemas/StopData'
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - operation
-      title: StopEntityUpdate
-    StopPosition:
-      properties:
-        position:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Position
-      type: object
-      title: StopPosition
-    PartialOrderStopMatchTarget:
-      properties:
-        matches_all:
-          items:
-            $ref: '#/components/schemas/PartialOrderStopMatchInput'
-          type: array
-          title: Matches All
-      type: object
-      title: PartialOrderStopMatchTarget
-    ConsignmentUpdateData:
-      properties:
-        consignment_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consignment Reference Number
-        cmr_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cmr Reference Number
-        planning_instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Planning Instructions
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentTransportNetwork'
-          - type: 'null'
-        central_transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/CentralTransportNetworkConsignmentInput'
-          - type: 'null'
-        palletline:
-          anyOf:
-          - $ref: '#/components/schemas/PalletlineConsignmentInput'
-          - type: 'null'
-        palletforce:
-          anyOf:
-          - $ref: '#/components/schemas/PalletforceConsignmentInput'
-          - type: 'null'
-        palletxpress_ie:
-          anyOf:
-          - $ref: '#/components/schemas/PalletXpressIeConsignmentInput'
-          - type: 'null'
-        tpn:
-          anyOf:
-          - $ref: '#/components/schemas/TPNConsignmentInput'
-          - type: 'null'
-        pallet_track:
-          anyOf:
-          - $ref: '#/components/schemas/PalletTrackConsignmentInput'
-          - type: 'null'
-        palletways:
-          anyOf:
-          - $ref: '#/components/schemas/PalletwaysConsignmentInput'
-          - type: 'null'
-        project44:
-          anyOf:
-          - $ref: '#/components/schemas/Project44ConsignmentInput'
-          - type: 'null'
-        hazchem:
-          anyOf:
-          - $ref: '#/components/schemas/HazchemConsignmentInput'
-          - type: 'null'
-        transporeon:
-          anyOf:
-          - $ref: '#/components/schemas/TransporeonConsignmentExtraFields'
-          - type: 'null'
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentImportExportExtraFieldsInput-Input'
-          - type: 'null'
-        shipper_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Shipper Name
-        shipper_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Shipper Reference Number
-        buyer_eori_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Buyer Eori Number
-        seller_eori_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Seller Eori Number
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-        consignee_signature:
-          anyOf:
-          - $ref: '#/components/schemas/SignatureInput'
-          - type: 'null'
-        consignor_signature:
-          anyOf:
-          - $ref: '#/components/schemas/SignatureInput'
-          - type: 'null'
-      type: object
-      title: ConsignmentUpdateData
-    AdditionalExportBorderProcessEnum:
-      type: string
-      enum:
-      - GVMS
-      - ELO
-      - PBN
-      - EIDR
-      title: AdditionalExportBorderProcessEnum
-    ADRPackagingType:
-      type: string
-      enum:
-      - BOX
-      - COMPOSITE_PACKAGING
-      - DRUM
-      - GAS_RECEPTABLE
-      - INTERMEDIATE_BULK_CONTAINER
-      - JERRICAN
-      - LARGE_PACKAGING
-      - LIGHT_GAUGE_METAL_PACKAGINGS
-      - BAG
-      - TANK_CONTAINER
-      title: ADRPackagingType
-    PalletXpressIeConsignmentInput:
-      properties:
-        job_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Job Number
-      type: object
-      title: PalletXpressIeConsignmentInput
-    SignatureInput:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        timestamp:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Timestamp
-        position:
-          anyOf:
-          - $ref: '#/components/schemas/Position'
-          - type: 'null'
-      type: object
-      title: SignatureInput
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    PartialOrderConsignmentMatchTarget:
-      properties:
-        matches_all:
-          items:
-            $ref: '#/components/schemas/PartialOrderConsignmentMatchInput'
-          type: array
-          title: Matches All
-      type: object
-      title: PartialOrderConsignmentMatchTarget
-    GoodEntityUpdate:
-      properties:
-        operation:
-          $ref: '#/components/schemas/UpdateOperation'
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/GoodUpdateData'
-          - $ref: '#/components/schemas/GoodData'
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - operation
-      title: GoodEntityUpdate
-    ContainerType:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        container_iso_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Container Iso Code
-          description: International standard ISO code identifying the container size and type (e.g. '22G1', '42G1')
-      type: object
-      title: ContainerType
-    GoodPackagingType:
-      properties:
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        packaging_size:
-          anyOf:
-          - $ref: '#/components/schemas/GoodPackagingSize'
-          - type: 'null'
-      type: object
-      title: GoodPackagingType
-    ErrorType:
-      type: string
-      enum:
-      - USER_INPUT_ERROR
-      - INTERNAL_ERROR
-      - NOT_SUPPORTED
-      title: ErrorType
-    ContainerOrderInput:
-      properties:
-        seal_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Seal Number
-        port_of_loading:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Port Of Loading
-        port_of_unloading:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Port Of Unloading
-        origin_of_goods:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Origin Of Goods
-        unique_consignment_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Unique Consignment Number
-        ocean_liner_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ocean Liner Name
-        ocean_liner_scac:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ocean Liner Scac
-        pin_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pin Code
-        ship_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ship Name
-        closing_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Closing Date
-        tare_weight:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tare Weight
-        container_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Container Number
-        container_type:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerTypeInput'
-          - type: 'null'
-        container_scenario:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerScenario'
-          - type: 'null'
-        secure_release:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Secure Release
-      type: object
-      title: ContainerOrderInput
-    PartialOrderConsignmentUpdate:
-      properties:
-        match:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderConsignmentMatchTarget'
-          - type: 'null'
-        good:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderGood'
-          - type: 'null'
-        stop:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderStop'
-          - type: 'null'
-        question_answers:
-          type: object
-          title: Question Answers
-          description: Question answers to update on the consignment. Mapping is configured in Qargo
-        update:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentEntityUpdate'
-          - type: 'null'
-      type: object
-      title: PartialOrderConsignmentUpdate
     StopData:
       properties:
         note:
@@ -3198,999 +4152,45 @@ components:
           title: External Id
       type: object
       title: StopData
+    PartialOrderStopMatchInput:
+      properties:
+        stop:
+          anyOf:
+          - $ref: '#/components/schemas/StopMatch'
+          - type: 'null'
+      type: object
+      title: PartialOrderStopMatchInput
     TransitDeclarationTypeEnum:
       type: string
       enum:
       - T1
       - T2
       title: TransitDeclarationTypeEnum
-    StopActivityConfigInput:
-      properties:
-        resource_types:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Resource Types
-        dpc_start_or_end_stop_location:
-          anyOf:
-          - $ref: '#/components/schemas/LocationInput'
-          - type: 'null'
-        dpc_drop_collect_empty_date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Dpc Drop Collect Empty Date
-        duration:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Duration
-      type: object
-      title: StopActivityConfigInput
-    HSCode:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Harmonized System Code for the good
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the HS code
-      type: object
-      title: HSCode
-    CentralTransportNetworkConsignmentExtraFields:
-      properties:
-        hub:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Hub
-          description: Central Transport Network hub
-        trunk:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Trunk
-          description: Central Transport Network trunk
-        alternative_hubs:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Alternative Hubs
-          description: Alternative hubs as a comma separated list e.g. `Central,South`
-      type: object
-      title: CentralTransportNetworkConsignmentExtraFields
-    ManuportOrderInput:
-      properties:
-        delivery_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Delivery Number
-        seal_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Seal Number
-        order_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Order Number
-        customer_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Customer Id
-        sender_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sender Id
-      type: object
-      title: ManuportOrderInput
-    PartialOrderMatchInput:
-      properties:
-        order:
-          anyOf:
-          - $ref: '#/components/schemas/OrderMatch'
-          - type: 'null'
-        company:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyMatch'
-          - type: 'null'
-      type: object
-      title: PartialOrderMatchInput
-    PalletTrackConsignmentInput:
-      properties:
-        tracking_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tracking Code
-        job_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Job Number
-      type: object
-      title: PalletTrackConsignmentInput
-    ConsignmentCustomsImportInfo:
-      properties:
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-          description: ISO 3166-1 alpha-2 country of the import declaration
-        declaration_type:
-          anyOf:
-          - $ref: '#/components/schemas/ImportDeclarationTypeEnum'
-          - type: 'null'
-          description: Declaration type code (e.g. IM)
-        additional_border_processes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AdditionalImportBorderProcessEnum'
-            type: array
-          - type: 'null'
-          title: Additional Border Processes
-          description: Additional border processes for this declaration
-        mrn:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Mrn
-          description: Movement Reference Number of the import declaration
-        ens_mrn:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ens Mrn
-          description: Entry Summary Declaration MRN
-        ducr:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ducr
-          description: Declaration Unique Consignment Reference (UK only)
-        temporary_storage_ucn:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Temporary Storage Ucn
-          description: Temporary storage UCN
-        temporary_storage_crn:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Temporary Storage Crn
-          description: Temporary storage CRN (BE only)
-        emails:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Emails
-          description: Email addresses associated with this declaration
-      type: object
-      title: ConsignmentCustomsImportInfo
-    ExportDeclarationTypeEnum:
-      type: string
-      enum:
-      - EU
-      - EX
-      title: ExportDeclarationTypeEnum
-    PalletlineExtraFields:
-      properties:
-        terms_of_carriage:
-          anyOf:
-          - type: string
-            enum:
-            - '1300'
-            - '5000'
-            - '10000'
-            - cmr
-            - other
-          - type: 'null'
-          title: Terms Of Carriage
-      type: object
-      title: PalletlineExtraFields
-    PalletlineConsignmentInput:
-      properties:
-        palletline_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Palletline Id
-        third_party_label_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Third Party Label Id
-      type: object
-      title: PalletlineConsignmentInput
-    PartialOrderConsignmentMatchInput:
-      properties:
-        consignment:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentMatch'
-          - type: 'null'
-      type: object
-      title: PartialOrderConsignmentMatchInput
-    OrderPricingInput:
-      properties:
-        requested_price:
-          anyOf:
-          - type: string
-          - type: number
-          - type: 'null'
-          title: Requested Price
-          description: Requested price
-      type: object
-      title: OrderPricingInput
-    ConsignmentData:
-      properties:
-        pickup_stop:
-          anyOf:
-          - $ref: '#/components/schemas/StopData'
-          - type: 'null'
-        delivery_stop:
-          anyOf:
-          - $ref: '#/components/schemas/StopData'
-          - type: 'null'
-        consignment_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consignment Reference Number
-        cmr_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cmr Reference Number
-        planning_instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Planning Instructions
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentTransportNetwork'
-          - type: 'null'
-        central_transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/CentralTransportNetworkConsignmentInput'
-          - type: 'null'
-        palletline:
-          anyOf:
-          - $ref: '#/components/schemas/PalletlineConsignmentInput'
-          - type: 'null'
-        palletforce:
-          anyOf:
-          - $ref: '#/components/schemas/PalletforceConsignmentInput'
-          - type: 'null'
-        palletxpress_ie:
-          anyOf:
-          - $ref: '#/components/schemas/PalletXpressIeConsignmentInput'
-          - type: 'null'
-        tpn:
-          anyOf:
-          - $ref: '#/components/schemas/TPNConsignmentInput'
-          - type: 'null'
-        pallet_track:
-          anyOf:
-          - $ref: '#/components/schemas/PalletTrackConsignmentInput'
-          - type: 'null'
-        palletways:
-          anyOf:
-          - $ref: '#/components/schemas/PalletwaysConsignmentInput'
-          - type: 'null'
-        project44:
-          anyOf:
-          - $ref: '#/components/schemas/Project44ConsignmentInput'
-          - type: 'null'
-        hazchem:
-          anyOf:
-          - $ref: '#/components/schemas/HazchemConsignmentInput'
-          - type: 'null'
-        transporeon:
-          anyOf:
-          - $ref: '#/components/schemas/TransporeonConsignmentExtraFields'
-          - type: 'null'
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/ConsignmentImportExportExtraFieldsInput-Input'
-          - type: 'null'
-        goods:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/GoodData'
-            type: array
-          - type: 'null'
-          title: Goods
-        standalone_stops:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/StopData'
-            type: array
-          - type: 'null'
-          title: Standalone Stops
-        shipper_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Shipper Name
-        shipper_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Shipper Reference Number
-        buyer:
-          anyOf:
-          - $ref: '#/components/schemas/BuyerSellerField'
-          - type: 'null'
-        seller:
-          anyOf:
-          - $ref: '#/components/schemas/BuyerSellerField'
-          - type: 'null'
-        buyer_eori_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Buyer Eori Number
-        seller_eori_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Seller Eori Number
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-        consignee_signature:
-          anyOf:
-          - $ref: '#/components/schemas/SignatureInput'
-          - type: 'null'
-        consignor_signature:
-          anyOf:
-          - $ref: '#/components/schemas/SignatureInput'
-          - type: 'null'
-      type: object
-      title: ConsignmentData
-    HandlingUnitEntityUpdate:
-      properties:
-        operation:
-          $ref: '#/components/schemas/UpdateOperation'
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/HandlingUnitUpdateData'
-          - $ref: '#/components/schemas/HandlingUnitData'
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - operation
-      title: HandlingUnitEntityUpdate
-    PartialOrderUpdate:
-      properties:
-        match:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderMatchTarget'
-          - type: 'null'
-          description: Matching criteria for the order to update
-        consignment:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderConsignment'
-          - type: 'null'
-        question_answers:
-          type: object
-          title: Question Answers
-          description: Question answers to update on the order. Mapping is configured in Qargo
-        update:
-          anyOf:
-          - $ref: '#/components/schemas/OrderEntityUpdate'
-          - type: 'null'
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Replaced by `match > order > id`. Please use `match > order > id` instead
-          deprecated: true
-      type: object
-      title: PartialOrderUpdate
-    PackagedItem-Input:
-      properties:
-        adr:
-          anyOf:
-          - $ref: '#/components/schemas/ADR-Input'
-          - type: 'null'
-        barcodes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Barcodes
-          description: List of barcodes associated with the packaged item
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/PackagedItemsImportExportExtraFields'
-          - type: 'null'
-        packaging_type:
-          anyOf:
-          - $ref: '#/components/schemas/PackagingType'
-          - type: 'null'
-          description: Packaging type, for example Pallet
-        quantity:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Quantity
-          description: Quantity of packaged items
-        total_net_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Net Weight Kg
-          description: Total net weight of packaged items in KG
-        total_volume_l:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Volume L
-          description: Total volume of packaged items in liter
-        total_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Weight Kg
-          description: Total weight of packaged items in KG
-        unit_height_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Height M
-        unit_length_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Length M
-        unit_width_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Width M
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the packaged item
-      type: object
-      title: PackagedItem
-      description: 'Synonym: GoodItem'
-    OrderMatch:
-      properties:
-        customer_reference_number:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-        name:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-        id:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-      type: object
-      title: OrderMatch
-    ImportDeclarationTypeEnum:
-      type: string
-      enum:
-      - IM
-      title: ImportDeclarationTypeEnum
-    HandlingUnitMatch:
-      properties:
-        barcode:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-      type: object
-      title: HandlingUnitMatch
-    StopType:
-      type: string
-      enum:
-      - PICKUP
-      - DELIVERY
-      title: StopType
-    PalletforceExtraFields:
-      properties:
-        ni_company_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ni Company Name
-          description: Northern Ireland company name
-        ni_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ni Description
-          description: Northern Ireland shipping info
-        ni_gbeori:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ni Gbeori
-          description: Northern Ireland GBEORI
-        ni_tss_job_reference:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ni Tss Job Reference
-          description: Northern Ireland TSS JON reference
-        ni_tss_registration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ni Tss Registration
-          description: Northern Ireland TSS registration
-      type: object
-      title: PalletforceExtraFields
-    OrderUpdateData:
-      properties:
-        transport_service:
-          anyOf:
-          - $ref: '#/components/schemas/Entity'
-          - type: 'null'
-        transport_network:
-          anyOf:
-          - $ref: '#/components/schemas/Entity'
-          - type: 'null'
-        service_level:
-          anyOf:
-          - $ref: '#/components/schemas/ServiceLevel'
-          - type: 'null'
-        customer:
-          anyOf:
-          - $ref: '#/components/schemas/CustomerField'
-          - type: 'null'
-        customer_reference_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Customer Reference Number
-        order_group:
-          anyOf:
-          - $ref: '#/components/schemas/Entity'
-          - type: 'null'
-        planning_instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Planning Instructions
-        planning_group:
-          anyOf:
-          - $ref: '#/components/schemas/PlanningGroup'
-          - type: 'null'
-        department:
-          anyOf:
-          - $ref: '#/components/schemas/Department'
-          - type: 'null'
-        vehicle_category:
-          anyOf:
-          - $ref: '#/components/schemas/VehicleCategory'
-          - type: 'null'
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        neutral_order_type:
-          anyOf:
-          - type: string
-            enum:
-            - NO_NEUTRAL_ORDER
-            - MASK_DELIVERY
-            - MASK_PICKUP
-          - type: 'null'
-          title: Neutral Order Type
-        pricing:
-          anyOf:
-          - $ref: '#/components/schemas/UpdateOrderPricingInput'
-          - type: 'null'
-        container:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerOrderInput'
-          - type: 'null'
-        palletforce:
-          anyOf:
-          - $ref: '#/components/schemas/PalletforceExtraFields'
-          - type: 'null'
-        palletline:
-          anyOf:
-          - $ref: '#/components/schemas/PalletlineExtraFields'
-          - type: 'null'
-        dachser:
-          anyOf:
-          - $ref: '#/components/schemas/DachserExtraFields'
-          - type: 'null'
-        kuehne_nagel:
-          anyOf:
-          - $ref: '#/components/schemas/KuehneNagelExtraFields'
-          - type: 'null'
-        chep:
-          anyOf:
-          - $ref: '#/components/schemas/ChepOrderInput'
-          - type: 'null'
-        project44:
-          anyOf:
-          - $ref: '#/components/schemas/Project44OrderInput'
-          - type: 'null'
-        shippeo:
-          anyOf:
-          - $ref: '#/components/schemas/ShippeoOrderInput'
-          - type: 'null'
-        manuport:
-          anyOf:
-          - $ref: '#/components/schemas/ManuportOrderInput'
-          - type: 'null'
-        transporeon:
-          anyOf:
-          - $ref: '#/components/schemas/TransporeonOrderExtraFields'
-          - type: 'null'
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/OrderImportExportInput'
-          - type: 'null'
-        origin_country_of_goods:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Origin Country Of Goods
-        destination_country_of_goods:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Destination Country Of Goods
-        contact_emails:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Contact Emails
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-      type: object
-      title: OrderUpdateData
-    PartialOrderGoodTraceUpdate:
-      properties:
-        match:
-          anyOf:
-          - $ref: '#/components/schemas/PartialOrderGoodTraceMatchTarget'
-          - type: 'null'
-        question_answers:
-          type: object
-          title: Question Answers
-          description: Question answers to update on the handling unit. Mapping is configured in Qargo
-        update:
-          anyOf:
-          - $ref: '#/components/schemas/HandlingUnitEntityUpdate'
-          - type: 'null'
-      type: object
-      title: PartialOrderGoodTraceUpdate
-    DropCollectEmptyInput:
-      properties:
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-          description: Location of an additional drop/collect. This location will be added after the stop this is associated with.
-        date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Date
-          description: Date the main drop/collect
-          examples:
-          - '2024-12-31'
-      type: object
-      title: DropCollectEmptyInput
-    GoodInput-Input:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        quantity:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Quantity
-        total_loading_meters:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Loading Meters
-        total_pallet_spaces:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Pallet Spaces
-        total_volume_m3:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Volume M3
-        total_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Weight Kg
-        unit_height_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Height M
-        unit_length_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Length M
-        unit_loading_meters:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Loading Meters
-        unit_pallet_spaces:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Pallet Spaces
-        unit_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Weight Kg
-        unit_width_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Width M
-        stackable:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Stackable
-        packaged_items:
-          items:
-            $ref: '#/components/schemas/PackagedItem-Input'
-          type: array
-          title: List of packaged items
-        adr_type:
-          anyOf:
-          - $ref: '#/components/schemas/ADRType'
-          - type: 'null'
-        absolute_min_temperature_degrees:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Absolute Min Temperature Degrees
-        absolute_max_temperature_degrees:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Absolute Max Temperature Degrees
-        ordered_transport_temperature_degrees:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Ordered Transport Temperature Degrees
-        specific_gravity:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Specific Gravity
-        product:
-          anyOf:
-          - $ref: '#/components/schemas/Product'
-          - type: 'null'
-          description: Product information
-        packaging_type:
-          anyOf:
-          - $ref: '#/components/schemas/PackagingType'
-          - type: 'null'
-          description: Packaging type, for example Pallet
-        extras:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ExtraField'
-            type: array
-          - type: 'null'
-          title: Extras
-          description: Additional extra services/options for good
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        handling_units:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/HandlingUnitInput-Input'
-            type: array
-          - type: 'null'
-          title: Handling Units
-          description: List of handling units. A handling unit is used to transport, store or handle goods
-          default: []
-      type: object
-      title: GoodInput
-    PartialOrderGoodMatchTarget:
-      properties:
-        matches_all:
-          items:
-            $ref: '#/components/schemas/PartialOrderGoodMatchInput'
-          type: array
-          title: Matches All
-      type: object
-      title: PartialOrderGoodMatchTarget
-    TPNConsignmentInput:
-      properties:
-        consignment_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Consignment Number
-      type: object
-      title: TPNConsignmentInput
-    HandlingUnitUpdateData:
-      properties:
-        barcode:
-          anyOf:
-          - $ref: '#/components/schemas/UpdateBarcodeInput'
-          - type: 'null'
-        alternative_barcodes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/UpdateBarcodeInput'
-            type: array
-          - type: 'null'
-          title: Alternative Barcodes
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-      type: object
-      title: HandlingUnitUpdateData
-    ImportExportInput:
-      properties:
-        hs_code_import:
-          anyOf:
-          - $ref: '#/components/schemas/HSCodeField'
-          - type: 'null'
-        hs_code_export:
-          anyOf:
-          - $ref: '#/components/schemas/HSCodeField'
-          - type: 'null'
-        commercial_invoice:
-          anyOf:
-          - $ref: '#/components/schemas/CommercialInvoiceInput'
-          - type: 'null'
-      type: object
-      title: ImportExportInput
-    GoodProductType:
+    SignatureInput:
       properties:
         name:
           anyOf:
           - type: string
           - type: 'null'
           title: Name
-        code:
+        timestamp:
           anyOf:
           - type: string
+            format: date-time
           - type: 'null'
-          title: Code
+          title: Timestamp
+        position:
+          anyOf:
+          - $ref: '#/components/schemas/Position'
+          - type: 'null'
       type: object
-      title: GoodProductType
-    PackagingSize:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        height_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Height M
-          description: Height in meters
-        length_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Length M
-          description: Length in meters
-        width_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Width M
-          description: Width in meters
-        weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Weight Kg
-          description: Weight in kg
-        loading_meters:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Loading Meters
-          description: Loading meters
-        pallet_spaces:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Pallet Spaces
-          description: Pallet spaces
-      type: object
-      title: PackagingSize
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
+      title: SignatureInput
+    OrderStatus:
+      type: string
+      enum:
+      - QUOTE
+      - TO_PLAN
+      title: OrderStatus
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2
