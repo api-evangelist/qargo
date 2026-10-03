@@ -109,16 +109,6 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    Body_Upload_document_content_v1_documents_document_upload_content_post:
-      properties:
-        file:
-          type: string
-          format: binary
-          title: File
-      type: object
-      required:
-      - file
-      title: Body_Upload_document_content_v1_documents_document_upload_content_post
     ValidationError:
       properties:
         loc:
@@ -140,6 +130,25 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Body_Upload_document_content_v1_documents_document_upload_content_post:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+      type: object
+      required:
+      - file
+      title: Body_Upload_document_content_v1_documents_document_upload_content_post
     ValidationErrorDetail:
       properties:
         message:
@@ -172,6 +181,17 @@ components:
       - message
       title: ValidationErrorDetail
       type: object
+    DocumentUploadResponse:
+      properties:
+        upload_id:
+          type: string
+          format: uuid
+          title: Upload Id
+          description: Unique identifier for the uploaded document
+      type: object
+      required:
+      - upload_id
+      title: DocumentUploadResponse
     ValidationErrorResponse:
       properties:
         message:
@@ -190,26 +210,6 @@ components:
       - errors
       title: ValidationErrorResponse
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DocumentUploadResponse:
-      properties:
-        upload_id:
-          type: string
-          format: uuid
-          title: Upload Id
-          description: Unique identifier for the uploaded document
-      type: object
-      required:
-      - upload_id
-      title: DocumentUploadResponse
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

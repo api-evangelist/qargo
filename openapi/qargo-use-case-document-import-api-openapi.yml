@@ -76,27 +76,6 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     DocumentImportResponse:
       properties:
         errors:
@@ -119,13 +98,50 @@ components:
       description: 'Response schema for the document import webhook.
 
         This schema is used to return errors or success messages.'
-    ErrorType:
-      type: string
-      enum:
-      - USER_INPUT_ERROR
-      - INTERNAL_ERROR
-      - NOT_SUPPORTED
-      title: ErrorType
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ErrorStatus:
+      properties:
+        error_type:
+          $ref: '#/components/schemas/ErrorType'
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+          description: (User visible) error message
+      type: object
+      required:
+      - error_type
+      title: ErrorStatus
     ValidationErrorDetail:
       properties:
         message:
@@ -158,6 +174,13 @@ components:
       - message
       title: ValidationErrorDetail
       type: object
+    ErrorType:
+      type: string
+      enum:
+      - USER_INPUT_ERROR
+      - INTERNAL_ERROR
+      - NOT_SUPPORTED
+      title: ErrorType
     ValidationErrorResponse:
       properties:
         message:
@@ -176,29 +199,6 @@ components:
       - errors
       title: ValidationErrorResponse
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ErrorStatus:
-      properties:
-        error_type:
-          $ref: '#/components/schemas/ErrorType'
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Message
-          description: (User visible) error message
-      type: object
-      required:
-      - error_type
-      title: ErrorStatus
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

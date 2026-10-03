@@ -75,69 +75,11 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    TripImportResponse:
-      properties:
-        errors:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ErrorStatus'
-            type: array
-          - type: 'null'
-          title: Errors
-          description: List of errors that occurred during the webhook processing. If empty/omitted, the webhook was processed successfully.
-          examples:
-          - error_message: The payload is invalid.
-            error_type: USER_INPUT_ERROR
-          - error_message: Not supported.
-            error_type: NOT_SUPPORTED
-          - error_message: Unknown error.
-            error_type: INTERNAL_ERROR
-      type: object
-      title: TripImportResponse
-    TripImportResource:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: ID of the resource in Qargo
-      type: object
-      required:
-      - id
-      title: TripImportResource
     TripImportStatus:
       type: string
       enum:
       - CANCELLED
       title: TripImportStatus
-    TripImportUnassignedStop:
-      properties:
-        stop_id:
-          type: string
-          format: uuid
-          title: Stop Id
-          description: ID of the stop that couldn't be assigned
-        reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reason
-          description: Reason for not being able to assign the stop
-      type: object
-      required:
-      - stop_id
-      title: TripImportUnassignedStop
-    TripImportLocation:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: ID of the location in Qargo
-      type: object
-      title: TripImportLocation
     ValidationError:
       properties:
         loc:
@@ -159,72 +101,23 @@ components:
       - msg
       - type
       title: ValidationError
-    ErrorType:
-      type: string
-      enum:
-      - USER_INPUT_ERROR
-      - INTERNAL_ERROR
-      - NOT_SUPPORTED
-      title: ErrorType
-    ValidationErrorDetail:
+    TripImportUnassignedStop:
       properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
+        stop_id:
           type: string
-        field:
+          format: uuid
+          title: Stop Id
+          description: ID of the stop that couldn't be assigned
+        reason:
           anyOf:
           - type: string
           - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
+          title: Reason
+          description: Reason for not being able to assign the stop
+      type: object
       required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - stop_id
+      title: TripImportUnassignedStop
     TripImportInput:
       properties:
         trip_identifier:
@@ -276,13 +169,17 @@ components:
       required:
       - planned_stops
       title: TripImportInput
-    FixedTimestampType:
-      type: string
-      enum:
-      - ENFORCED_TIMEWINDOW
-      - SET_BY_USER
-      - CALCULATED
-      title: FixedTimestampType
+    TripImportResource:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: ID of the resource in Qargo
+      type: object
+      required:
+      - id
+      title: TripImportResource
     TripImportStop:
       properties:
         sequence:
@@ -334,6 +231,15 @@ components:
       - start_timestamp
       - end_timestamp
       title: TripImportStop
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ErrorStatus:
       properties:
         error_type:
@@ -348,6 +254,100 @@ components:
       required:
       - error_type
       title: ErrorStatus
+    FixedTimestampType:
+      type: string
+      enum:
+      - ENFORCED_TIMEWINDOW
+      - SET_BY_USER
+      - CALCULATED
+      title: FixedTimestampType
+    TripImportLocation:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: ID of the location in Qargo
+      type: object
+      title: TripImportLocation
+    TripImportResponse:
+      properties:
+        errors:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ErrorStatus'
+            type: array
+          - type: 'null'
+          title: Errors
+          description: List of errors that occurred during the webhook processing. If empty/omitted, the webhook was processed successfully.
+          examples:
+          - error_message: The payload is invalid.
+            error_type: USER_INPUT_ERROR
+          - error_message: Not supported.
+            error_type: NOT_SUPPORTED
+          - error_message: Unknown error.
+            error_type: INTERNAL_ERROR
+      type: object
+      title: TripImportResponse
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    ErrorType:
+      type: string
+      enum:
+      - USER_INPUT_ERROR
+      - INTERNAL_ERROR
+      - NOT_SUPPORTED
+      title: ErrorType
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

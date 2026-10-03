@@ -109,64 +109,58 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    VisibilityOrder:
+    TripUpdate:
       properties:
         id:
-          type: string
-          format: uuid
-          title: Id
-          description: Order ID in Qargo
-        order_name:
-          type: string
-          title: Order Name
-          description: Order name in Qargo
-          examples:
-          - INV-7980
-        customer_reference_number:
           anyOf:
           - type: string
+            format: uuid
           - type: 'null'
-          title: Customer Reference Number
-          description: Customer reference
-        customer:
-          anyOf:
-          - $ref: '#/components/schemas/VisibilityCustomer'
-          - type: 'null'
-          description: Customer details
+          title: Id
+        type:
+          type: string
+          const: Trip
+          title: Type
         status:
-          $ref: '#/components/schemas/VisibilityOrderStatus'
-          description: 'Status of an order. We only send an update for the following status updates:
-
-            - ACCEPTED
-
-            - REJECTED
-
-            - COMPLETED
-
-            '
+          $ref: '#/components/schemas/VisibilityTripStatus'
+      type: object
+      required:
+      - type
+      - status
+      title: TripUpdate
+      description: Send update event on trip status transitions.
+    ResourceUpdate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+        type:
+          type: string
+          const: Resource
+          title: Type
+        resource:
+          $ref: '#/components/schemas/VisibilityResource'
         custom_fields:
           anyOf:
           - type: object
           - type: 'null'
           title: Custom Fields
-        stops:
-          items:
-            $ref: '#/components/schemas/VisibilityStop'
-          type: array
-          title: Stops
-          description: Stops included in this order
-        consignment:
-          anyOf:
-          - $ref: '#/components/schemas/VisibilityConsignment'
-          - type: 'null'
-          description: Consignment details for this order
       type: object
       required:
-      - id
-      - order_name
-      - status
-      - stops
-      title: VisibilityOrder
+      - type
+      - resource
+      title: ResourceUpdate
+      description: 'Send update event on resource assignment (allocation).
+
+
+        Not that by default, we can send updates on every resource assignment change.
+
+        This can be customised to only send an update at the moment that the transport
+
+        is dispatched to the driver or subcontractor.'
     StopUpdate:
       properties:
         id:
@@ -188,11 +182,463 @@ components:
       - stop
       title: StopUpdate
       description: Send update event on stop status change, from order perspective.
-    PurchaseCreditNoteStatusUpdate:
+    VisibilityConsignment:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Consignment ID
+        goods:
+          items:
+            $ref: '#/components/schemas/VisibilityGood'
+          type: array
+          title: Goods
+          description: List of goods in this consignment
+      type: object
+      required:
+      - id
+      title: VisibilityConsignment
+    Entity:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+      type: object
+      title: Entity
+    PackagingSize:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        height_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Height M
+          description: Height in meters
+        length_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Length M
+          description: Length in meters
+        width_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Width M
+          description: Width in meters
+        weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Weight Kg
+          description: Weight in kg
+        loading_meters:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Loading Meters
+          description: Loading meters
+        pallet_spaces:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Pallet Spaces
+          description: Pallet spaces
+      type: object
+      title: PackagingSize
+    VisibilityDocumentType:
+      type: string
+      enum:
+      - CONSIGNEE_SIGNATURE
+      - CUSTOMER_PAPERWORK
+      - PHOTO_OF_GOODS_DELIVERY
+      - PROOF_OF_DELIVERY
+      - PROOF_OF_DELIVERY_SIGNED
+      - PALLET_LABEL
+      - PALLET_LABEL_EXTERNAL
+      - TEMPERATURE_REPORT
+      title: VisibilityDocumentType
+    OrderUpdate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+        type:
+          type: string
+          const: Order
+          title: Type
+        update_type:
+          $ref: '#/components/schemas/OrderUpdateType'
+          description: "Type of update:\n    - STATUS: Status update, see status field\n    - COST_APPROVAL_REQUEST: Cost approval request\n    - CUSTOM: Custom event, see custom_event_code field\n"
+          default: STATUS
+        custom_event_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Event Code
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/VisibilityOrderStatus'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      title: OrderUpdate
+      description: Send update event on order status change.
+    VisibilityDocument:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: file name
+        document_type:
+          $ref: '#/components/schemas/VisibilityDocumentType'
+        document_content:
+          anyOf:
+          - $ref: '#/components/schemas/RemoteDocument'
+          - $ref: '#/components/schemas/EmbeddedDocument'
+          title: Document Content
+        subject:
+          anyOf:
+          - $ref: '#/components/schemas/VisibilityOrderReference'
+          - $ref: '#/components/schemas/VisibilityConsignmentReference'
+          - $ref: '#/components/schemas/VisibilityStopReference'
+          title: Subject
+      type: object
+      required:
+      - name
+      - document_type
+      - document_content
+      - subject
+      title: VisibilityDocument
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PackagingType:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        export_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Export Alias
+          description: Alias defined in the Qargo config
+        packaging_size:
+          anyOf:
+          - $ref: '#/components/schemas/PackagingSize'
+          - type: 'null'
+          description: Size of packaging, for example Europallet
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+      type: object
+      title: PackagingType
+    HandlingUnitUpdate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+        type:
+          type: string
+          const: HandlingUnit
+          title: Type
+        status:
+          $ref: '#/components/schemas/VisibilityHandlingUnitStatus'
+          description: 'Handling unit status. We only send an update for the following status updates:
+
+            - SCANNED_IN
+
+            - STORED
+
+            - SCANNED_OUT
+
+            '
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+          description: Timestamp of the status change in UTC. For barcodes scans, this will be the timestamp at which the scan was performed.
+        barcode:
+          $ref: '#/components/schemas/BarcodeOutput'
+          description: Barcode information
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+          description: User who created the scan
+        stop_location_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stop Location Code
+          description: Optional code used to describe the location of the scan.
+          examples:
+          - DEPOT-001
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        source_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Status
+          description: The status as provided to Qargo by an external system
+        stop:
+          anyOf:
+          - $ref: '#/components/schemas/VisibilityStop'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      - status
+      - timestamp
+      - barcode
+      title: HandlingUnitUpdate
+      description: Send update event when a handling unit is updated in Qargo.
+    PackagedItemOutput-Input:
+      properties:
+        adr:
+          anyOf:
+          - $ref: '#/components/schemas/ADR-Input'
+          - type: 'null'
+        barcodes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Barcodes
+          description: List of barcodes associated with the packaged item
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        import_export:
+          anyOf:
+          - $ref: '#/components/schemas/PackagedItemsImportExportExtraFields'
+          - type: 'null'
+        packaging_type:
+          anyOf:
+          - $ref: '#/components/schemas/PackagingType'
+          - type: 'null'
+          description: Packaging type, for example Pallet
+        quantity:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Quantity
+          description: Quantity of packaged items
+        total_net_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Net Weight Kg
+          description: Total net weight of packaged items in KG
+        total_volume_l:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Volume L
+          description: Total volume of packaged items in liter
+        total_weight_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Weight Kg
+          description: Total weight of packaged items in KG
+        unit_height_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Height M
+        unit_length_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Length M
+        unit_width_m:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Unit Width M
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the packaged item
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier for this packaged item
+      type: object
+      required:
+      - id
+      title: PackagedItemOutput
+    VisibilityQuantityByType:
+      properties:
+        actual:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Actual
+          description: Actual quantity of goods
+        ordered:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Ordered
+          description: Ordered quantity of goods
+      type: object
+      title: VisibilityQuantityByType
+    HSCode:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Harmonized System Code for the good
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the HS code
+      type: object
+      title: HSCode
+    VisibilityStopStatus:
+      type: string
+      enum:
+      - TO_PLAN
+      - DISPATCHED
+      - ROUTE_TO_STOP
+      - PLANNED
+      - TODO
+      - AT_STOP
+      - COMPLETED
+      - CANCELLED
+      title: VisibilityStopStatus
+    AccountingVisibilityUpdate:
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+          description: Event timestamp in UTC
+        updates:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SalesInvoiceStatusUpdate'
+            - $ref: '#/components/schemas/SalesCreditNoteStatusUpdate'
+            - $ref: '#/components/schemas/PurchaseInvoiceStatusUpdate'
+            - $ref: '#/components/schemas/PurchaseCreditNoteStatusUpdate'
+          type: array
+          title: Updates
+          description: Set of updates for invoices and credit notes. Note that by default these events will only trigger on status transitions, not on field changes. Note that this is a combination of invoicing and accounting updates.
+      type: object
+      required:
+      - timestamp
+      - updates
+      title: AccountingVisibilityUpdate
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    PurchaseInvoiceStatusUpdate:
       properties:
         type:
           type: string
-          const: PurchaseCreditNote
+          const: PurchaseInvoice
           title: Type
         id:
           type: string
@@ -200,13 +646,404 @@ components:
           title: Id
           description: ID of the invoice or credit note
         status:
-          $ref: '#/components/schemas/CreditNoteStatus'
+          $ref: '#/components/schemas/InvoiceStatus'
       type: object
       required:
       - type
       - id
       - status
-      title: PurchaseCreditNoteStatusUpdate
+      title: PurchaseInvoiceStatusUpdate
+    ADRType:
+      type: string
+      enum:
+      - ADR
+      - LIMITED_QUANTITY
+      title: ADRType
+    DocumentUpdate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+        type:
+          type: string
+          const: Document
+          title: Type
+        status:
+          $ref: '#/components/schemas/VisibilityDocumentStatus'
+        document:
+          $ref: '#/components/schemas/VisibilityDocument'
+      type: object
+      required:
+      - type
+      - status
+      - document
+      title: DocumentUpdate
+      description: Send update event when a document is uploaded to Qargo.
+    VisibilityStop:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Stop ID in Qargo
+        location:
+          $ref: '#/components/schemas/VisibilityLocation'
+        resources:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/VisibilityResource'
+            type: array
+          - type: 'null'
+          title: Resources
+          description: Resources involved on this stop
+        status:
+          $ref: '#/components/schemas/VisibilityStopStatus'
+        stop_type:
+          $ref: '#/components/schemas/VisibilityStopType'
+        eta_start_time:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Eta Start Time
+          description: Estimated arrival time (ETA) at the stop in UTC. ISO 8601 format.
+          examples:
+          - '2024-12-31T14:30:00Z'
+        eta_end_time:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Eta End Time
+          description: Estimated departure time (ETD) from the stop in UTC. ISO 8601 format.
+          examples:
+          - '2024-12-31T16:00:00Z'
+        actual_start_timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Actual Start Timestamp
+          description: Actual arrival timestamp in UTC. ISO 8601 format.
+          examples:
+          - '2024-12-31T14:45:00Z'
+        actual_end_timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Actual End Timestamp
+          description: Actual departure timestamp in UTC. ISO 8601 format.
+          examples:
+          - '2024-12-31T15:30:00Z'
+        stop_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stop Reference
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+          description: User-defined custom fields for the stop.
+      type: object
+      required:
+      - id
+      - location
+      - status
+      - stop_type
+      title: VisibilityStop
+    VisibilityOrderReference:
+      properties:
+        customer_reference_number:
+          type: string
+          title: Customer Reference Number
+      type: object
+      required:
+      - customer_reference_number
+      title: VisibilityOrderReference
+    InvoiceStatus:
+      type: string
+      enum:
+      - DRAFT
+      - PRE_INVOICED
+      - INVOICED
+      - INVOICE_POSTED
+      title: InvoiceStatus
+      description: 'Status description:
+
+        - DRAFT: Invoice is in draft state and not yet invoiced.
+
+        - PRE_INVOICED: Invoice is in pre-invoiced state and not yet invoiced (Purchase invoice only).
+
+        - INVOICED: Invoice is invoiced but not yet posted.
+
+        - INVOICE_POSTED: Invoice is invoiced and posted.'
+    VisibilityOrderImportStatus:
+      type: string
+      enum:
+      - IGNORED
+      title: VisibilityOrderImportStatus
+    VisibilityResource:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Resource ID in Qargo
+        type:
+          $ref: '#/components/schemas/ResourceType'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        license_plate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License Plate
+        container_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Container Number
+      type: object
+      required:
+      - type
+      title: VisibilityResource
+      description: 'Represents a resource: van, tractor, trailer and container.'
+    PackagedItemCommercialInvoiceExtraField:
+      properties:
+        value:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Value
+          description: Value of the commercial invoice
+      type: object
+      title: PackagedItemCommercialInvoiceExtraField
+    VisibilityDocumentStatus:
+      type: string
+      enum:
+      - CREATED
+      title: VisibilityDocumentStatus
+    PackagedItemsImportExportExtraFields:
+      properties:
+        hs_code_import:
+          anyOf:
+          - $ref: '#/components/schemas/HSCode'
+          - type: 'null'
+          description: Harmonized System Code for importing the good
+        hs_code_export:
+          anyOf:
+          - $ref: '#/components/schemas/HSCode'
+          - type: 'null'
+          description: Harmonized System Code for exporting the good
+        shipping_marks:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Shipping Marks
+          description: Shipping marks for the good
+        commercial_invoice:
+          anyOf:
+          - $ref: '#/components/schemas/PackagedItemCommercialInvoiceExtraField'
+          - type: 'null'
+        sps_flag:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Sps Flag
+          description: Sanitary & phytosanitary flag
+        sps_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sps Reference
+          description: CHED / IPAFFS reference
+        ggb_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ggb Reference
+          description: GGB reference (NL only)
+      type: object
+      title: PackagedItemsImportExportExtraFields
+    ADR-Input:
+      properties:
+        adr_name_by_locale:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Adr Name By Locale
+          description: Name of the packaged item in different locales
+        un_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Un Number
+          description: See https://adr-tool.com/lists-of-un-numbers
+        packaging_type:
+          anyOf:
+          - $ref: '#/components/schemas/ADRPackagingType'
+          - type: 'null'
+          description: Packaging type
+        emergency_phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emergency Phone Number
+          description: Emergency phone number
+        technical_name_by_locale:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Technical Name By Locale
+          description: Technical name of the packaged item
+        classification_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Classification Code
+          description: ADR classification code
+        transport_category_tunnel_restriction_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Transport Category Tunnel Restriction Code
+          description: A letter code (A-E) that reflects restrictions for carrying the substance through road tunnels - Helps improve ADR matching beyond just using UN number
+        packing_group:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Packing Group
+          description: Indicates danger level - Helps improve ADR matching beyond just using UN number
+        adr_class:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Adr Class
+          description: Identifies the primary hazard category of the substance - Helps improve ADR matching beyond just using UN number
+        physical_state:
+          anyOf:
+          - $ref: '#/components/schemas/ADRPhysicalState'
+          - type: 'null'
+          description: Describes the form of the substance. Indicates whether the substance is a solid, liquid or gas
+        hazard_identification_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Hazard Identification Number
+          description: Also known as Kemler code. Used in ADR labeling
+        division:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Division
+          description: ADR division/subclass (e.g. '1.2', '2.1'). Populated for classes 1, 2, 4, 5 and 6
+        labels:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Labels
+          description: 'Subsidiary hazard class labels (ADR), ''+''-separated when multiple. Example: ''6.1+5.1''.'
+        special_provisions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Special Provisions
+          description: 'ADR special provisions code(s) applying to this substance. Example: ''274 640D''.'
+      type: object
+      title: ADR
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
+    Position:
+      properties:
+        longitude:
+          type: number
+          title: Longitude
+          description: The longitude of the position
+        latitude:
+          type: number
+          title: Latitude
+          description: The latitude of the position
+      type: object
+      required:
+      - longitude
+      - latitude
+      title: Position
+    ADRPackagingType:
+      type: string
+      enum:
+      - BOX
+      - COMPOSITE_PACKAGING
+      - DRUM
+      - GAS_RECEPTABLE
+      - INTERMEDIATE_BULK_CONTAINER
+      - JERRICAN
+      - LARGE_PACKAGING
+      - LIGHT_GAUGE_METAL_PACKAGINGS
+      - BAG
+      - TANK_CONTAINER
+      title: ADRPackagingType
+    SalesInvoiceStatusUpdate:
+      properties:
+        type:
+          type: string
+          const: SalesInvoice
+          title: Type
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: ID of the invoice or credit note
+        status:
+          $ref: '#/components/schemas/InvoiceStatus'
+      type: object
+      required:
+      - type
+      - id
+      - status
+      title: SalesInvoiceStatusUpdate
+    VisibilityStopReference:
+      properties:
+        reference_number:
+          type: string
+          title: Reference Number
+      type: object
+      required:
+      - reference_number
+      title: VisibilityStopReference
     VisibilityGood:
       properties:
         description:
@@ -386,29 +1223,39 @@ components:
       required:
       - id
       title: VisibilityGood
-    VisibilityDocumentStatus:
+    VisibilityStopType:
       type: string
       enum:
-      - CREATED
-      title: VisibilityDocumentStatus
-    ValidationErrorResponse:
+      - PICKUP
+      - DELIVERY
+      - CUSTOM
+      title: VisibilityStopType
+    Incident:
       properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the incident
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
       type: object
+      title: Incident
     Product:
       properties:
         name:
@@ -434,64 +1281,42 @@ components:
           description: Store values for user defined fields
       type: object
       title: Product
-    ExtraField:
+    PositionUpdate:
       properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
+        type:
+          type: string
+          const: Position
+          title: Type
+        position:
+          $ref: '#/components/schemas/Position'
       type: object
-      title: ExtraField
-    ADRType:
+      required:
+      - type
+      - position
+      title: PositionUpdate
+      description: 'Send update event on resource (driver, vehicle, subcontractor) position update.
+
+
+        Spec only, under development 🚧",'
+    VisibilityOrderStatus:
       type: string
       enum:
-      - ADR
-      - LIMITED_QUANTITY
-      title: ADRType
-    Entity:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-      type: object
-      title: Entity
-    HSCode:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Harmonized System Code for the good
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the HS code
-      type: object
-      title: HSCode
+      - ACCEPTED
+      - REJECTED
+      - COMPLETED
+      - DRAFT
+      - QUOTE
+      - TO_PLAN
+      - PLANNED
+      - DEPARTED
+      - IN_TRANSIT
+      - INVOICE_READY
+      - DONT_INVOICE
+      - INVOICE_CREATED
+      - INVOICED
+      - INVOICE_POSTED
+      - CANCELLED
+      title: VisibilityOrderStatus
     BarcodeSource:
       type: string
       enum:
@@ -508,46 +1333,73 @@ components:
       - TPN
       - UPN
       title: BarcodeSource
-    ADRPackagingType:
-      type: string
-      enum:
-      - BOX
-      - COMPOSITE_PACKAGING
-      - DRUM
-      - GAS_RECEPTABLE
-      - INTERMEDIATE_BULK_CONTAINER
-      - JERRICAN
-      - LARGE_PACKAGING
-      - LIGHT_GAUGE_METAL_PACKAGINGS
-      - BAG
-      - TANK_CONTAINER
-      title: ADRPackagingType
-    VisibilityDocument:
+    VisibilityOrder:
       properties:
-        name:
+        id:
           type: string
-          title: Name
-          description: file name
-        document_type:
-          $ref: '#/components/schemas/VisibilityDocumentType'
-        document_content:
+          format: uuid
+          title: Id
+          description: Order ID in Qargo
+        order_name:
+          type: string
+          title: Order Name
+          description: Order name in Qargo
+          examples:
+          - INV-7980
+        customer_reference_number:
           anyOf:
-          - $ref: '#/components/schemas/RemoteDocument'
-          - $ref: '#/components/schemas/EmbeddedDocument'
-          title: Document Content
-        subject:
+          - type: string
+          - type: 'null'
+          title: Customer Reference Number
+          description: Customer reference
+        customer:
           anyOf:
-          - $ref: '#/components/schemas/VisibilityOrderReference'
-          - $ref: '#/components/schemas/VisibilityConsignmentReference'
-          - $ref: '#/components/schemas/VisibilityStopReference'
-          title: Subject
+          - $ref: '#/components/schemas/VisibilityCustomer'
+          - type: 'null'
+          description: Customer details
+        status:
+          $ref: '#/components/schemas/VisibilityOrderStatus'
+          description: 'Status of an order. We only send an update for the following status updates:
+
+            - ACCEPTED
+
+            - REJECTED
+
+            - COMPLETED
+
+            '
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        stops:
+          items:
+            $ref: '#/components/schemas/VisibilityStop'
+          type: array
+          title: Stops
+          description: Stops included in this order
+        consignment:
+          anyOf:
+          - $ref: '#/components/schemas/VisibilityConsignment'
+          - type: 'null'
+          description: Consignment details for this order
       type: object
       required:
-      - name
-      - document_type
-      - document_content
-      - subject
-      title: VisibilityDocument
+      - id
+      - order_name
+      - status
+      - stops
+      title: VisibilityOrder
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     CreditNoteStatus:
       type: string
       enum:
@@ -565,112 +1417,6 @@ components:
         - INVOICED: Credit note is credited but not yet posted.
 
         - POSTED: Credit note is credited and posted.'
-    VisibilityTrip:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Trip ID in Qargo
-        name:
-          type: string
-          title: Name
-          description: Trip name in Qargo
-        orders:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/VisibilityOrder'
-            type: array
-          - type: 'null'
-          title: Orders
-          description: Orders included in this trip
-        stops:
-          items:
-            $ref: '#/components/schemas/VisibilityStop'
-          type: array
-          title: Stops
-          description: Stops included in this trip
-      type: object
-      required:
-      - id
-      - name
-      - stops
-      title: VisibilityTrip
-    VisibilityStop:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Stop ID in Qargo
-        location:
-          $ref: '#/components/schemas/VisibilityLocation'
-        resources:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/VisibilityResource'
-            type: array
-          - type: 'null'
-          title: Resources
-          description: Resources involved on this stop
-        status:
-          $ref: '#/components/schemas/VisibilityStopStatus'
-        stop_type:
-          $ref: '#/components/schemas/VisibilityStopType'
-        eta_start_time:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Eta Start Time
-          description: Estimated arrival time (ETA) at the stop in UTC. ISO 8601 format.
-          examples:
-          - '2024-12-31T14:30:00Z'
-        eta_end_time:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Eta End Time
-          description: Estimated departure time (ETD) from the stop in UTC. ISO 8601 format.
-          examples:
-          - '2024-12-31T16:00:00Z'
-        actual_start_timestamp:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Actual Start Timestamp
-          description: Actual arrival timestamp in UTC. ISO 8601 format.
-          examples:
-          - '2024-12-31T14:45:00Z'
-        actual_end_timestamp:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Actual End Timestamp
-          description: Actual departure timestamp in UTC. ISO 8601 format.
-          examples:
-          - '2024-12-31T15:30:00Z'
-        stop_reference:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Stop Reference
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-          description: User-defined custom fields for the stop.
-      type: object
-      required:
-      - id
-      - location
-      - status
-      - stop_type
-      title: VisibilityStop
     VisibilityLocation:
       properties:
         name:
@@ -728,108 +1474,6 @@ components:
       required:
       - name
       title: VisibilityLocation
-    VisibilityConsignment:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Consignment ID
-        goods:
-          items:
-            $ref: '#/components/schemas/VisibilityGood'
-          type: array
-          title: Goods
-          description: List of goods in this consignment
-      type: object
-      required:
-      - id
-      title: VisibilityConsignment
-    VisibilityStopReference:
-      properties:
-        reference_number:
-          type: string
-          title: Reference Number
-      type: object
-      required:
-      - reference_number
-      title: VisibilityStopReference
-    VisibilityTripStatus:
-      type: string
-      enum:
-      - CREATED
-      - PLANNED
-      - COMPLETED
-      title: VisibilityTripStatus
-    ADRPhysicalState:
-      type: string
-      enum:
-      - UNKNOWN
-      - SOLID
-      - LIQUID
-      - GAS
-      - GAS_OR_LIQUID
-      title: ADRPhysicalState
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    VisibilityStopType:
-      type: string
-      enum:
-      - PICKUP
-      - DELIVERY
-      - CUSTOM
-      title: VisibilityStopType
-    PackagedItemCommercialInvoiceExtraField:
-      properties:
-        value:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Value
-          description: Value of the commercial invoice
-      type: object
-      title: PackagedItemCommercialInvoiceExtraField
-    EmbeddedDocument:
-      properties:
-        content:
-          type: string
-          title: Content
-          description: A base64 encoded representation of the document
-        mime_type:
-          type: string
-          title: Mime Type
-          description: A valid mime-type as per IANA specifications (https://www.iana.org/assignments/media-types/media-types.xhtml)
-          examples:
-          - application/json
-          - application/pdf
-        filename:
-          type: string
-          title: Filename
-      type: object
-      required:
-      - content
-      - mime_type
-      - filename
-      title: EmbeddedDocument
     ResourceType:
       type: string
       enum:
@@ -845,128 +1489,6 @@ components:
       - FERRY
       - TRAIN
       title: ResourceType
-    ResourceUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-        type:
-          type: string
-          const: Resource
-          title: Type
-        resource:
-          $ref: '#/components/schemas/VisibilityResource'
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-      type: object
-      required:
-      - type
-      - resource
-      title: ResourceUpdate
-      description: 'Send update event on resource assignment (allocation).
-
-
-        Not that by default, we can send updates on every resource assignment change.
-
-        This can be customised to only send an update at the moment that the transport
-
-        is dispatched to the driver or subcontractor.'
-    PackagingType:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        export_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Export Alias
-          description: Alias defined in the Qargo config
-        packaging_size:
-          anyOf:
-          - $ref: '#/components/schemas/PackagingSize'
-          - type: 'null'
-          description: Size of packaging, for example Europallet
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-      type: object
-      title: PackagingType
-    VisibilityOrderStatus:
-      type: string
-      enum:
-      - ACCEPTED
-      - REJECTED
-      - COMPLETED
-      - DRAFT
-      - QUOTE
-      - TO_PLAN
-      - PLANNED
-      - DEPARTED
-      - IN_TRANSIT
-      - INVOICE_READY
-      - DONT_INVOICE
-      - INVOICE_CREATED
-      - INVOICED
-      - INVOICE_POSTED
-      - CANCELLED
-      title: VisibilityOrderStatus
-    VisibilityQuantityByType:
-      properties:
-        actual:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Actual
-          description: Actual quantity of goods
-        ordered:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Ordered
-          description: Ordered quantity of goods
-      type: object
-      title: VisibilityQuantityByType
-    VisibilityConsignmentReference:
-      properties:
-        reference_number:
-          type: string
-          title: Reference Number
-      type: object
-      required:
-      - reference_number
-      title: VisibilityConsignmentReference
-    Position:
-      properties:
-        longitude:
-          type: number
-          title: Longitude
-          description: The longitude of the position
-        latitude:
-          type: number
-          title: Latitude
-          description: The latitude of the position
-      type: object
-      required:
-      - longitude
-      - latitude
-      title: Position
     RemoteDocument:
       properties:
         download_url:
@@ -977,456 +1499,6 @@ components:
       required:
       - download_url
       title: RemoteDocument
-    TripUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-        type:
-          type: string
-          const: Trip
-          title: Type
-        status:
-          $ref: '#/components/schemas/VisibilityTripStatus'
-      type: object
-      required:
-      - type
-      - status
-      title: TripUpdate
-      description: Send update event on trip status transitions.
-    HandlingUnitOutput-Input:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier for this handling unit
-        barcode:
-          anyOf:
-          - $ref: '#/components/schemas/BarcodeOutput'
-          - type: 'null'
-          description: Barcode information
-      type: object
-      required:
-      - id
-      title: HandlingUnitOutput
-    AccountingVisibilityUpdate:
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-          description: Event timestamp in UTC
-        updates:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/SalesInvoiceStatusUpdate'
-            - $ref: '#/components/schemas/SalesCreditNoteStatusUpdate'
-            - $ref: '#/components/schemas/PurchaseInvoiceStatusUpdate'
-            - $ref: '#/components/schemas/PurchaseCreditNoteStatusUpdate'
-          type: array
-          title: Updates
-          description: Set of updates for invoices and credit notes. Note that by default these events will only trigger on status transitions, not on field changes. Note that this is a combination of invoicing and accounting updates.
-      type: object
-      required:
-      - timestamp
-      - updates
-      title: AccountingVisibilityUpdate
-    ADR-Input:
-      properties:
-        adr_name_by_locale:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Adr Name By Locale
-          description: Name of the packaged item in different locales
-        un_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Un Number
-          description: See https://adr-tool.com/lists-of-un-numbers
-        packaging_type:
-          anyOf:
-          - $ref: '#/components/schemas/ADRPackagingType'
-          - type: 'null'
-          description: Packaging type
-        emergency_phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Emergency Phone Number
-          description: Emergency phone number
-        technical_name_by_locale:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Technical Name By Locale
-          description: Technical name of the packaged item
-        classification_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Classification Code
-          description: ADR classification code
-        transport_category_tunnel_restriction_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Transport Category Tunnel Restriction Code
-          description: A letter code (A-E) that reflects restrictions for carrying the substance through road tunnels - Helps improve ADR matching beyond just using UN number
-        packing_group:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Packing Group
-          description: Indicates danger level - Helps improve ADR matching beyond just using UN number
-        adr_class:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Adr Class
-          description: Identifies the primary hazard category of the substance - Helps improve ADR matching beyond just using UN number
-        physical_state:
-          anyOf:
-          - $ref: '#/components/schemas/ADRPhysicalState'
-          - type: 'null'
-          description: Describes the form of the substance. Indicates whether the substance is a solid, liquid or gas
-        hazard_identification_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Hazard Identification Number
-          description: Also known as Kemler code. Used in ADR labeling
-        division:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Division
-          description: ADR division/subclass (e.g. '1.2', '2.1'). Populated for classes 1, 2, 4, 5 and 6
-        labels:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Labels
-          description: 'Subsidiary hazard class labels (ADR), ''+''-separated when multiple. Example: ''6.1+5.1''.'
-        special_provisions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Special Provisions
-          description: 'ADR special provisions code(s) applying to this substance. Example: ''274 640D''.'
-      type: object
-      title: ADR
-    VisibilityCustomer:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Customer ID in Qargo
-        name:
-          type: string
-          title: Name
-          description: Customer name
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-          description: User defined additional fields.
-      type: object
-      required:
-      - name
-      title: VisibilityCustomer
-    VisibilityResource:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Resource ID in Qargo
-        type:
-          $ref: '#/components/schemas/ResourceType'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        license_plate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: License Plate
-        container_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Container Number
-      type: object
-      required:
-      - type
-      title: VisibilityResource
-      description: 'Represents a resource: van, tractor, trailer and container.'
-    PackagingSize:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        height_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Height M
-          description: Height in meters
-        length_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Length M
-          description: Length in meters
-        width_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Width M
-          description: Width in meters
-        weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Weight Kg
-          description: Weight in kg
-        loading_meters:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Loading Meters
-          description: Loading meters
-        pallet_spaces:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Pallet Spaces
-          description: Pallet spaces
-      type: object
-      title: PackagingSize
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    VisibilityOrderReference:
-      properties:
-        customer_reference_number:
-          type: string
-          title: Customer Reference Number
-      type: object
-      required:
-      - customer_reference_number
-      title: VisibilityOrderReference
-    VisibilityDimensionByType:
-      properties:
-        actual:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Actual
-          description: Actual dimension of goods
-        ordered:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Ordered
-          description: Ordered dimension of goods
-      type: object
-      title: VisibilityDimensionByType
-    OrderImportUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-        type:
-          type: string
-          const: OrderImport
-          title: Type
-        status:
-          $ref: '#/components/schemas/VisibilityOrderImportStatus'
-        input_data:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Input Data
-          description: Parsed input data for the order import instance.
-      type: object
-      required:
-      - type
-      - status
-      title: OrderImportUpdate
-    InvoiceStatus:
-      type: string
-      enum:
-      - DRAFT
-      - PRE_INVOICED
-      - INVOICED
-      - INVOICE_POSTED
-      title: InvoiceStatus
-      description: 'Status description:
-
-        - DRAFT: Invoice is in draft state and not yet invoiced.
-
-        - PRE_INVOICED: Invoice is in pre-invoiced state and not yet invoiced (Purchase invoice only).
-
-        - INVOICED: Invoice is invoiced but not yet posted.
-
-        - INVOICE_POSTED: Invoice is invoiced and posted.'
-    OrderUpdateType:
-      type: string
-      enum:
-      - STATUS
-      - COST_APPROVAL_REQUEST
-      - CUSTOM
-      title: OrderUpdateType
-    VisibilityStopStatus:
-      type: string
-      enum:
-      - TO_PLAN
-      - DISPATCHED
-      - ROUTE_TO_STOP
-      - PLANNED
-      - TODO
-      - AT_STOP
-      - COMPLETED
-      - CANCELLED
-      title: VisibilityStopStatus
-    SalesInvoiceStatusUpdate:
-      properties:
-        type:
-          type: string
-          const: SalesInvoice
-          title: Type
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: ID of the invoice or credit note
-        status:
-          $ref: '#/components/schemas/InvoiceStatus'
-      type: object
-      required:
-      - type
-      - id
-      - status
-      title: SalesInvoiceStatusUpdate
-    PackagedItemOutput-Input:
-      properties:
-        adr:
-          anyOf:
-          - $ref: '#/components/schemas/ADR-Input'
-          - type: 'null'
-        barcodes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Barcodes
-          description: List of barcodes associated with the packaged item
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        import_export:
-          anyOf:
-          - $ref: '#/components/schemas/PackagedItemsImportExportExtraFields'
-          - type: 'null'
-        packaging_type:
-          anyOf:
-          - $ref: '#/components/schemas/PackagingType'
-          - type: 'null'
-          description: Packaging type, for example Pallet
-        quantity:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Quantity
-          description: Quantity of packaged items
-        total_net_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Net Weight Kg
-          description: Total net weight of packaged items in KG
-        total_volume_l:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Volume L
-          description: Total volume of packaged items in liter
-        total_weight_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Weight Kg
-          description: Total weight of packaged items in KG
-        unit_height_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Height M
-        unit_length_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Length M
-        unit_width_m:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Unit Width M
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the packaged item
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier for this packaged item
-      type: object
-      required:
-      - id
-      title: PackagedItemOutput
     EtaUpdate:
       properties:
         id:
@@ -1452,7 +1524,160 @@ components:
       - stops
       title: EtaUpdate
       description: Send update event on stop ETA change.
-    DocumentUpdate:
+    VisibilityDimensionByType:
+      properties:
+        actual:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Actual
+          description: Actual dimension of goods
+        ordered:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Ordered
+          description: Ordered dimension of goods
+      type: object
+      title: VisibilityDimensionByType
+    OrderUpdateType:
+      type: string
+      enum:
+      - STATUS
+      - COST_APPROVAL_REQUEST
+      - CUSTOM
+      title: OrderUpdateType
+    ADRPhysicalState:
+      type: string
+      enum:
+      - UNKNOWN
+      - SOLID
+      - LIQUID
+      - GAS
+      - GAS_OR_LIQUID
+      title: ADRPhysicalState
+    VisibilityTripStatus:
+      type: string
+      enum:
+      - CREATED
+      - PLANNED
+      - COMPLETED
+      title: VisibilityTripStatus
+    VisibilityCustomer:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Customer ID in Qargo
+        name:
+          type: string
+          title: Name
+          description: Customer name
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+          description: User defined additional fields.
+      type: object
+      required:
+      - name
+      title: VisibilityCustomer
+    BarcodeOutput:
+      properties:
+        value:
+          anyOf:
+          - type: string
+            maxLength: 255
+          - type: 'null'
+          title: Value
+          description: Barcode value
+        source:
+          anyOf:
+          - $ref: '#/components/schemas/BarcodeSource'
+          - type: 'null'
+          description: Source system of the barcode
+      type: object
+      title: BarcodeOutput
+    VisibilityConsignmentReference:
+      properties:
+        reference_number:
+          type: string
+          title: Reference Number
+      type: object
+      required:
+      - reference_number
+      title: VisibilityConsignmentReference
+    HandlingUnitOutput-Input:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier for this handling unit
+        barcode:
+          anyOf:
+          - $ref: '#/components/schemas/BarcodeOutput'
+          - type: 'null'
+          description: Barcode information
+      type: object
+      required:
+      - id
+      title: HandlingUnitOutput
+    PurchaseCreditNoteStatusUpdate:
+      properties:
+        type:
+          type: string
+          const: PurchaseCreditNote
+          title: Type
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: ID of the invoice or credit note
+        status:
+          $ref: '#/components/schemas/CreditNoteStatus'
+      type: object
+      required:
+      - type
+      - id
+      - status
+      title: PurchaseCreditNoteStatusUpdate
+    VisibilityTrip:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Trip ID in Qargo
+        name:
+          type: string
+          title: Name
+          description: Trip name in Qargo
+        orders:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/VisibilityOrder'
+            type: array
+          - type: 'null'
+          title: Orders
+          description: Orders included in this trip
+        stops:
+          items:
+            $ref: '#/components/schemas/VisibilityStop'
+          type: array
+          title: Stops
+          description: Stops included in this trip
+      type: object
+      required:
+      - id
+      - name
+      - stops
+      title: VisibilityTrip
+    OrderImportUpdate:
       properties:
         id:
           anyOf:
@@ -1462,19 +1687,89 @@ components:
           title: Id
         type:
           type: string
-          const: Document
+          const: OrderImport
           title: Type
         status:
-          $ref: '#/components/schemas/VisibilityDocumentStatus'
-        document:
-          $ref: '#/components/schemas/VisibilityDocument'
+          $ref: '#/components/schemas/VisibilityOrderImportStatus'
+        input_data:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Input Data
+          description: Parsed input data for the order import instance.
       type: object
       required:
       - type
       - status
-      - document
-      title: DocumentUpdate
-      description: Send update event when a document is uploaded to Qargo.
+      title: OrderImportUpdate
+    SalesCreditNoteStatusUpdate:
+      properties:
+        type:
+          type: string
+          const: SalesCreditNote
+          title: Type
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: ID of the invoice or credit note
+        status:
+          $ref: '#/components/schemas/CreditNoteStatus'
+      type: object
+      required:
+      - type
+      - id
+      - status
+      title: SalesCreditNoteStatusUpdate
+    VisibilityHandlingUnitStatus:
+      type: string
+      enum:
+      - SCANNED_IN
+      - STORED
+      - SCANNED_OUT
+      title: VisibilityHandlingUnitStatus
+    ExtraField:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+      type: object
+      title: ExtraField
+    EmbeddedDocument:
+      properties:
+        content:
+          type: string
+          title: Content
+          description: A base64 encoded representation of the document
+        mime_type:
+          type: string
+          title: Mime Type
+          description: A valid mime-type as per IANA specifications (https://www.iana.org/assignments/media-types/media-types.xhtml)
+          examples:
+          - application/json
+          - application/pdf
+        filename:
+          type: string
+          title: Filename
+      type: object
+      required:
+      - content
+      - mime_type
+      - filename
+      title: EmbeddedDocument
     OperationalVisibilityUpdate:
       properties:
         events:
@@ -1497,172 +1792,6 @@ components:
       required:
       - events
       title: OperationalVisibilityUpdate
-    VisibilityOrderImportStatus:
-      type: string
-      enum:
-      - IGNORED
-      title: VisibilityOrderImportStatus
-    HandlingUnitUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-        type:
-          type: string
-          const: HandlingUnit
-          title: Type
-        status:
-          $ref: '#/components/schemas/VisibilityHandlingUnitStatus'
-          description: 'Handling unit status. We only send an update for the following status updates:
-
-            - SCANNED_IN
-
-            - STORED
-
-            - SCANNED_OUT
-
-            '
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-          description: Timestamp of the status change in UTC. For barcodes scans, this will be the timestamp at which the scan was performed.
-        barcode:
-          $ref: '#/components/schemas/BarcodeOutput'
-          description: Barcode information
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-          description: User who created the scan
-        stop_location_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Stop Location Code
-          description: Optional code used to describe the location of the scan.
-          examples:
-          - DEPOT-001
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        source_status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Source Status
-          description: The status as provided to Qargo by an external system
-        stop:
-          anyOf:
-          - $ref: '#/components/schemas/VisibilityStop'
-          - type: 'null'
-      type: object
-      required:
-      - type
-      - status
-      - timestamp
-      - barcode
-      title: HandlingUnitUpdate
-      description: Send update event when a handling unit is updated in Qargo.
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    VisibilityDocumentType:
-      type: string
-      enum:
-      - CONSIGNEE_SIGNATURE
-      - CUSTOMER_PAPERWORK
-      - PHOTO_OF_GOODS_DELIVERY
-      - PROOF_OF_DELIVERY
-      - PROOF_OF_DELIVERY_SIGNED
-      - PALLET_LABEL
-      - PALLET_LABEL_EXTERNAL
-      - TEMPERATURE_REPORT
-      title: VisibilityDocumentType
-    BarcodeOutput:
-      properties:
-        value:
-          anyOf:
-          - type: string
-            maxLength: 255
-          - type: 'null'
-          title: Value
-          description: Barcode value
-        source:
-          anyOf:
-          - $ref: '#/components/schemas/BarcodeSource'
-          - type: 'null'
-          description: Source system of the barcode
-      type: object
-      title: BarcodeOutput
-    Incident:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the incident
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-      type: object
-      title: Incident
-    VisibilityHandlingUnitStatus:
-      type: string
-      enum:
-      - SCANNED_IN
-      - STORED
-      - SCANNED_OUT
-      title: VisibilityHandlingUnitStatus
     VisibilityEvent:
       properties:
         timestamp:
@@ -1690,135 +1819,6 @@ components:
       - timestamp
       - update
       title: VisibilityEvent
-    PositionUpdate:
-      properties:
-        type:
-          type: string
-          const: Position
-          title: Type
-        position:
-          $ref: '#/components/schemas/Position'
-      type: object
-      required:
-      - type
-      - position
-      title: PositionUpdate
-      description: 'Send update event on resource (driver, vehicle, subcontractor) position update.
-
-
-        Spec only, under development 🚧",'
-    OrderUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-        type:
-          type: string
-          const: Order
-          title: Type
-        update_type:
-          $ref: '#/components/schemas/OrderUpdateType'
-          description: "Type of update:\n    - STATUS: Status update, see status field\n    - COST_APPROVAL_REQUEST: Cost approval request\n    - CUSTOM: Custom event, see custom_event_code field\n"
-          default: STATUS
-        custom_event_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Event Code
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/VisibilityOrderStatus'
-          - type: 'null'
-      type: object
-      required:
-      - type
-      title: OrderUpdate
-      description: Send update event on order status change.
-    SalesCreditNoteStatusUpdate:
-      properties:
-        type:
-          type: string
-          const: SalesCreditNote
-          title: Type
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: ID of the invoice or credit note
-        status:
-          $ref: '#/components/schemas/CreditNoteStatus'
-      type: object
-      required:
-      - type
-      - id
-      - status
-      title: SalesCreditNoteStatusUpdate
-    PackagedItemsImportExportExtraFields:
-      properties:
-        hs_code_import:
-          anyOf:
-          - $ref: '#/components/schemas/HSCode'
-          - type: 'null'
-          description: Harmonized System Code for importing the good
-        hs_code_export:
-          anyOf:
-          - $ref: '#/components/schemas/HSCode'
-          - type: 'null'
-          description: Harmonized System Code for exporting the good
-        shipping_marks:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Shipping Marks
-          description: Shipping marks for the good
-        commercial_invoice:
-          anyOf:
-          - $ref: '#/components/schemas/PackagedItemCommercialInvoiceExtraField'
-          - type: 'null'
-        sps_flag:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Sps Flag
-          description: Sanitary & phytosanitary flag
-        sps_reference:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sps Reference
-          description: CHED / IPAFFS reference
-        ggb_reference:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ggb Reference
-          description: GGB reference (NL only)
-      type: object
-      title: PackagedItemsImportExportExtraFields
-    PurchaseInvoiceStatusUpdate:
-      properties:
-        type:
-          type: string
-          const: PurchaseInvoice
-          title: Type
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: ID of the invoice or credit note
-        status:
-          $ref: '#/components/schemas/InvoiceStatus'
-      type: object
-      required:
-      - type
-      - id
-      - status
-      title: PurchaseInvoiceStatusUpdate
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

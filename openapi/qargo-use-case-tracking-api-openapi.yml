@@ -82,77 +82,6 @@ components:
         generic_id:
           matches_any:
           - CONT-001
-    TrackingUpdateFuelData:
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-          description: Timestamp at which tracking event occured
-          examples:
-          - '2024-01-15T10:30:00Z'
-        fuel_level_percentage:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Fuel Level Percentage
-          examples:
-          - 75
-      type: object
-      required:
-      - timestamp
-      title: TrackingUpdateFuelData
-    TrackingUpdateItem:
-      properties:
-        tracking_match:
-          $ref: '#/components/schemas/TrackingMatchTarget'
-        tracking_update_data:
-          items:
-            $ref: '#/components/schemas/TrackingUpdateData'
-          type: array
-          title: Tracking Update Data
-      type: object
-      required:
-      - tracking_match
-      title: TrackingUpdateItem
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
-    TrackingUpdateMileageData:
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-          description: Timestamp at which tracking event occured
-          examples:
-          - '2024-01-15T10:30:00Z'
-        mileage_meter:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Mileage Meter
-          examples:
-          - 150000
-      type: object
-      required:
-      - timestamp
-      title: TrackingUpdateMileageData
     FieldMatchInput:
       properties:
         matches_any:
@@ -162,62 +91,36 @@ components:
           title: Matches Any
       type: object
       title: FieldMatchInput
-    ErrorStatus:
+    TachographActivityEnum:
+      type: string
+      enum:
+      - DRIVING
+      - WORKING
+      - BREAK
+      - REST
+      - WAITING
+      - UNKNOWN
+      title: TachographActivityEnum
+    TrackingResourceMatchInput:
       properties:
-        error_type:
-          $ref: '#/components/schemas/ErrorType'
-        error_message:
+        driver:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/DriverMatchInput'
           - type: 'null'
-          title: Error Message
-          description: (User visible) error message
+        vehicle:
+          anyOf:
+          - $ref: '#/components/schemas/VehicleMatchInput'
+          - type: 'null'
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/SubcontractorMatchInput'
+          - type: 'null'
+        container:
+          anyOf:
+          - $ref: '#/components/schemas/ContainerMatchInput'
+          - type: 'null'
       type: object
-      required:
-      - error_type
-      title: ErrorStatus
-    SubcontractorMatchInput:
-      properties:
-        name:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-        generic_id:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-        integration_object_id:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-          description: 'The resource ID in the given context of your integration. '
-      type: object
-      title: SubcontractorMatchInput
-      example:
-        name:
-          matches_any:
-          - Acme Logistics
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      title: TrackingResourceMatchInput
     VehicleMatchInput:
       properties:
         name:
@@ -239,15 +142,72 @@ components:
         generic_id:
           matches_any:
           - VEH-001
-    TrackingMatchTarget:
+    ValidationErrorDetail:
       properties:
-        matches_any:
-          items:
-            $ref: '#/components/schemas/TrackingMatchInput'
-          type: array
-          title: Matches Any
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
       type: object
-      title: TrackingMatchTarget
+    SubcontractorMatchInput:
+      properties:
+        name:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+        generic_id:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+        integration_object_id:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+          description: 'The resource ID in the given context of your integration. '
+      type: object
+      title: SubcontractorMatchInput
+      example:
+        name:
+          matches_any:
+          - Acme Logistics
+    TrackingUpdateItem:
+      properties:
+        tracking_match:
+          $ref: '#/components/schemas/TrackingMatchTarget'
+        tracking_update_data:
+          items:
+            $ref: '#/components/schemas/TrackingUpdateData'
+          type: array
+          title: Tracking Update Data
+      type: object
+      required:
+      - tracking_match
+      title: TrackingUpdateItem
     TrackingUpdateTemperatureMeasurement:
       properties:
         sensor:
@@ -267,14 +227,64 @@ components:
       - sensor
       - temperature
       title: TrackingUpdateTemperatureMeasurement
-    TrackingMatchInput:
+    TrackingUpdatePayload:
       properties:
-        resource:
+        updates:
+          items:
+            $ref: '#/components/schemas/TrackingUpdateItem'
+          type: array
+          title: Updates
+          description: List of tracking updates to process
+      type: object
+      title: TrackingUpdatePayload
+    TrackingUpdateWeightData:
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+          description: Timestamp at which tracking event occured
+          examples:
+          - '2024-01-15T10:30:00Z'
+        axle_weight:
           anyOf:
-          - $ref: '#/components/schemas/TrackingResourceMatchInput'
+          - type: number
+          - type: 'null'
+          title: Axle Weight
+          examples:
+          - 8500
+      type: object
+      required:
+      - timestamp
+      title: TrackingUpdateWeightData
+    TrackingUpdateData:
+      properties:
+        position:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingUpdatePositionData'
+          - type: 'null'
+        temperature:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingUpdateTemperatureData'
+          - type: 'null'
+        tachograph:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingUpdateTachographData'
+          - type: 'null'
+        fuel:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingUpdateFuelData'
+          - type: 'null'
+        mileage:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingUpdateMileageData'
+          - type: 'null'
+        weight:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingUpdateWeightData'
           - type: 'null'
       type: object
-      title: TrackingMatchInput
+      title: TrackingUpdateData
     DriverMatchInput:
       properties:
         name:
@@ -319,53 +329,6 @@ components:
       required:
       - timestamp
       title: TrackingUpdateTemperatureData
-    TrackingUpdateData:
-      properties:
-        position:
-          anyOf:
-          - $ref: '#/components/schemas/TrackingUpdatePositionData'
-          - type: 'null'
-        temperature:
-          anyOf:
-          - $ref: '#/components/schemas/TrackingUpdateTemperatureData'
-          - type: 'null'
-        tachograph:
-          anyOf:
-          - $ref: '#/components/schemas/TrackingUpdateTachographData'
-          - type: 'null'
-        fuel:
-          anyOf:
-          - $ref: '#/components/schemas/TrackingUpdateFuelData'
-          - type: 'null'
-        mileage:
-          anyOf:
-          - $ref: '#/components/schemas/TrackingUpdateMileageData'
-          - type: 'null'
-        weight:
-          anyOf:
-          - $ref: '#/components/schemas/TrackingUpdateWeightData'
-          - type: 'null'
-      type: object
-      title: TrackingUpdateData
-    TachographActivityEnum:
-      type: string
-      enum:
-      - DRIVING
-      - WORKING
-      - BREAK
-      - REST
-      - WAITING
-      - UNKNOWN
-      title: TachographActivityEnum
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     TrackingUpdatePositionData:
       properties:
         timestamp:
@@ -391,68 +354,23 @@ components:
       - latitude
       - longitude
       title: TrackingUpdatePositionData
-    TrackingUpdatePayload:
+    TrackingMatchInput:
       properties:
-        updates:
+        resource:
+          anyOf:
+          - $ref: '#/components/schemas/TrackingResourceMatchInput'
+          - type: 'null'
+      type: object
+      title: TrackingMatchInput
+    TrackingMatchTarget:
+      properties:
+        matches_any:
           items:
-            $ref: '#/components/schemas/TrackingUpdateItem'
+            $ref: '#/components/schemas/TrackingMatchInput'
           type: array
-          title: Updates
-          description: List of tracking updates to process
+          title: Matches Any
       type: object
-      title: TrackingUpdatePayload
-    TrackingUpdateWeightData:
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-          description: Timestamp at which tracking event occured
-          examples:
-          - '2024-01-15T10:30:00Z'
-        axle_weight:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Axle Weight
-          examples:
-          - 8500
-      type: object
-      required:
-      - timestamp
-      title: TrackingUpdateWeightData
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
+      title: TrackingMatchTarget
     ErrorType:
       type: string
       enum:
@@ -460,6 +378,45 @@ components:
       - INTERNAL_ERROR
       - NOT_SUPPORTED
       title: ErrorType
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     TrackingUpdateTachographData:
       properties:
         timestamp:
@@ -520,6 +477,55 @@ components:
       required:
       - timestamp
       title: TrackingUpdateTachographData
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TrackingUpdateMileageData:
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+          description: Timestamp at which tracking event occured
+          examples:
+          - '2024-01-15T10:30:00Z'
+        mileage_meter:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Mileage Meter
+          examples:
+          - 150000
+      type: object
+      required:
+      - timestamp
+      title: TrackingUpdateMileageData
+    TrackingUpdateFuelData:
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+          description: Timestamp at which tracking event occured
+          examples:
+          - '2024-01-15T10:30:00Z'
+        fuel_level_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Fuel Level Percentage
+          examples:
+          - 75
+      type: object
+      required:
+      - timestamp
+      title: TrackingUpdateFuelData
     TrackingUpdateResponse:
       properties:
         errors:
@@ -542,26 +548,20 @@ components:
       description: 'Response schema for the tracking update webhook.
 
         This schema is used to return errors or success messages.'
-    TrackingResourceMatchInput:
+    ErrorStatus:
       properties:
-        driver:
+        error_type:
+          $ref: '#/components/schemas/ErrorType'
+        error_message:
           anyOf:
-          - $ref: '#/components/schemas/DriverMatchInput'
+          - type: string
           - type: 'null'
-        vehicle:
-          anyOf:
-          - $ref: '#/components/schemas/VehicleMatchInput'
-          - type: 'null'
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/SubcontractorMatchInput'
-          - type: 'null'
-        container:
-          anyOf:
-          - $ref: '#/components/schemas/ContainerMatchInput'
-          - type: 'null'
+          title: Error Message
+          description: (User visible) error message
       type: object
-      title: TrackingResourceMatchInput
+      required:
+      - error_type
+      title: ErrorStatus
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

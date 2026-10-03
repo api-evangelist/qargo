@@ -62,100 +62,6 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    EInvoiceLineItem:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Freeform description field.
-          default: ''
-          examples:
-          - Charge description
-        amount:
-          anyOf:
-          - type: number
-          - type: string
-          title: Amount
-          description: Amount of the charge line.
-          examples:
-          - '100'
-        account:
-          anyOf:
-          - $ref: '#/components/schemas/api__order__models__charge__AccountInput'
-          - type: 'null'
-          description: Accounting account associated with this line item.
-        tax_rate:
-          anyOf:
-          - $ref: '#/components/schemas/api__accounting__models__invoice__TaxRate'
-          - type: 'null'
-          description: Tax rate applied to this line item.
-        currency:
-          type: string
-          title: Currency
-          description: Currency of the line item.
-          examples:
-          - USD
-        references:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: References
-          description: References associated with this line item.
-          examples:
-          - order_name: OR-1234
-      type: object
-      required:
-      - amount
-      - currency
-      title: EInvoiceLineItem
-    EInvoiceCompanyInput:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: The unique identifier of the company.
-        name:
-          type: string
-          title: Name
-          description: Name of the company.
-          examples:
-          - John Doe
-        vat_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vat Number
-          description: VAT number of the company.
-          examples:
-          - BE1234.123.123
-        billing_location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-          description: Billing address of the company.
-      type: object
-      required:
-      - name
-      title: EInvoiceCompanyInput
-    api__order__models__charge__AccountInput:
-      properties:
-        code:
-          type: string
-          title: Code
-          description: Code of the general ledger in the accounting software linked to this charge line.
-          examples:
-          - '200'
-      type: object
-      required:
-      - code
-      title: AccountInput
     ExchangeRate:
       properties:
         rate_date:
@@ -181,34 +87,6 @@ components:
       - rate
       - inverse_rate
       title: ExchangeRate
-    EInvoiceDocumentType:
-      type: string
-      enum:
-      - INVOICE
-      - CREDIT_NOTE
-      - OTHER
-      title: EInvoiceDocumentType
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     PurchaseECreditNoteInput:
       properties:
         name:
@@ -305,148 +183,6 @@ components:
       - line_items
       - invoice_type
       title: PurchaseECreditNoteInput
-    EInvoiceAttachment:
-      properties:
-        document:
-          $ref: '#/components/schemas/EInvoiceDocumentAttachment'
-      type: object
-      required:
-      - document
-      title: EInvoiceAttachment
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    EInvoiceDocumentAttachment:
-      properties:
-        base64:
-          type: string
-          title: Base64
-          description: Base64 encoded content of the document attachment.
-        content_type:
-          type: string
-          title: Content Type
-          description: MIME type of the document attachment, e.g., 'application/pdf', 'application/xml'.
-        document_type:
-          $ref: '#/components/schemas/EInvoiceDocumentType'
-          description: Type of the document attachment.
-        filename:
-          type: string
-          title: Filename
-          description: Filename of the document attachment.
-      type: object
-      required:
-      - base64
-      - content_type
-      - document_type
-      - filename
-      title: EInvoiceDocumentAttachment
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TaxRateType:
-      type: string
-      enum:
-      - VAT
-      - NO_VAT
-      - REVERSE_CHARGE
-      - TRANSIT
-      - CO_CONTRACTING
-      - OTHER
-      title: TaxRateType
-    api__accounting__models__invoice__TaxRate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Unique identifier of the tax rate in Qargo.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the Tax rate in Qargo.
-          examples:
-          - 21%
-        percentage:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Percentage
-          examples:
-          - 21
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the tax rate item in the accounting software.
-          examples:
-          - 21% VAT
-        tax_type:
-          anyOf:
-          - $ref: '#/components/schemas/TaxRateType'
-          - type: 'null'
-          default: VAT
-          examples:
-          - VAT
-      type: object
-      title: TaxRate
     PurchaseEInvoiceInput:
       properties:
         name:
@@ -551,6 +287,231 @@ components:
       - due_date
       - invoice_type
       title: PurchaseEInvoiceInput
+    EInvoiceDocumentAttachment:
+      properties:
+        base64:
+          type: string
+          title: Base64
+          description: Base64 encoded content of the document attachment.
+        content_type:
+          type: string
+          title: Content Type
+          description: MIME type of the document attachment, e.g., 'application/pdf', 'application/xml'.
+        document_type:
+          $ref: '#/components/schemas/EInvoiceDocumentType'
+          description: Type of the document attachment.
+        filename:
+          type: string
+          title: Filename
+          description: Filename of the document attachment.
+      type: object
+      required:
+      - base64
+      - content_type
+      - document_type
+      - filename
+      title: EInvoiceDocumentAttachment
+    EInvoiceCompanyInput:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: The unique identifier of the company.
+        name:
+          type: string
+          title: Name
+          description: Name of the company.
+          examples:
+          - John Doe
+        vat_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vat Number
+          description: VAT number of the company.
+          examples:
+          - BE1234.123.123
+        billing_location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+          description: Billing address of the company.
+      type: object
+      required:
+      - name
+      title: EInvoiceCompanyInput
+    EInvoiceLineItem:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Freeform description field.
+          default: ''
+          examples:
+          - Charge description
+        amount:
+          anyOf:
+          - type: number
+          - type: string
+          title: Amount
+          description: Amount of the charge line.
+          examples:
+          - '100'
+        account:
+          anyOf:
+          - $ref: '#/components/schemas/api__order__models__charge__AccountInput'
+          - type: 'null'
+          description: Accounting account associated with this line item.
+        tax_rate:
+          anyOf:
+          - $ref: '#/components/schemas/api__accounting__models__invoice__TaxRate'
+          - type: 'null'
+          description: Tax rate applied to this line item.
+        currency:
+          type: string
+          title: Currency
+          description: Currency of the line item.
+          examples:
+          - USD
+        references:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: References
+          description: References associated with this line item.
+          examples:
+          - order_name: OR-1234
+      type: object
+      required:
+      - amount
+      - currency
+      title: EInvoiceLineItem
+    api__accounting__models__invoice__TaxRate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Unique identifier of the tax rate in Qargo.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the Tax rate in Qargo.
+          examples:
+          - 21%
+        percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Percentage
+          examples:
+          - 21
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the tax rate item in the accounting software.
+          examples:
+          - 21% VAT
+        tax_type:
+          anyOf:
+          - $ref: '#/components/schemas/TaxRateType'
+          - type: 'null'
+          default: VAT
+          examples:
+          - VAT
+      type: object
+      title: TaxRate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EInvoiceDocumentType:
+      type: string
+      enum:
+      - INVOICE
+      - CREDIT_NOTE
+      - OTHER
+      title: EInvoiceDocumentType
+    TaxRateType:
+      type: string
+      enum:
+      - VAT
+      - NO_VAT
+      - REVERSE_CHARGE
+      - TRANSIT
+      - CO_CONTRACTING
+      - OTHER
+      title: TaxRateType
+    EInvoiceAttachment:
+      properties:
+        document:
+          $ref: '#/components/schemas/EInvoiceDocumentAttachment'
+      type: object
+      required:
+      - document
+      title: EInvoiceAttachment
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    api__order__models__charge__AccountInput:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Code of the general ledger in the accounting software linked to this charge line.
+          examples:
+          - '200'
+      type: object
+      required:
+      - code
+      title: AccountInput
     Location:
       properties:
         code:
@@ -662,6 +623,45 @@ components:
           description: External location identifier
       type: object
       title: Location
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2
