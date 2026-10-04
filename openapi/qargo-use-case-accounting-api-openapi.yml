@@ -75,24 +75,27 @@ components:
           - type: 'null'
       type: object
       title: BillingDocumentUpdate
-    BillingDocumentMatchInput:
+    ValidationError:
       properties:
-        sales_invoice:
-          $ref: '#/components/schemas/SalesInvoiceMatch'
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - sales_invoice
-      title: BillingDocumentMatchInput
-    BillingDocumentUpdatePayload:
-      properties:
-        updates:
-          items:
-            $ref: '#/components/schemas/BillingDocumentUpdate'
-          type: array
-          title: Updates
-          description: List of updates to process
-      type: object
-      title: BillingDocumentUpdatePayload
+      - loc
+      - msg
+      - type
+      title: ValidationError
     FieldMatchInput:
       properties:
         matches_any:
@@ -102,49 +105,6 @@ components:
           title: Matches Any
       type: object
       title: FieldMatchInput
-    SalesInvoiceUpdate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-        match:
-          $ref: '#/components/schemas/BillingDocumentMatchTarget'
-          description: Matcher for the billing document update, used to match to a billing document
-      type: object
-      title: SalesInvoiceUpdate
-    SalesInvoiceMatch:
-      properties:
-        name:
-          anyOf:
-          - $ref: '#/components/schemas/FieldMatchInput'
-          - type: 'null'
-      type: object
-      title: SalesInvoiceMatch
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BillingDocumentMatchTarget:
-      properties:
-        matches_all:
-          items:
-            $ref: '#/components/schemas/BillingDocumentMatchInput'
-          type: array
-          title: Matches All
-      type: object
-      title: BillingDocumentMatchTarget
     ValidationErrorDetail:
       properties:
         message:
@@ -177,27 +137,32 @@ components:
       - message
       title: ValidationErrorDetail
       type: object
-    ValidationError:
+    SalesInvoiceMatch:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+        name:
+          anyOf:
+          - $ref: '#/components/schemas/FieldMatchInput'
+          - type: 'null'
+      type: object
+      title: SalesInvoiceMatch
+    BillingDocumentMatchInput:
+      properties:
+        sales_invoice:
+          $ref: '#/components/schemas/SalesInvoiceMatch'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - sales_invoice
+      title: BillingDocumentMatchInput
+    BillingDocumentUpdatePayload:
+      properties:
+        updates:
+          items:
+            $ref: '#/components/schemas/BillingDocumentUpdate'
+          type: array
+          title: Updates
+          description: List of updates to process
+      type: object
+      title: BillingDocumentUpdatePayload
     ValidationErrorResponse:
       properties:
         message:
@@ -216,6 +181,41 @@ components:
       - errors
       title: ValidationErrorResponse
       type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SalesInvoiceUpdate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+        match:
+          $ref: '#/components/schemas/BillingDocumentMatchTarget'
+          description: Matcher for the billing document update, used to match to a billing document
+      type: object
+      title: SalesInvoiceUpdate
+    BillingDocumentMatchTarget:
+      properties:
+        matches_all:
+          items:
+            $ref: '#/components/schemas/BillingDocumentMatchInput'
+          type: array
+          title: Matches All
+      type: object
+      title: BillingDocumentMatchTarget
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

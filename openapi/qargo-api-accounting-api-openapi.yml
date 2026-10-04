@@ -2289,439 +2289,6 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    CreditPolicyInput:
-      properties:
-        limit:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Limit
-          description: The limit for total amount that has been invoiced but not paid.
-          examples:
-          - 10000
-      type: object
-      title: CreditPolicyInput
-    CompanyPartialInput:
-      properties:
-        is_customer:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Customer
-          description: Indicate that this company is a customer. At least one of `is_customer` or `is_subcontractor` must be set.
-        is_buyer_or_seller:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Buyer Or Seller
-          description: Indicates that this company is a buyer or seller of a consignment
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the company.
-          examples:
-          - John Doe
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: External reference to this company record
-          examples:
-          - ''
-        currency:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Currency
-          description: Currency of the company (ISO 4217, 3 letter code)
-          examples:
-          - EUR
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-          description: Custom fields of the company
-        credit_policy:
-          anyOf:
-          - $ref: '#/components/schemas/CreditPolicyInput'
-          - type: 'null'
-          description: Credit policy of the customer
-        default_invoice_customer_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Default Invoice Customer Id
-          description: ID of the default invoice customer (bill-to) for this company. When set, charges for this customer are billed to the referenced company instead.
-        is_subcontractor:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Subcontractor
-          description: Indicate that this company is a subcontractor (supplier). At least one of `is_customer` or `is_subcontractor` must be set.
-        archived_customer:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Archived Customer
-          description: Set to `true` to archive the customer role of this company, or `false` to reactivate it. Has no effect if `is_customer` is `false`.
-        archived_subcontractor:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Archived Subcontractor
-          description: Set to `true` to archive the subcontractor role of this company, or `false` to reactivate it. Has no effect if `is_subcontractor` is `false`.
-        legal_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Legal Name
-          description: Legal name of the company.
-          examples:
-          - John Doe
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the company. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        vat_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vat Number
-          description: VAT number of the company.
-          examples:
-          - BE1234.123.123
-        reference_numbers:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReferenceNumbers'
-          - type: 'null'
-          description: Reference numbers of the company
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Additional notes about the company
-          examples:
-          - ''
-        tax_type:
-          anyOf:
-          - $ref: '#/components/schemas/TaxTypeEnum'
-          - type: 'null'
-          description: DESCRIPTION_HERE
-          examples:
-          - VAT
-        bank_accounts:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BankAccount'
-            type: array
-          - type: 'null'
-          title: Bank Accounts
-          description: List of associated bank accounts.
-        accounting_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Accounting Code
-          description: Code linked to the accounting system
-          examples:
-          - '1234'
-        billing_location:
-          anyOf:
-          - $ref: '#/components/schemas/BillingLocation'
-          - type: 'null'
-          description: Billing address of the company.
-        payment_term:
-          anyOf:
-          - $ref: '#/components/schemas/BasePaymentTerm'
-          - type: 'null'
-          description: Payment term information of the company
-        contacts:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CompanyContactInput'
-            type: array
-          - type: 'null'
-          title: Contacts
-          description: List of contacts associated with the company
-        sales:
-          $ref: '#/components/schemas/SalesCompanyFields-Input'
-          description: Sales related fields of the company
-        purchase:
-          $ref: '#/components/schemas/PurchaseCompanyFields-Input'
-          description: Purchase related fields of the company
-        credit_limit_total:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Credit Limit Total
-          description: 'The limit for total amount that has been invoiced but not paid. **Deprecated**: use `credit_policy.limit` instead.'
-          deprecated: true
-          examples:
-          - 12000
-        is_blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Blocked
-          description: 'Set to true to disallow new order creation for companies representing companies.
-
-
-            **Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields.an update of `status` will always prevail over `is_blocked` update.'
-          deprecated: true
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/CustomerStatus'
-          - type: 'null'
-          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status.**Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields."
-          deprecated: true
-          examples:
-          - APPROVED
-      type: object
-      title: CompanyPartialInput
-    api__accounting__models__invoice__TaxRate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Unique identifier of the tax rate in Qargo.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the Tax rate in Qargo.
-          examples:
-          - 21%
-        percentage:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Percentage
-          examples:
-          - 21
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the tax rate item in the accounting software.
-          examples:
-          - 21% VAT
-        tax_type:
-          anyOf:
-          - $ref: '#/components/schemas/TaxRateType'
-          - type: 'null'
-          default: VAT
-          examples:
-          - VAT
-      type: object
-      title: TaxRate
-    Document:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the document
-        name:
-          type: string
-          title: Name
-          description: Name of the document
-        type:
-          type: string
-          title: Type
-          description: Type of the document
-        download_url:
-          type: string
-          title: Download Url
-          description: Relative URL from the base URL to download the document
-          default: ''
-        subject_type:
-          type: string
-          title: Subject Type
-          description: Linked subject of the document
-        content_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Content Type
-          description: Content type of the document
-      type: object
-      required:
-      - id
-      - name
-      - type
-      - subject_type
-      title: Document
-    api__order__models__charge__AccountOutput:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Accounting code
-      type: object
-      title: AccountOutput
-    TaskStatus:
-      type: string
-      enum:
-      - TODO
-      - COMPLETED
-      - FAILED
-      - WAITING
-      title: TaskStatus
-    TaskUpdateInput:
-      properties:
-        status:
-          $ref: '#/components/schemas/TaskStatusInput'
-        failure:
-          anyOf:
-          - $ref: '#/components/schemas/TaskFailureStatus'
-          - type: 'null'
-      type: object
-      required:
-      - status
-      title: TaskUpdateInput
-      description: 'Update task status on completion/failure.
-
-
-        The failure field can be used to provide more information on failure.'
-    SalesInvoicePatchInput:
-      properties:
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields.
-      type: object
-      title: SalesInvoicePatchInput
-    SalesCreditNotePatchInput:
-      properties:
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: User defined additional fields.
-      type: object
-      title: SalesCreditNotePatchInput
-    CompanyContactInput:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Unique identifier of the contact. When creating a new contact, this field should be omitted or set to null. This field only needs to be provided when updating an existing contact of the company
-        is_archived:
-          type: boolean
-          title: Is Archived
-          description: Indicates whether a contact should be archived. Set to true to archive the contact.
-          default: false
-        roles:
-          items:
-            $ref: '#/components/schemas/ContactType'
-          type: array
-          title: Roles
-          description: List of roles associated with the contact.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the contact person associated with the company.
-          examples:
-          - John Doe
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Additional notes about the contact person.
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-          description: Email address of the contact person.
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-          description: Phone number of the contact person. Expected format is E.164 (e.g., +32485123456).
-          examples:
-          - '+32485123456'
-      type: object
-      title: CompanyContactInput
-    ExternalExecutionMetadata:
-      properties:
-        completed:
-          type: boolean
-          title: Completed
-          default: false
-      type: object
-      title: ExternalExecutionMetadata
-    BillingEntity:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the billing entity in Qargo.
-        legal_name:
-          type: string
-          title: Legal Name
-          description: Legal name of the billing entity.
-          examples:
-          - Qargo BV
-        vat_number:
-          type: string
-          title: Vat Number
-          description: VAT number of the billing entity.
-          examples:
-          - NL123456789B01
-        code:
-          type: string
-          title: Code
-          description: Code of the billing entity.
-          examples:
-          - QARGO
-        company_registration_number:
-          type: string
-          title: Company Registration Number
-          description: Company registration number of the billing entity.
-          examples:
-          - '12345678'
-        is_default:
-          type: boolean
-          title: Is Default
-          description: Indicates whether this billing entity is the default one.
-          default: false
-      type: object
-      required:
-      - id
-      - legal_name
-      - vat_number
-      - code
-      - company_registration_number
-      title: BillingEntity
     PurchaseCreditNote:
       properties:
         id:
@@ -2843,78 +2410,129 @@ components:
       - status
       - task_type
       title: TaskDetail
-    ContactType:
-      type: string
-      enum:
-      - BILLING
-      - OPERATIONS
-      - BOOKINGS
-      - NOTIFICATIONS
-      - CLEANING
-      - HEATING
-      - STORAGE
-      - CONTAINER_RELEASE
-      - DRIVER
-      - OTHER
-      - CMR_PROCESSING
-      - PAYMENT_REMINDERS
-      - CLAIMS_INSURANCE
-      - CUSTOMS
-      - IT
-      - QUALITY
-      - SALES
-      - CUSTOMER_CONTACT
-      title: ContactType
-    ValidationErrorDetail:
+    CompanyContactInput:
       properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Unique identifier of the contact. When creating a new contact, this field should be omitted or set to null. This field only needs to be provided when updating an existing contact of the company
+        is_archived:
+          type: boolean
+          title: Is Archived
+          description: Indicates whether a contact should be archived. Set to true to archive the contact.
+          default: false
+        roles:
+          items:
+            $ref: '#/components/schemas/ContactType'
+          type: array
+          title: Roles
+          description: List of roles associated with the contact.
+        name:
           anyOf:
           - type: string
           - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
+          title: Name
+          description: Name of the contact person associated with the company.
+          examples:
+          - John Doe
+        note:
           anyOf:
           - type: string
           - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
+          title: Note
+          description: Additional notes about the contact person.
+        email:
           anyOf:
           - type: string
-          - type: object
           - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
+          title: Email
+          description: Email address of the contact person.
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+          description: Phone number of the contact person. Expected format is E.164 (e.g., +32485123456).
+          examples:
+          - '+32485123456'
       type: object
-    TaxRateReference:
+      title: CompanyContactInput
+    CreditPolicyInput:
       properties:
+        limit:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Limit
+          description: The limit for total amount that has been invoiced but not paid.
+          examples:
+          - 10000
+      type: object
+      title: CreditPolicyInput
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BillingEntity:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the billing entity in Qargo.
+        legal_name:
+          type: string
+          title: Legal Name
+          description: Legal name of the billing entity.
+          examples:
+          - Qargo BV
+        vat_number:
+          type: string
+          title: Vat Number
+          description: VAT number of the billing entity.
+          examples:
+          - NL123456789B01
         code:
           type: string
           title: Code
-          description: Code of the reference
+          description: Code of the billing entity.
+          examples:
+          - QARGO
+        company_registration_number:
+          type: string
+          title: Company Registration Number
+          description: Company registration number of the billing entity.
+          examples:
+          - '12345678'
+        is_default:
+          type: boolean
+          title: Is Default
+          description: Indicates whether this billing entity is the default one.
+          default: false
       type: object
       required:
+      - id
+      - legal_name
+      - vat_number
       - code
-      title: TaxRateReference
-    PurchaseInvoiceInput:
+      - company_registration_number
+      title: BillingEntity
+    SalesInvoicePatchInput:
       properties:
         custom_fields:
           type: object
           title: Custom Fields
           description: User defined additional fields.
       type: object
-      title: PurchaseInvoiceInput
+      title: SalesInvoicePatchInput
     SubjectType:
       type: string
       enum:
@@ -2923,6 +2541,36 @@ components:
       - PURCHASE_INVOICE
       - PURCHASE_CREDIT_NOTE
       title: SubjectType
+    TaskPayload:
+      properties:
+        subject_id:
+          type: string
+          format: uuid
+          title: Subject Id
+          description: Task target id
+        subject_type:
+          $ref: '#/components/schemas/SubjectType'
+          description: Task target type
+        documents:
+          items:
+            $ref: '#/components/schemas/Document'
+          type: array
+          title: Documents
+          description: List of related documents
+        instance:
+          anyOf:
+          - $ref: '#/components/schemas/SalesInvoiceOutput'
+          - $ref: '#/components/schemas/PurchaseInvoice'
+          - $ref: '#/components/schemas/SalesCreditNoteOutput'
+          - $ref: '#/components/schemas/PurchaseCreditNote'
+          title: Instance
+      type: object
+      required:
+      - subject_id
+      - subject_type
+      - instance
+      title: TaskPayload
+      description: Task execution input data.
     BasePaymentTerm:
       properties:
         code:
@@ -3046,405 +2694,43 @@ components:
       required:
       - code
       title: BasePaymentTerm
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ErrorType:
-      type: string
-      enum:
-      - USER_INPUT_ERROR
-      - INTERNAL_ERROR
-      - NOT_SUPPORTED
-      title: ErrorType
-    SalesInvoiceOutput:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-          description: Invoicing date
-          examples:
-          - '2022-01-01'
-        due_date:
-          type: string
-          format: date
-          title: Due Date
-          examples:
-          - '2022-01-01'
-        booking_date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Booking Date
-          description: booking date needs to be enabled else this will default to the date field
-          examples:
-          - '2021-12-22'
-        currency:
-          type: string
-          title: Currency
-          description: Currency code (ISO 4217).
-          examples:
-          - EUR
-        customer_reference_numbers:
-          items:
-            type: string
-          type: array
-          title: Customer Reference Numbers
-          description: PO numbers
-          default: []
-          examples:
-          - - '12345'
-        custom_fields:
-          type: object
-          title: Custom Fields
-          default: {}
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Technical id within the Qargo system
-        name:
-          type: string
-          title: Name
-          description: Name of the invoice.
-          examples:
-          - Invoice-0001
-        e_invoicing:
-          anyOf:
-          - $ref: '#/components/schemas/EInvoicingOutput'
-          - type: 'null'
-          description: E-invoicing registration metadata.
-        exchange_rate:
-          anyOf:
-          - $ref: '#/components/schemas/ExchangeRate'
-          - type: 'null'
-        total_excl_tax:
-          type: string
-          title: Total Excl Tax
-          examples:
-          - '100'
-        total_incl_tax:
-          type: string
-          title: Total Incl Tax
-          examples:
-          - '121'
-        total_tax:
-          type: string
-          title: Total Tax
-          examples:
-          - '21'
-        customer:
-          $ref: '#/components/schemas/CompanySummaryOutput'
-        line_items:
-          items:
-            $ref: '#/components/schemas/LineItem'
-          type: array
-          title: Line Items
-        billing_entity:
-          $ref: '#/components/schemas/BillingEntity'
-          description: Billing entity linked to this invoice.
-      type: object
-      required:
-      - date
-      - due_date
-      - currency
-      - id
-      - name
-      - total_excl_tax
-      - total_incl_tax
-      - total_tax
-      - customer
-      - line_items
-      - billing_entity
-      title: SalesInvoiceOutput
-    TaskFailureStatus:
-      properties:
-        error_type:
-          $ref: '#/components/schemas/ErrorType'
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Message
-          description: (User visible) error message
-      type: object
-      required:
-      - error_type
-      title: TaskFailureStatus
-    CurrencyCode:
-      type: string
-      enum:
-      - AED
-      - AFN
-      - ALL
-      - AMD
-      - ANG
-      - AOA
-      - ARS
-      - AUD
-      - AWG
-      - AZN
-      - BAM
-      - BBD
-      - BDT
-      - BGN
-      - BHD
-      - BIF
-      - BMD
-      - BND
-      - BOB
-      - BOV
-      - BRL
-      - BSD
-      - BTN
-      - BWP
-      - BYN
-      - BZD
-      - CAD
-      - CDF
-      - CHE
-      - CHF
-      - CHW
-      - CLF
-      - CLP
-      - CNY
-      - COP
-      - COU
-      - CRC
-      - CUP
-      - CVE
-      - CZK
-      - DJF
-      - DKK
-      - DOP
-      - DZD
-      - EGP
-      - ERN
-      - ETB
-      - EUR
-      - FJD
-      - FKP
-      - FOK
-      - GBP
-      - GEL
-      - GGP
-      - GHS
-      - GIP
-      - GMD
-      - GNF
-      - GTQ
-      - GYD
-      - HKD
-      - HNL
-      - HRK
-      - HTG
-      - HUF
-      - IDR
-      - ILS
-      - IMP
-      - INR
-      - IQD
-      - IRR
-      - ISK
-      - JEP
-      - JMD
-      - JOD
-      - JPY
-      - KES
-      - KGS
-      - KHR
-      - KID
-      - KMF
-      - KRW
-      - KWD
-      - KYD
-      - KZT
-      - LAK
-      - LBP
-      - LKR
-      - LRD
-      - LSL
-      - LYD
-      - MAD
-      - MDL
-      - MGA
-      - MKD
-      - MMK
-      - MNT
-      - MOP
-      - MRU
-      - MUR
-      - MVR
-      - MWK
-      - MXN
-      - MYR
-      - MZN
-      - NAD
-      - NGN
-      - NIO
-      - NOK
-      - NPR
-      - NZD
-      - OMR
-      - PAB
-      - PEN
-      - PGK
-      - PHP
-      - PKR
-      - PLN
-      - PYG
-      - QAR
-      - RON
-      - RSD
-      - RUB
-      - RWF
-      - SAR
-      - SBD
-      - SCR
-      - SDG
-      - SEK
-      - SGD
-      - SHP
-      - SLL
-      - SOS
-      - SRD
-      - SSP
-      - STN
-      - SYP
-      - SZL
-      - THB
-      - TJS
-      - TMT
-      - TND
-      - TOP
-      - TRY
-      - TTD
-      - TVD
-      - TWD
-      - TZS
-      - UAH
-      - UGX
-      - USD
-      - UYU
-      - UZS
-      - VES
-      - VND
-      - VUV
-      - WST
-      - XAF
-      - XAG
-      - XAU
-      - XBA
-      - XBB
-      - XBC
-      - XBD
-      - XCD
-      - XDR
-      - XOF
-      - XPD
-      - XPF
-      - XPT
-      - XSU
-      - XTS
-      - XUA
-      - XXX
-      - YER
-      - ZAR
-      - ZMW
-      - ZWL
-      title: CurrencyCode
-    ListAccountOutput:
-      properties:
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/api__accounting__models__master_data__AccountOutput'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: ListAccountOutput
-    AvailableTask:
+    Document:
       properties:
         id:
           type: string
           format: uuid
           title: Id
-        invoice_id:
+          description: Unique identifier of the document
+        name:
+          type: string
+          title: Name
+          description: Name of the document
+        type:
+          type: string
+          title: Type
+          description: Type of the document
+        download_url:
+          type: string
+          title: Download Url
+          description: Relative URL from the base URL to download the document
+          default: ''
+        subject_type:
+          type: string
+          title: Subject Type
+          description: Linked subject of the document
+        content_type:
           anyOf:
           - type: string
-            format: uuid
           - type: 'null'
-          title: Invoice Id
-        task_type:
-          $ref: '#/components/schemas/TaskType'
-        status:
-          $ref: '#/components/schemas/TaskStatus'
+          title: Content Type
+          description: Content type of the document
       type: object
       required:
       - id
-      - task_type
-      - status
-      title: AvailableTask
-      description: Reference to a task available for processing.
-    SubcontractorStatus:
-      type: string
-      enum:
-      - NOT_APPROVED
-      - APPROVED
-      - WARNING
-      - BLOCKED
-      title: SubcontractorStatus
-    ListExchangeRateOutput:
-      properties:
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/ExchangeRateOutput'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: ListExchangeRateOutput
-    PaymentStatusUpdate:
-      properties:
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
-      type: object
-      required:
-      - status
-      title: PaymentStatusUpdate
+      - name
+      - type
+      - subject_type
+      title: Document
     CompanyBillingEntity:
       properties:
         id:
@@ -3468,120 +2754,186 @@ components:
           description: Accounting code linked to the billing entity for the company.
       type: object
       title: CompanyBillingEntity
-    TaxRateOutput:
+    BankAccount:
+      properties:
+        bic_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bic Code
+        iban_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Iban Code
+      type: object
+      title: BankAccount
+    LineItem:
       properties:
         id:
-          type: string
-          format: uuid
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
           title: Id
-          description: Unique identifier of the record in Qargo.
-        archived:
-          type: boolean
-          title: Archived
-          description: Whether this record has been archived.
+          description: Unique id of this line item. A Qargo invoice line can be represented with multiple LineItems if revenue/cost split is enabled.
+        invoice_line_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Invoice Line Id
+          description: Technical id of the invoice within the Qargo system
         name:
           type: string
           title: Name
-          description: Display name of the tax rate.
-        billing_entity:
-          $ref: '#/components/schemas/BillingEntity'
-          description: Billing entity this tax rate belongs to.
-        percentage:
-          type: number
-          title: Percentage
-          description: Tax percentage, e.g. 21.0.
-        base_percentage:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Base Percentage
-          description: Base percentage before applying customer/transport-specific tax rules.
+          description: Name of the charge line.
+          examples:
+          - Fuel charge
+        amount:
+          type: string
+          title: Amount
+          description: Amount of the charge line.
+          examples:
+          - '100'
         code:
           type: string
           title: Code
-          description: Code used in the external accounting software.
-        tax_type:
-          $ref: '#/components/schemas/TaxRateType'
-          description: Tax type classification.
-        invoice_type:
-          $ref: '#/components/schemas/TaxRateInvoiceType'
-          description: Invoice type this tax rate applies to.
+          description: Code of the type of charge line.
+          examples:
+          - FUEL
+        account:
+          anyOf:
+          - $ref: '#/components/schemas/api__order__models__charge__AccountOutput'
+          - type: 'null'
         description:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Description
-          description: Optional description of the tax rate.
+          description: Freeform description field
+          default: ''
+          examples:
+          - Charge description
+        tax_rate:
+          anyOf:
+          - $ref: '#/components/schemas/api__accounting__models__invoice__TaxRate'
+          - type: 'null'
+        base_tax_rate:
+          anyOf:
+          - $ref: '#/components/schemas/BaseTaxRate'
+          - type: 'null'
+          description: Original tax rate before applying tax rules.
+        order_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Order Name
+          description: Linked Qargo order name, for cost charges.
+          examples:
+          - Order-0001
+        order_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Order Id
+          description: Linked Qargo order id, for cost charges.
+        trip_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Trip Id
+          description: Linked Qargo trip id, for cost charges
+        is_credit_charge:
+          type: boolean
+          title: Is Credit Charge
+          default: false
+          examples:
+          - false
+        invoice_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Invoice Name
+          description: Name of the source invoice this line item is linked to, if applicable.
+          examples:
+          - Invoice-0001
+        currency:
+          type: string
+          title: Currency
+          examples:
+          - USD
+        fraction:
+          type: string
+          title: Fraction
+          description: The api can split the charge lines according to revenue. This fraction indicates the percentage of the total amount of the split for this set of dimensions.
+          default: '1'
+          examples:
+          - '0.5'
+        dimension_1:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dimension 1
+        dimension_2:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dimension 2
+        dimension_3:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dimension 3
+        dimension_4:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dimension 4
+        dimension_5:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dimension 5
+        dimension_6:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dimension 6
       type: object
       required:
       - id
-      - archived
+      - invoice_line_id
       - name
-      - billing_entity
-      - percentage
+      - amount
       - code
-      - tax_type
-      - invoice_type
-      - description
-      title: TaxRateOutput
-    PurchaseCompanyFields-Output:
+      - currency
+      title: LineItem
+      description: 'Represents a single invoice/credit line item.
+
+
+        Note that a single invoice line can be split up in multiple line items
+
+        if revenue split is enabled.'
+    CustomerReference:
       properties:
-        payment_term:
+        id:
           anyOf:
-          - $ref: '#/components/schemas/BasePaymentTerm'
-          - type: 'null'
-          description: Payment term information of the company
-        billing_entities:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CompanyBillingEntity'
-            type: array
-          - type: 'null'
-          title: Billing Entities
-          description: List of billing entities associated with the company
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/SubcontractorStatus'
-          - type: 'null'
-          description: "The status indicates whether an order can be linked to this subcontractor. The available statuses are: \n - `NOT_APPROVED`: The subcontractor is not yet approved.\n - `APPROVED`: The subcontractor is approved.\n - `WARNING`: The subcontractor is approved, but a warning is triggered.\n - `BLOCKED`: The subcontractor is blocked; no new orders can be assigned."
-          default: APPROVED
-          examples:
-          - APPROVED
-      type: object
-      title: PurchaseCompanyFields
-    ExchangeRateInput:
-      properties:
-        exchange_rate:
-          anyOf:
-          - type: number
-            exclusiveMinimum: 0
           - type: string
-          title: Exchange Rate
-          description: The exchange rate value. Must be a positive number.
-        exchange_rate_date:
-          type: string
-          format: date
-          title: Exchange Rate Date
-          description: The date for this exchange rate.
-        from_currency:
-          $ref: '#/components/schemas/CurrencyCode'
-          description: Source currency code (ISO 4217).
-        to_currency:
-          $ref: '#/components/schemas/CurrencyCode'
-          description: Target currency code (ISO 4217).
-        inverse_exchange_rate:
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: The unique Qargo ID of the customer. Use this to distinguish between different customers sharing the same accounting code.
+        accounting_code:
           anyOf:
-          - type: number
-            exclusiveMinimum: 0
           - type: string
-          title: Inverse Exchange Rate
-          description: The inverse exchange rate value. Must be a positive number.
+          - type: 'null'
+          title: Accounting Code
+          description: Accounting code that uniquely identifies the customer in the accounting system.
       type: object
-      required:
-      - exchange_rate
-      - exchange_rate_date
-      - from_currency
-      - to_currency
-      - inverse_exchange_rate
-      title: ExchangeRateInput
+      title: CustomerReference
     BillingLocation:
       properties:
         code:
@@ -3664,15 +3016,40 @@ components:
           - Qargo HQ
       type: object
       title: BillingLocation
-    RefundStatusUpdate:
+    TaskStatus:
+      type: string
+      enum:
+      - TODO
+      - COMPLETED
+      - FAILED
+      - WAITING
+      title: TaskStatus
+    ExchangeRate:
       properties:
-        status:
-          $ref: '#/components/schemas/RefundStatus'
+        rate_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Rate Date
+          examples:
+          - '2022-01-01'
+        rate:
+          type: number
+          title: Rate
+          examples:
+          - 1
+        inverse_rate:
+          type: number
+          title: Inverse Rate
+          examples:
+          - 1
       type: object
       required:
-      - status
-      title: RefundStatusUpdate
-    PurchaseInvoice:
+      - rate
+      - inverse_rate
+      title: ExchangeRate
+    CompanyContactOutput:
       properties:
         id:
           anyOf:
@@ -3680,98 +3057,326 @@ components:
             format: uuid
           - type: 'null'
           title: Id
-          description: Technical id within the Qargo system
+          description: Unique identifier of the contact
+        roles:
+          items:
+            $ref: '#/components/schemas/ContactType'
+          type: array
+          title: Roles
+          description: List of roles associated with the contact.
         name:
-          type: string
-          title: Name
-          description: Reference from invoicing party
-          examples:
-          - Credit-Note-0001
-        external_name:
-          type: string
-          title: External Name
-          description: Reference from invoicing party
-        date:
-          type: string
-          format: date
-          title: Date
-          examples:
-          - '2022-01-01'
-        due_date:
-          type: string
-          format: date
-          title: Due Date
-          examples:
-          - '2022-01-01'
-        booking_date:
           anyOf:
           - type: string
-            format: date
           - type: 'null'
-          title: Booking Date
-          description: booking date needs to be enabled else this will default to the date field
+          title: Name
+          description: Name of the contact person associated with the company.
           examples:
-          - '2021-12-22'
+          - John Doe
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Additional notes about the contact person.
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+          description: Email address of the contact person.
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+          description: Phone number of the contact person.
+          examples:
+          - '+32485123456'
+      type: object
+      title: CompanyContactOutput
+    api__order__models__charge__AccountOutput:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Accounting code
+      type: object
+      title: AccountOutput
+    SubcontractorStatus:
+      type: string
+      enum:
+      - NOT_APPROVED
+      - APPROVED
+      - WARNING
+      - BLOCKED
+      title: SubcontractorStatus
+    SalesCompanyFields-Output:
+      properties:
+        payment_term:
+          anyOf:
+          - $ref: '#/components/schemas/BasePaymentTerm'
+          - type: 'null'
+          description: Payment term information of the company
+        billing_entities:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CompanyBillingEntity'
+            type: array
+          - type: 'null'
+          title: Billing Entities
+          description: List of billing entities associated with the company
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/CustomerStatus'
+          - type: 'null'
+          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status."
+          default: APPROVED
+          examples:
+          - APPROVED
+      type: object
+      title: SalesCompanyFields
+    BaseTaxRate:
+      properties:
+        percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Percentage
+          examples:
+          - 21
+      type: object
+      title: BaseTaxRate
+      description: Original base tax rate, before applying customer/transport specific tax rules.
+    CompanyInput:
+      properties:
+        is_customer:
+          type: boolean
+          title: Is Customer
+          description: Indicate that this company is a customer
+          default: false
+        is_buyer_or_seller:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Buyer Or Seller
+          description: Indicates that this company is a buyer or seller of a consignment
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the company.
+          examples:
+          - John Doe
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: External reference to this company record
+          examples:
+          - ''
         currency:
           type: string
           title: Currency
+          description: Currency of the company (ISO 4217, 3 letter code)
           examples:
           - EUR
-        exchange_rate:
-          anyOf:
-          - $ref: '#/components/schemas/ExchangeRate'
-          - type: 'null'
-        total_excl_tax:
-          type: string
-          title: Total Excl Tax
-          examples:
-          - '100'
-        total_incl_tax:
-          type: string
-          title: Total Incl Tax
-          examples:
-          - '121'
-        total_tax:
-          type: string
-          title: Total Tax
-          examples:
-          - '21'
         custom_fields:
-          type: object
+          anyOf:
+          - type: object
+          - type: 'null'
           title: Custom Fields
-          default: {}
-        supplier:
-          $ref: '#/components/schemas/CompanySummaryOutput'
-        customer_reference_numbers:
-          items:
-            type: string
-          type: array
-          title: Customer Reference Numbers
+          description: Custom fields of the company
+        credit_policy:
+          anyOf:
+          - $ref: '#/components/schemas/CreditPolicyInput'
+          - type: 'null'
+          description: Credit policy of the customer
+        default_invoice_customer_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Default Invoice Customer Id
+          description: ID of the default invoice customer (bill-to) for this company. When set, charges for this customer are billed to the referenced company instead.
+        is_subcontractor:
+          type: boolean
+          title: Is Subcontractor
+          description: Indicate that this company is a subcontractor (supplier)
+          default: false
+        archived_customer:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Archived Customer
+          description: Set to `true` to archive the customer role of this company, or `false` to reactivate it. Has no effect if `is_customer` is `false`.
+        archived_subcontractor:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Archived Subcontractor
+          description: Set to `true` to archive the subcontractor role of this company, or `false` to reactivate it. Has no effect if `is_subcontractor` is `false`.
+        legal_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Legal Name
+          description: Legal name of the company.
           examples:
-          - - '12345'
-        line_items:
-          items:
-            $ref: '#/components/schemas/LineItem'
-          type: array
-          title: Line Items
-        billing_entity:
-          $ref: '#/components/schemas/BillingEntity'
-          description: Billing entity linked to this invoice.
+          - John Doe
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the company. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        vat_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vat Number
+          description: VAT number of the company.
+          examples:
+          - BE1234.123.123
+        reference_numbers:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReferenceNumbers'
+          - type: 'null'
+          description: Reference numbers of the company
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Additional notes about the company
+          examples:
+          - ''
+        tax_type:
+          anyOf:
+          - $ref: '#/components/schemas/TaxTypeEnum'
+          - type: 'null'
+          description: DESCRIPTION_HERE
+          default: VAT
+          examples:
+          - VAT
+        bank_accounts:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BankAccount'
+            type: array
+          - type: 'null'
+          title: Bank Accounts
+          description: List of associated bank accounts.
+          default: []
+        accounting_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Accounting Code
+          description: Code linked to the accounting system
+          examples:
+          - '1234'
+        billing_location:
+          anyOf:
+          - $ref: '#/components/schemas/BillingLocation'
+          - type: 'null'
+          description: Billing address of the company.
+        payment_term:
+          anyOf:
+          - $ref: '#/components/schemas/BasePaymentTerm'
+          - type: 'null'
+          description: Payment term information of the company
+        contacts:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CompanyContactInput'
+            type: array
+          - type: 'null'
+          title: Contacts
+          description: List of contacts associated with the company
+        sales:
+          $ref: '#/components/schemas/SalesCompanyFields-Input'
+          description: Sales related fields of the company
+        purchase:
+          $ref: '#/components/schemas/PurchaseCompanyFields-Input'
+          description: Purchase related fields of the company
+        credit_limit_total:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Credit Limit Total
+          description: 'The limit for total amount that has been invoiced but not paid. **Deprecated**: use `credit_policy.limit` instead.'
+          deprecated: true
+          examples:
+          - 12000
+        is_blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Blocked
+          description: 'Set to true to disallow new order creation for companies representing companies.
+
+
+            **Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields.an update of `status` will always prevail over `is_blocked` update.'
+          deprecated: true
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/CustomerStatus'
+          - type: 'null'
+          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status.**Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields."
+          deprecated: true
+          examples:
+          - APPROVED
       type: object
       required:
-      - name
-      - external_name
-      - date
-      - due_date
       - currency
-      - total_excl_tax
-      - total_incl_tax
-      - total_tax
-      - supplier
-      - line_items
-      - billing_entity
-      title: PurchaseInvoice
-    BillingEntityReference:
+      title: CompanyInput
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TaskStatusInput:
+      type: string
+      enum:
+      - COMPLETED
+      - FAILED
+      title: TaskStatusInput
+    TaskUpdate:
+      properties:
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+      type: object
+      required:
+      - status
+      title: TaskUpdate
+      description: Update task status result.
+    PriceListItemReference:
       properties:
         code:
           type: string
@@ -3780,29 +3385,123 @@ components:
       type: object
       required:
       - code
-      title: BillingEntityReference
-    AvailableTasks:
+      title: PriceListItemReference
+    PurchaseCompanyFields-Input:
       properties:
-        tasks:
-          items:
-            $ref: '#/components/schemas/AvailableTask'
-          type: array
-          title: Tasks
+        payment_term:
+          anyOf:
+          - $ref: '#/components/schemas/BasePaymentTerm'
+          - type: 'null'
+          description: Payment term information of the company
+        billing_entities:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CompanyBillingEntity'
+            type: array
+          - type: 'null'
+          title: Billing Entities
+          description: List of billing entities associated with the company
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/SubcontractorStatus'
+          - type: 'null'
+          description: "The status indicates whether an order can be linked to this subcontractor. The available statuses are: \n - `NOT_APPROVED`: The subcontractor is not yet approved.\n - `APPROVED`: The subcontractor is approved.\n - `WARNING`: The subcontractor is approved, but a warning is triggered.\n - `BLOCKED`: The subcontractor is blocked; no new orders can be assigned."
+          default: APPROVED
+          examples:
+          - APPROVED
       type: object
-      required:
-      - tasks
-      title: AvailableTasks
-    TaxTypeEnum:
+      title: PurchaseCompanyFields
+    SalesCompanyFields-Input:
+      properties:
+        payment_term:
+          anyOf:
+          - $ref: '#/components/schemas/BasePaymentTerm'
+          - type: 'null'
+          description: Payment term information of the company
+        billing_entities:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CompanyBillingEntity'
+            type: array
+          - type: 'null'
+          title: Billing Entities
+          description: List of billing entities associated with the company
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/CustomerStatus'
+          - type: 'null'
+          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status."
+          default: APPROVED
+          examples:
+          - APPROVED
+      type: object
+      title: SalesCompanyFields
+    ExternalExecutionMetadata:
+      properties:
+        completed:
+          type: boolean
+          title: Completed
+          default: false
+      type: object
+      title: ExternalExecutionMetadata
+    CustomerStatus:
       type: string
       enum:
-      - VAT
-      - REVERSE_CHARGE
-      - TRANSIT
-      - NO_VAT
-      - CO_CONTRACTING
-      - OTHER
-      title: TaxTypeEnum
-    SalesCreditNoteInput:
+      - PROSPECT
+      - NOT_APPROVED
+      - APPROVED
+      - WARNING
+      - BLOCKED
+      title: CustomerStatus
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
+    RefundStatus:
+      type: string
+      enum:
+      - OPEN
+      - REFUNDED
+      title: RefundStatus
+    PurchaseCreditNoteInput:
+      properties:
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields.
+      type: object
+      title: PurchaseCreditNoteInput
+    PaymentStatusUpdate:
+      properties:
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+      type: object
+      required:
+      - status
+      title: PaymentStatusUpdate
+    PurchaseInvoiceInput:
+      properties:
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: User defined additional fields.
+      type: object
+      title: PurchaseInvoiceInput
+    SalesCreditNoteOutput:
       properties:
         date:
           type: string
@@ -3836,77 +3535,135 @@ components:
           title: Customer Reference Numbers
           examples:
           - - '12345'
-        customer:
-          $ref: '#/components/schemas/CustomerReference'
-          description: Customer reference for this credit note.
-        charges:
-          items:
-            $ref: '#/components/schemas/ChargeInput'
-          type: array
-          title: Charges
-        billing_entity:
+        id:
           anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: string
+            format: uuid
           - type: 'null'
-          description: Billing entity linked to this credit note. When having multiple billing entities make sure to specify the correct entity.
+          title: Id
+          description: Technical id within the Qargo system
+        name:
+          type: string
+          title: Name
+          examples:
+          - Credit-Note-0001
+        e_invoicing:
+          anyOf:
+          - $ref: '#/components/schemas/EInvoicingOutput'
+          - type: 'null'
+          description: E-invoicing registration metadata.
+        exchange_rate:
+          anyOf:
+          - $ref: '#/components/schemas/ExchangeRate'
+          - type: 'null'
+        total_excl_tax:
+          type: string
+          title: Total Excl Tax
+          examples:
+          - '100'
+        total_incl_tax:
+          type: string
+          title: Total Incl Tax
+          examples:
+          - '121'
+        total_tax:
+          type: string
+          title: Total Tax
+          examples:
+          - '21'
+        customer:
+          $ref: '#/components/schemas/CompanySummaryOutput'
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          title: Line Items
+        billing_entity:
+          $ref: '#/components/schemas/BillingEntity'
+          description: Billing entity linked to this credit note.
       type: object
       required:
       - date
       - currency
+      - id
+      - name
+      - total_excl_tax
+      - total_incl_tax
+      - total_tax
       - customer
-      - charges
-      title: SalesCreditNoteInput
-    ExchangeRate:
+      - line_items
+      - billing_entity
+      title: SalesCreditNoteOutput
+    CompanyReferenceNumbers:
       properties:
-        rate_date:
+        eori_number:
           anyOf:
           - type: string
-            format: date
           - type: 'null'
-          title: Rate Date
+          title: Eori Number
+          description: Economic Operator Registration and Identification
           examples:
-          - '2022-01-01'
-        rate:
-          type: number
-          title: Rate
+          - ''
+        duns_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Duns Number
+          description: D-U-N-S Number
           examples:
-          - 1
-        inverse_rate:
-          type: number
-          title: Inverse Rate
+          - ''
+        scac_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scac Code
+          description: Standard Carrier Alpha Code
           examples:
-          - 1
+          - ''
+        company_registration_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Company Registration Number
+          description: Company Registration Number
+          examples:
+          - ''
+        tss_registration_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tss Registration Number
+          description: TSS registration number
+          examples:
+          - ''
+      type: object
+      title: CompanyReferenceNumbers
+    api__accounting__models__company__CompanyReferenceOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: The unique identifier of the company.
+        name:
+          type: string
+          title: Name
+          description: Name of the company.
+          examples:
+          - John Doe
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: External reference to this company record
+          examples:
+          - CUST-001
       type: object
       required:
-      - rate
-      - inverse_rate
-      title: ExchangeRate
-    BankAccount:
-      properties:
-        bic_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bic Code
-        iban_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Iban Code
-      type: object
-      title: BankAccount
-    BaseTaxRate:
-      properties:
-        percentage:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Percentage
-          examples:
-          - 21
-      type: object
-      title: BaseTaxRate
-      description: Original base tax rate, before applying customer/transport specific tax rules.
+      - id
+      - name
+      title: CompanyReferenceOutput
     CompanyDetailOutput:
       properties:
         id:
@@ -4099,28 +3856,6 @@ components:
       - archived_buyer_or_seller
       - timestamp_updated
       title: CompanyDetailOutput
-    RefundStatus:
-      type: string
-      enum:
-      - OPEN
-      - REFUNDED
-      title: RefundStatus
-    ListCompanyOutput:
-      properties:
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/CompanyDetailOutput'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: ListCompanyOutput
     CreditPolicyOutput:
       properties:
         limit:
@@ -4133,7 +3868,108 @@ components:
           - 10000
       type: object
       title: CreditPolicyOutput
-    PurchaseCompanyFields-Input:
+    LocationOutput:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Technical code for integrations/mapping logic; should be treated as stable once set.
+          examples:
+          - LOC123
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+          description: Human-readable label for a location in operational views.
+          examples:
+          - Main Office
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: Identifier from an external (master data) system.
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: First address line of the location
+          examples:
+          - Gaston Crommenlaan 4
+        address_second_line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Second Line
+          description: Second address line of the location
+          examples:
+          - ''
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+          description: City of the location
+          examples:
+          - Ghent
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+          description: State of the location
+          examples:
+          - ''
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: Country code (ISO 3166-1 alpha-2) of the location
+          examples:
+          - BE
+        postal_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Postal Code
+          description: Postal code of the location
+          examples:
+          - '9050'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the location
+          examples:
+          - Qargo HQ
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Unique identifier of the location
+        latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latitude
+          description: Latitude of the location
+        longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Longitude
+          description: Longitude of the location
+      type: object
+      title: LocationOutput
+    PurchaseCompanyFields-Output:
       properties:
         payment_term:
           anyOf:
@@ -4158,437 +3994,83 @@ components:
           - APPROVED
       type: object
       title: PurchaseCompanyFields
-    PurchaseCreditNoteInput:
+    ChargeInput:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the charge
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the charge
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the charge
+        amount_excl_tax:
+          anyOf:
+          - type: number
+          - type: string
+          title: Amount Excl Tax
+          description: Amount excluding tax
+        tax_rate:
+          anyOf:
+          - $ref: '#/components/schemas/TaxRateReference'
+          - type: 'null'
+          description: Tax rate reference for this charge, defaults to tax rate on price list item.
+        price_list_item:
+          $ref: '#/components/schemas/PriceListItemReference'
+          description: Price list item reference for this charge
+      type: object
+      required:
+      - amount_excl_tax
+      - price_list_item
+      title: ChargeInput
+    SalesCreditNotePatchInput:
       properties:
         custom_fields:
           type: object
           title: Custom Fields
           description: User defined additional fields.
       type: object
-      title: PurchaseCreditNoteInput
-    CustomerStatus:
-      type: string
-      enum:
-      - PROSPECT
-      - NOT_APPROVED
-      - APPROVED
-      - WARNING
-      - BLOCKED
-      title: CustomerStatus
-    CompanyContactOutput:
+      title: SalesCreditNotePatchInput
+    TaskFailureStatus:
       properties:
-        id:
+        error_type:
+          $ref: '#/components/schemas/ErrorType'
+        error_message:
           anyOf:
           - type: string
-            format: uuid
           - type: 'null'
-          title: Id
-          description: Unique identifier of the contact
-        roles:
+          title: Error Message
+          description: (User visible) error message
+      type: object
+      required:
+      - error_type
+      title: TaskFailureStatus
+    ListExchangeRateOutput:
+      properties:
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+        items:
           items:
-            $ref: '#/components/schemas/ContactType'
+            $ref: '#/components/schemas/ExchangeRateOutput'
           type: array
-          title: Roles
-          description: List of roles associated with the contact.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the contact person associated with the company.
-          examples:
-          - John Doe
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Additional notes about the contact person.
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-          description: Email address of the contact person.
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-          description: Phone number of the contact person.
-          examples:
-          - '+32485123456'
-      type: object
-      title: CompanyContactOutput
-    PriceListItemReference:
-      properties:
-        code:
-          type: string
-          title: Code
-          description: Code of the reference
+          title: Items
       type: object
       required:
-      - code
-      title: PriceListItemReference
-    TaskPayload:
-      properties:
-        subject_id:
-          type: string
-          format: uuid
-          title: Subject Id
-          description: Task target id
-        subject_type:
-          $ref: '#/components/schemas/SubjectType'
-          description: Task target type
-        documents:
-          items:
-            $ref: '#/components/schemas/Document'
-          type: array
-          title: Documents
-          description: List of related documents
-        instance:
-          anyOf:
-          - $ref: '#/components/schemas/SalesInvoiceOutput'
-          - $ref: '#/components/schemas/PurchaseInvoice'
-          - $ref: '#/components/schemas/SalesCreditNoteOutput'
-          - $ref: '#/components/schemas/PurchaseCreditNote'
-          title: Instance
-      type: object
-      required:
-      - subject_id
-      - subject_type
-      - instance
-      title: TaskPayload
-      description: Task execution input data.
-    CompanyInput:
-      properties:
-        is_customer:
-          type: boolean
-          title: Is Customer
-          description: Indicate that this company is a customer
-          default: false
-        is_buyer_or_seller:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Buyer Or Seller
-          description: Indicates that this company is a buyer or seller of a consignment
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the company.
-          examples:
-          - John Doe
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: External reference to this company record
-          examples:
-          - ''
-        currency:
-          type: string
-          title: Currency
-          description: Currency of the company (ISO 4217, 3 letter code)
-          examples:
-          - EUR
-        custom_fields:
-          anyOf:
-          - type: object
-          - type: 'null'
-          title: Custom Fields
-          description: Custom fields of the company
-        credit_policy:
-          anyOf:
-          - $ref: '#/components/schemas/CreditPolicyInput'
-          - type: 'null'
-          description: Credit policy of the customer
-        default_invoice_customer_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Default Invoice Customer Id
-          description: ID of the default invoice customer (bill-to) for this company. When set, charges for this customer are billed to the referenced company instead.
-        is_subcontractor:
-          type: boolean
-          title: Is Subcontractor
-          description: Indicate that this company is a subcontractor (supplier)
-          default: false
-        archived_customer:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Archived Customer
-          description: Set to `true` to archive the customer role of this company, or `false` to reactivate it. Has no effect if `is_customer` is `false`.
-        archived_subcontractor:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Archived Subcontractor
-          description: Set to `true` to archive the subcontractor role of this company, or `false` to reactivate it. Has no effect if `is_subcontractor` is `false`.
-        legal_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Legal Name
-          description: Legal name of the company.
-          examples:
-          - John Doe
-        locale:
-          anyOf:
-          - type: string
-            pattern: ^[a-z]{2}(-[A-Z]{2})?$
-          - type: 'null'
-          title: Locale
-          description: 'Locale of the company. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
-          examples:
-          - en
-          - nl
-          - en-GB
-          - fr-BE
-        vat_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vat Number
-          description: VAT number of the company.
-          examples:
-          - BE1234.123.123
-        reference_numbers:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyReferenceNumbers'
-          - type: 'null'
-          description: Reference numbers of the company
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Additional notes about the company
-          examples:
-          - ''
-        tax_type:
-          anyOf:
-          - $ref: '#/components/schemas/TaxTypeEnum'
-          - type: 'null'
-          description: DESCRIPTION_HERE
-          default: VAT
-          examples:
-          - VAT
-        bank_accounts:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BankAccount'
-            type: array
-          - type: 'null'
-          title: Bank Accounts
-          description: List of associated bank accounts.
-          default: []
-        accounting_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Accounting Code
-          description: Code linked to the accounting system
-          examples:
-          - '1234'
-        billing_location:
-          anyOf:
-          - $ref: '#/components/schemas/BillingLocation'
-          - type: 'null'
-          description: Billing address of the company.
-        payment_term:
-          anyOf:
-          - $ref: '#/components/schemas/BasePaymentTerm'
-          - type: 'null'
-          description: Payment term information of the company
-        contacts:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CompanyContactInput'
-            type: array
-          - type: 'null'
-          title: Contacts
-          description: List of contacts associated with the company
-        sales:
-          $ref: '#/components/schemas/SalesCompanyFields-Input'
-          description: Sales related fields of the company
-        purchase:
-          $ref: '#/components/schemas/PurchaseCompanyFields-Input'
-          description: Purchase related fields of the company
-        credit_limit_total:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Credit Limit Total
-          description: 'The limit for total amount that has been invoiced but not paid. **Deprecated**: use `credit_policy.limit` instead.'
-          deprecated: true
-          examples:
-          - 12000
-        is_blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Blocked
-          description: 'Set to true to disallow new order creation for companies representing companies.
-
-
-            **Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields.an update of `status` will always prevail over `is_blocked` update.'
-          deprecated: true
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/CustomerStatus'
-          - type: 'null'
-          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status.**Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields."
-          deprecated: true
-          examples:
-          - APPROVED
-      type: object
-      required:
-      - currency
-      title: CompanyInput
-    PaymentStatus:
-      type: string
-      enum:
-      - UNPAID
-      - PAID
-      title: PaymentStatus
-    SalesCompanyFields-Output:
-      properties:
-        payment_term:
-          anyOf:
-          - $ref: '#/components/schemas/BasePaymentTerm'
-          - type: 'null'
-          description: Payment term information of the company
-        billing_entities:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CompanyBillingEntity'
-            type: array
-          - type: 'null'
-          title: Billing Entities
-          description: List of billing entities associated with the company
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/CustomerStatus'
-          - type: 'null'
-          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status."
-          default: APPROVED
-          examples:
-          - APPROVED
-      type: object
-      title: SalesCompanyFields
-    TaskUpdate:
-      properties:
-        status:
-          $ref: '#/components/schemas/TaskStatus'
-      type: object
-      required:
-      - status
-      title: TaskUpdate
-      description: Update task status result.
-    TaxRateType:
-      type: string
-      enum:
-      - VAT
-      - NO_VAT
-      - REVERSE_CHARGE
-      - TRANSIT
-      - CO_CONTRACTING
-      - OTHER
-      title: TaxRateType
-    TaskStatusInput:
-      type: string
-      enum:
-      - COMPLETED
-      - FAILED
-      title: TaskStatusInput
-    api__accounting__models__master_data__AccountOutput:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the record in Qargo.
-        archived:
-          type: boolean
-          title: Archived
-          description: Whether this record has been archived.
-        code:
-          type: string
-          title: Code
-          description: Accounting code (GL / nominal code).
-        name:
-          type: string
-          title: Name
-          description: Display name of the account.
-        billing_entity:
-          $ref: '#/components/schemas/BillingEntity'
-          description: Billing entity this account belongs to.
-      type: object
-      required:
-      - id
-      - archived
-      - code
-      - name
-      - billing_entity
-      title: AccountOutput
-    CompanyReferenceNumbers:
-      properties:
-        eori_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Eori Number
-          description: Economic Operator Registration and Identification
-          examples:
-          - ''
-        duns_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Duns Number
-          description: D-U-N-S Number
-          examples:
-          - ''
-        scac_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scac Code
-          description: Standard Carrier Alpha Code
-          examples:
-          - ''
-        company_registration_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Company Registration Number
-          description: Company Registration Number
-          examples:
-          - ''
-        tss_registration_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tss Registration Number
-          description: TSS registration number
-          examples:
-          - ''
-      type: object
-      title: CompanyReferenceNumbers
-    TaskInstanceExecutionMetadata:
-      properties:
-        external_execution:
-          anyOf:
-          - $ref: '#/components/schemas/ExternalExecutionMetadata'
-          - type: 'null'
-      type: object
-      title: TaskInstanceExecutionMetadata
+      - items
+      title: ListExchangeRateOutput
     ExchangeRateOutput:
       properties:
         id:
@@ -4624,86 +4106,30 @@ components:
       - to_currency
       - inverse_exchange_rate
       title: ExchangeRateOutput
-    ListTaxRateOutput:
+    TaxRateInvoiceType:
+      type: string
+      enum:
+      - SALES
+      - SALES_CREDIT_NOTE
+      - PURCHASE
+      - PURCHASE_CREDIT_NOTE
+      title: TaxRateInvoiceType
+    TaskUpdateInput:
       properties:
-        next_cursor:
+        status:
+          $ref: '#/components/schemas/TaskStatusInput'
+        failure:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/TaskFailureStatus'
           - type: 'null'
-          title: Next Cursor
-        items:
-          items:
-            $ref: '#/components/schemas/TaxRateOutput'
-          type: array
-          title: Items
       type: object
       required:
-      - items
-      title: ListTaxRateOutput
-    SalesInvoiceInput:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-          description: Invoicing date
-          examples:
-          - '2022-01-01'
-        due_date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Due Date
-          examples:
-          - '2022-01-01'
-        booking_date:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Booking Date
-          description: booking date needs to be enabled else this will default to the date field
-          examples:
-          - '2021-12-22'
-        currency:
-          type: string
-          title: Currency
-          description: Currency code (ISO 4217).
-          examples:
-          - EUR
-        customer_reference_numbers:
-          items:
-            type: string
-          type: array
-          title: Customer Reference Numbers
-          description: PO numbers
-          default: []
-          examples:
-          - - '12345'
-        custom_fields:
-          type: object
-          title: Custom Fields
-          default: {}
-        customer:
-          $ref: '#/components/schemas/CustomerReference'
-        charges:
-          items:
-            $ref: '#/components/schemas/ChargeInput'
-          type: array
-          title: Charges
-        billing_entity:
-          anyOf:
-          - $ref: '#/components/schemas/BillingEntityReference'
-          - type: 'null'
-          description: Billing entity linked to this invoice. When having multiple billing entities make sure to specify the correct entity.
-      type: object
-      required:
-      - date
-      - currency
-      - customer
-      - charges
-      title: SalesInvoiceInput
+      - status
+      title: TaskUpdateInput
+      description: 'Update task status on completion/failure.
+
+
+        The failure field can be used to provide more information on failure.'
     CompanySummaryOutput:
       properties:
         id:
@@ -4823,34 +4249,331 @@ components:
       - currency
       - name
       title: CompanySummaryOutput
-    ValidationErrorResponse:
+    SalesInvoiceOutput:
       properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
+        date:
           type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          format: date
+          title: Date
+          description: Invoicing date
+          examples:
+          - '2022-01-01'
+        due_date:
+          type: string
+          format: date
+          title: Due Date
+          examples:
+          - '2022-01-01'
+        booking_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Booking Date
+          description: booking date needs to be enabled else this will default to the date field
+          examples:
+          - '2021-12-22'
+        currency:
+          type: string
+          title: Currency
+          description: Currency code (ISO 4217).
+          examples:
+          - EUR
+        customer_reference_numbers:
           items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
+            type: string
           type: array
+          title: Customer Reference Numbers
+          description: PO numbers
+          default: []
+          examples:
+          - - '12345'
+        custom_fields:
+          type: object
+          title: Custom Fields
+          default: {}
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Technical id within the Qargo system
+        name:
+          type: string
+          title: Name
+          description: Name of the invoice.
+          examples:
+          - Invoice-0001
+        e_invoicing:
+          anyOf:
+          - $ref: '#/components/schemas/EInvoicingOutput'
+          - type: 'null'
+          description: E-invoicing registration metadata.
+        exchange_rate:
+          anyOf:
+          - $ref: '#/components/schemas/ExchangeRate'
+          - type: 'null'
+        total_excl_tax:
+          type: string
+          title: Total Excl Tax
+          examples:
+          - '100'
+        total_incl_tax:
+          type: string
+          title: Total Incl Tax
+          examples:
+          - '121'
+        total_tax:
+          type: string
+          title: Total Tax
+          examples:
+          - '21'
+        customer:
+          $ref: '#/components/schemas/CompanySummaryOutput'
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          title: Line Items
+        billing_entity:
+          $ref: '#/components/schemas/BillingEntity'
+          description: Billing entity linked to this invoice.
+      type: object
       required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
-    HTTPValidationError:
+      - date
+      - due_date
+      - currency
+      - id
+      - name
+      - total_excl_tax
+      - total_incl_tax
+      - total_tax
+      - customer
+      - line_items
+      - billing_entity
+      title: SalesInvoiceOutput
+    TaskInstanceExecutionMetadata:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        external_execution:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalExecutionMetadata'
+          - type: 'null'
       type: object
-      title: HTTPValidationError
-    CustomerReference:
+      title: TaskInstanceExecutionMetadata
+    ContactType:
+      type: string
+      enum:
+      - BILLING
+      - OPERATIONS
+      - BOOKINGS
+      - NOTIFICATIONS
+      - CLEANING
+      - HEATING
+      - STORAGE
+      - CONTAINER_RELEASE
+      - DRIVER
+      - OTHER
+      - CMR_PROCESSING
+      - PAYMENT_REMINDERS
+      - CLAIMS_INSURANCE
+      - CUSTOMS
+      - IT
+      - QUALITY
+      - SALES
+      - CUSTOMER_CONTACT
+      title: ContactType
+    RefundStatusUpdate:
+      properties:
+        status:
+          $ref: '#/components/schemas/RefundStatus'
+      type: object
+      required:
+      - status
+      title: RefundStatusUpdate
+    CurrencyCode:
+      type: string
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - FOK
+      - GBP
+      - GEL
+      - GGP
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - IMP
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JEP
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KID
+      - KMF
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STN
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TVD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - UYU
+      - UZS
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+      title: CurrencyCode
+    PurchaseInvoice:
       properties:
         id:
           anyOf:
@@ -4858,15 +4581,289 @@ components:
             format: uuid
           - type: 'null'
           title: Id
-          description: The unique Qargo ID of the customer. Use this to distinguish between different customers sharing the same accounting code.
-        accounting_code:
+          description: Technical id within the Qargo system
+        name:
+          type: string
+          title: Name
+          description: Reference from invoicing party
+          examples:
+          - Credit-Note-0001
+        external_name:
+          type: string
+          title: External Name
+          description: Reference from invoicing party
+        date:
+          type: string
+          format: date
+          title: Date
+          examples:
+          - '2022-01-01'
+        due_date:
+          type: string
+          format: date
+          title: Due Date
+          examples:
+          - '2022-01-01'
+        booking_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Booking Date
+          description: booking date needs to be enabled else this will default to the date field
+          examples:
+          - '2021-12-22'
+        currency:
+          type: string
+          title: Currency
+          examples:
+          - EUR
+        exchange_rate:
+          anyOf:
+          - $ref: '#/components/schemas/ExchangeRate'
+          - type: 'null'
+        total_excl_tax:
+          type: string
+          title: Total Excl Tax
+          examples:
+          - '100'
+        total_incl_tax:
+          type: string
+          title: Total Incl Tax
+          examples:
+          - '121'
+        total_tax:
+          type: string
+          title: Total Tax
+          examples:
+          - '21'
+        custom_fields:
+          type: object
+          title: Custom Fields
+          default: {}
+        supplier:
+          $ref: '#/components/schemas/CompanySummaryOutput'
+        customer_reference_numbers:
+          items:
+            type: string
+          type: array
+          title: Customer Reference Numbers
+          examples:
+          - - '12345'
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          title: Line Items
+        billing_entity:
+          $ref: '#/components/schemas/BillingEntity'
+          description: Billing entity linked to this invoice.
+      type: object
+      required:
+      - name
+      - external_name
+      - date
+      - due_date
+      - currency
+      - total_excl_tax
+      - total_incl_tax
+      - total_tax
+      - supplier
+      - line_items
+      - billing_entity
+      title: PurchaseInvoice
+    ErrorType:
+      type: string
+      enum:
+      - USER_INPUT_ERROR
+      - INTERNAL_ERROR
+      - NOT_SUPPORTED
+      title: ErrorType
+    SalesInvoiceInput:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+          description: Invoicing date
+          examples:
+          - '2022-01-01'
+        due_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Due Date
+          examples:
+          - '2022-01-01'
+        booking_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Booking Date
+          description: booking date needs to be enabled else this will default to the date field
+          examples:
+          - '2021-12-22'
+        currency:
+          type: string
+          title: Currency
+          description: Currency code (ISO 4217).
+          examples:
+          - EUR
+        customer_reference_numbers:
+          items:
+            type: string
+          type: array
+          title: Customer Reference Numbers
+          description: PO numbers
+          default: []
+          examples:
+          - - '12345'
+        custom_fields:
+          type: object
+          title: Custom Fields
+          default: {}
+        customer:
+          $ref: '#/components/schemas/CustomerReference'
+        charges:
+          items:
+            $ref: '#/components/schemas/ChargeInput'
+          type: array
+          title: Charges
+        billing_entity:
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity linked to this invoice. When having multiple billing entities make sure to specify the correct entity.
+      type: object
+      required:
+      - date
+      - currency
+      - customer
+      - charges
+      title: SalesInvoiceInput
+    ExchangeRateInput:
+      properties:
+        exchange_rate:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0
+          - type: string
+          title: Exchange Rate
+          description: The exchange rate value. Must be a positive number.
+        exchange_rate_date:
+          type: string
+          format: date
+          title: Exchange Rate Date
+          description: The date for this exchange rate.
+        from_currency:
+          $ref: '#/components/schemas/CurrencyCode'
+          description: Source currency code (ISO 4217).
+        to_currency:
+          $ref: '#/components/schemas/CurrencyCode'
+          description: Target currency code (ISO 4217).
+        inverse_exchange_rate:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0
+          - type: string
+          title: Inverse Exchange Rate
+          description: The inverse exchange rate value. Must be a positive number.
+      type: object
+      required:
+      - exchange_rate
+      - exchange_rate_date
+      - from_currency
+      - to_currency
+      - inverse_exchange_rate
+      title: ExchangeRateInput
+    AvailableTask:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        invoice_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Invoice Id
+        task_type:
+          $ref: '#/components/schemas/TaskType'
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+      type: object
+      required:
+      - id
+      - task_type
+      - status
+      title: AvailableTask
+      description: Reference to a task available for processing.
+    ListTaxRateOutput:
+      properties:
+        next_cursor:
           anyOf:
           - type: string
           - type: 'null'
-          title: Accounting Code
-          description: Accounting code that uniquely identifies the customer in the accounting system.
+          title: Next Cursor
+        items:
+          items:
+            $ref: '#/components/schemas/TaxRateOutput'
+          type: array
+          title: Items
       type: object
-      title: CustomerReference
+      required:
+      - items
+      title: ListTaxRateOutput
+    ListCompanyOutput:
+      properties:
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+        items:
+          items:
+            $ref: '#/components/schemas/CompanyDetailOutput'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: ListCompanyOutput
+    BillingEntityReference:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Code of the reference
+      type: object
+      required:
+      - code
+      title: BillingEntityReference
+    AvailableTasks:
+      properties:
+        tasks:
+          items:
+            $ref: '#/components/schemas/AvailableTask'
+          type: array
+          title: Tasks
+      type: object
+      required:
+      - tasks
+      title: AvailableTasks
+    TaxTypeEnum:
+      type: string
+      enum:
+      - VAT
+      - REVERSE_CHARGE
+      - TRANSIT
+      - NO_VAT
+      - CO_CONTRACTING
+      - OTHER
+      title: TaxTypeEnum
     PaymentTermCode:
       type: string
       enum:
@@ -4927,6 +4924,307 @@ components:
       - NET_98
       - NET_120
       title: PaymentTermCode
+    TaxRateOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the record in Qargo.
+        archived:
+          type: boolean
+          title: Archived
+          description: Whether this record has been archived.
+        name:
+          type: string
+          title: Name
+          description: Display name of the tax rate.
+        billing_entity:
+          $ref: '#/components/schemas/BillingEntity'
+          description: Billing entity this tax rate belongs to.
+        percentage:
+          type: number
+          title: Percentage
+          description: Tax percentage, e.g. 21.0.
+        base_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Base Percentage
+          description: Base percentage before applying customer/transport-specific tax rules.
+        code:
+          type: string
+          title: Code
+          description: Code used in the external accounting software.
+        tax_type:
+          $ref: '#/components/schemas/TaxRateType'
+          description: Tax type classification.
+        invoice_type:
+          $ref: '#/components/schemas/TaxRateInvoiceType'
+          description: Invoice type this tax rate applies to.
+        description:
+          type: string
+          title: Description
+          description: Optional description of the tax rate.
+      type: object
+      required:
+      - id
+      - archived
+      - name
+      - billing_entity
+      - percentage
+      - code
+      - tax_type
+      - invoice_type
+      - description
+      title: TaxRateOutput
+    api__accounting__models__master_data__AccountOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the record in Qargo.
+        archived:
+          type: boolean
+          title: Archived
+          description: Whether this record has been archived.
+        code:
+          type: string
+          title: Code
+          description: Accounting code (GL / nominal code).
+        name:
+          type: string
+          title: Name
+          description: Display name of the account.
+        billing_entity:
+          $ref: '#/components/schemas/BillingEntity'
+          description: Billing entity this account belongs to.
+      type: object
+      required:
+      - id
+      - archived
+      - code
+      - name
+      - billing_entity
+      title: AccountOutput
+    CompanyPartialInput:
+      properties:
+        is_customer:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Customer
+          description: Indicate that this company is a customer. At least one of `is_customer` or `is_subcontractor` must be set.
+        is_buyer_or_seller:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Buyer Or Seller
+          description: Indicates that this company is a buyer or seller of a consignment
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the company.
+          examples:
+          - John Doe
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: External reference to this company record
+          examples:
+          - ''
+        currency:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Currency
+          description: Currency of the company (ISO 4217, 3 letter code)
+          examples:
+          - EUR
+        custom_fields:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Custom Fields
+          description: Custom fields of the company
+        credit_policy:
+          anyOf:
+          - $ref: '#/components/schemas/CreditPolicyInput'
+          - type: 'null'
+          description: Credit policy of the customer
+        default_invoice_customer_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Default Invoice Customer Id
+          description: ID of the default invoice customer (bill-to) for this company. When set, charges for this customer are billed to the referenced company instead.
+        is_subcontractor:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Subcontractor
+          description: Indicate that this company is a subcontractor (supplier). At least one of `is_customer` or `is_subcontractor` must be set.
+        archived_customer:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Archived Customer
+          description: Set to `true` to archive the customer role of this company, or `false` to reactivate it. Has no effect if `is_customer` is `false`.
+        archived_subcontractor:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Archived Subcontractor
+          description: Set to `true` to archive the subcontractor role of this company, or `false` to reactivate it. Has no effect if `is_subcontractor` is `false`.
+        legal_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Legal Name
+          description: Legal name of the company.
+          examples:
+          - John Doe
+        locale:
+          anyOf:
+          - type: string
+            pattern: ^[a-z]{2}(-[A-Z]{2})?$
+          - type: 'null'
+          title: Locale
+          description: 'Locale of the company. Format: ISO 639-1 language code, optionally followed by a dash and ISO 3166-1 alpha-2 country code.'
+          examples:
+          - en
+          - nl
+          - en-GB
+          - fr-BE
+        vat_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vat Number
+          description: VAT number of the company.
+          examples:
+          - BE1234.123.123
+        reference_numbers:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyReferenceNumbers'
+          - type: 'null'
+          description: Reference numbers of the company
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Additional notes about the company
+          examples:
+          - ''
+        tax_type:
+          anyOf:
+          - $ref: '#/components/schemas/TaxTypeEnum'
+          - type: 'null'
+          description: DESCRIPTION_HERE
+          examples:
+          - VAT
+        bank_accounts:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BankAccount'
+            type: array
+          - type: 'null'
+          title: Bank Accounts
+          description: List of associated bank accounts.
+        accounting_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Accounting Code
+          description: Code linked to the accounting system
+          examples:
+          - '1234'
+        billing_location:
+          anyOf:
+          - $ref: '#/components/schemas/BillingLocation'
+          - type: 'null'
+          description: Billing address of the company.
+        payment_term:
+          anyOf:
+          - $ref: '#/components/schemas/BasePaymentTerm'
+          - type: 'null'
+          description: Payment term information of the company
+        contacts:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CompanyContactInput'
+            type: array
+          - type: 'null'
+          title: Contacts
+          description: List of contacts associated with the company
+        sales:
+          $ref: '#/components/schemas/SalesCompanyFields-Input'
+          description: Sales related fields of the company
+        purchase:
+          $ref: '#/components/schemas/PurchaseCompanyFields-Input'
+          description: Purchase related fields of the company
+        credit_limit_total:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Credit Limit Total
+          description: 'The limit for total amount that has been invoiced but not paid. **Deprecated**: use `credit_policy.limit` instead.'
+          deprecated: true
+          examples:
+          - 12000
+        is_blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Blocked
+          description: 'Set to true to disallow new order creation for companies representing companies.
+
+
+            **Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields.an update of `status` will always prevail over `is_blocked` update.'
+          deprecated: true
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/CustomerStatus'
+          - type: 'null'
+          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status.**Note**: Deprecated in favor of `status` under the `sales` and `purchase` fields."
+          deprecated: true
+          examples:
+          - APPROVED
+      type: object
+      title: CompanyPartialInput
+    PaymentStatus:
+      type: string
+      enum:
+      - UNPAID
+      - PAID
+      title: PaymentStatus
+    TaxRateReference:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Code of the reference
+      type: object
+      required:
+      - code
+      title: TaxRateReference
+    TaxRateType:
+      type: string
+      enum:
+      - VAT
+      - NO_VAT
+      - REVERSE_CHARGE
+      - TRANSIT
+      - CO_CONTRACTING
+      - OTHER
+      title: TaxRateType
     EInvoicingOutput:
       properties:
         number:
@@ -4949,155 +5247,39 @@ components:
           description: E-invoicing regulator.
       type: object
       title: EInvoicingOutput
-    ChargeInput:
+    ValidationErrorDetail:
       properties:
-        name:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
           anyOf:
           - type: string
           - type: 'null'
-          title: Name
-          description: Name of the charge
-        code:
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
           anyOf:
           - type: string
           - type: 'null'
-          title: Code
-          description: Code of the charge
-        description:
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
           anyOf:
           - type: string
+          - type: object
           - type: 'null'
-          title: Description
-          description: Description of the charge
-        amount_excl_tax:
-          anyOf:
-          - type: number
-          - type: string
-          title: Amount Excl Tax
-          description: Amount excluding tax
-        tax_rate:
-          anyOf:
-          - $ref: '#/components/schemas/TaxRateReference'
-          - type: 'null'
-          description: Tax rate reference for this charge, defaults to tax rate on price list item.
-        price_list_item:
-          $ref: '#/components/schemas/PriceListItemReference'
-          description: Price list item reference for this charge
-      type: object
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
       required:
-      - amount_excl_tax
-      - price_list_item
-      title: ChargeInput
-    LocationOutput:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Technical code for integrations/mapping logic; should be treated as stable once set.
-          examples:
-          - LOC123
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-          description: Human-readable label for a location in operational views.
-          examples:
-          - Main Office
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: Identifier from an external (master data) system.
-        address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address
-          description: First address line of the location
-          examples:
-          - Gaston Crommenlaan 4
-        address_second_line:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address Second Line
-          description: Second address line of the location
-          examples:
-          - ''
-        city:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: City
-          description: City of the location
-          examples:
-          - Ghent
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-          description: State of the location
-          examples:
-          - ''
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-          description: Country code (ISO 3166-1 alpha-2) of the location
-          examples:
-          - BE
-        postal_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Postal Code
-          description: Postal code of the location
-          examples:
-          - '9050'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the location
-          examples:
-          - Qargo HQ
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Unique identifier of the location
-        latitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Latitude
-          description: Latitude of the location
-        longitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Longitude
-          description: Longitude of the location
+      - message
+      title: ValidationErrorDetail
       type: object
-      title: LocationOutput
-    TaxRateInvoiceType:
-      type: string
-      enum:
-      - SALES
-      - SALES_CREDIT_NOTE
-      - PURCHASE
-      - PURCHASE_CREDIT_NOTE
-      title: TaxRateInvoiceType
-    LineItem:
+    api__accounting__models__invoice__TaxRate:
       properties:
         id:
           anyOf:
@@ -5105,199 +5287,56 @@ components:
             format: uuid
           - type: 'null'
           title: Id
-          description: Unique id of this line item. A Qargo invoice line can be represented with multiple LineItems if revenue/cost split is enabled.
-        invoice_line_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Invoice Line Id
-          description: Technical id of the invoice within the Qargo system
+          description: Unique identifier of the tax rate in Qargo.
         name:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Name
-          description: Name of the charge line.
+          description: Name of the Tax rate in Qargo.
           examples:
-          - Fuel charge
-        amount:
-          type: string
-          title: Amount
-          description: Amount of the charge line.
+          - 21%
+        percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Percentage
           examples:
-          - '100'
-        code:
-          type: string
-          title: Code
-          description: Code of the type of charge line.
-          examples:
-          - FUEL
-        account:
-          anyOf:
-          - $ref: '#/components/schemas/api__order__models__charge__AccountOutput'
-          - type: 'null'
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Freeform description field
-          default: ''
-          examples:
-          - Charge description
-        tax_rate:
-          anyOf:
-          - $ref: '#/components/schemas/api__accounting__models__invoice__TaxRate'
-          - type: 'null'
-        base_tax_rate:
-          anyOf:
-          - $ref: '#/components/schemas/BaseTaxRate'
-          - type: 'null'
-          description: Original tax rate before applying tax rules.
-        order_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Order Name
-          description: Linked Qargo order name, for cost charges.
-          examples:
-          - Order-0001
-        order_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Order Id
-          description: Linked Qargo order id, for cost charges.
-        trip_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Trip Id
-          description: Linked Qargo trip id, for cost charges
-        is_credit_charge:
-          type: boolean
-          title: Is Credit Charge
-          default: false
-          examples:
-          - false
-        invoice_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Invoice Name
-          description: Name of the source invoice this line item is linked to, if applicable.
-          examples:
-          - Invoice-0001
-        currency:
-          type: string
-          title: Currency
-          examples:
-          - USD
-        fraction:
-          type: string
-          title: Fraction
-          description: The api can split the charge lines according to revenue. This fraction indicates the percentage of the total amount of the split for this set of dimensions.
-          default: '1'
-          examples:
-          - '0.5'
-        dimension_1:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Dimension 1
-        dimension_2:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Dimension 2
-        dimension_3:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Dimension 3
-        dimension_4:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Dimension 4
-        dimension_5:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Dimension 5
-        dimension_6:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Dimension 6
-      type: object
-      required:
-      - id
-      - invoice_line_id
-      - name
-      - amount
-      - code
-      - currency
-      title: LineItem
-      description: 'Represents a single invoice/credit line item.
-
-
-        Note that a single invoice line can be split up in multiple line items
-
-        if revenue split is enabled.'
-    SalesCompanyFields-Input:
-      properties:
-        payment_term:
-          anyOf:
-          - $ref: '#/components/schemas/BasePaymentTerm'
-          - type: 'null'
-          description: Payment term information of the company
-        billing_entities:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CompanyBillingEntity'
-            type: array
-          - type: 'null'
-          title: Billing Entities
-          description: List of billing entities associated with the company
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/CustomerStatus'
-          - type: 'null'
-          description: "The status indicates whether an order can be linked to this customer. The available statuses are: \n - `PROSPECT`: The company is a potential customer but not yet approved. Only quotes can be created; no orders can be placed.\n - `NOT_APPROVED`: The company is not yet fully approved as a customer. This is an intermediary step between PROSPECT and APPROVED. Same permissions as PROSPECT apply.\n - `APPROVED`: The customer is approved. Orders can be placed without restrictions.\n - `WARNING`: The customer is approved, but a warning is triggered when attempting to create an order  in Qargo. The operator can dismiss the warning and proceed with the order.\n - `BLOCKED`: The customer is blocked; no new orders can be created.\n\n For a company representing other companies, it can only create orders if it holds the `APPROVED` status."
-          default: APPROVED
-          examples:
-          - APPROVED
-      type: object
-      title: SalesCompanyFields
-    api__accounting__models__company__CompanyReferenceOutput:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: The unique identifier of the company.
-        name:
-          type: string
-          title: Name
-          description: Name of the company.
-          examples:
-          - John Doe
+          - 21
         code:
           anyOf:
           - type: string
           - type: 'null'
           title: Code
-          description: External reference to this company record
+          description: Code of the tax rate item in the accounting software.
           examples:
-          - CUST-001
+          - 21% VAT
+        tax_type:
+          anyOf:
+          - $ref: '#/components/schemas/TaxRateType'
+          - type: 'null'
+          default: VAT
+          examples:
+          - VAT
+      type: object
+      title: TaxRate
+    ListAccountOutput:
+      properties:
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+        items:
+          items:
+            $ref: '#/components/schemas/api__accounting__models__master_data__AccountOutput'
+          type: array
+          title: Items
       type: object
       required:
-      - id
-      - name
-      title: CompanyReferenceOutput
-    SalesCreditNoteOutput:
+      - items
+      title: ListAccountOutput
+    SalesCreditNoteInput:
       properties:
         date:
           type: string
@@ -5331,65 +5370,26 @@ components:
           title: Customer Reference Numbers
           examples:
           - - '12345'
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Technical id within the Qargo system
-        name:
-          type: string
-          title: Name
-          examples:
-          - Credit-Note-0001
-        e_invoicing:
-          anyOf:
-          - $ref: '#/components/schemas/EInvoicingOutput'
-          - type: 'null'
-          description: E-invoicing registration metadata.
-        exchange_rate:
-          anyOf:
-          - $ref: '#/components/schemas/ExchangeRate'
-          - type: 'null'
-        total_excl_tax:
-          type: string
-          title: Total Excl Tax
-          examples:
-          - '100'
-        total_incl_tax:
-          type: string
-          title: Total Incl Tax
-          examples:
-          - '121'
-        total_tax:
-          type: string
-          title: Total Tax
-          examples:
-          - '21'
         customer:
-          $ref: '#/components/schemas/CompanySummaryOutput'
-        line_items:
+          $ref: '#/components/schemas/CustomerReference'
+          description: Customer reference for this credit note.
+        charges:
           items:
-            $ref: '#/components/schemas/LineItem'
+            $ref: '#/components/schemas/ChargeInput'
           type: array
-          title: Line Items
+          title: Charges
         billing_entity:
-          $ref: '#/components/schemas/BillingEntity'
-          description: Billing entity linked to this credit note.
+          anyOf:
+          - $ref: '#/components/schemas/BillingEntityReference'
+          - type: 'null'
+          description: Billing entity linked to this credit note. When having multiple billing entities make sure to specify the correct entity.
       type: object
       required:
       - date
       - currency
-      - id
-      - name
-      - total_excl_tax
-      - total_incl_tax
-      - total_tax
       - customer
-      - line_items
-      - billing_entity
-      title: SalesCreditNoteOutput
+      - charges
+      title: SalesCreditNoteInput
     TaskType:
       type: string
       enum:

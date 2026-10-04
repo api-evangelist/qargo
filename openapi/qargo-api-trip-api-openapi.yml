@@ -152,974 +152,6 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    MinimalOrderOutput:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: ID of the order
-        name:
-          type: string
-          title: Name
-          description: Name of the order
-      type: object
-      required:
-      - id
-      - name
-      title: MinimalOrderOutput
-    ContactType:
-      type: string
-      enum:
-      - BILLING
-      - OPERATIONS
-      - BOOKINGS
-      - NOTIFICATIONS
-      - CLEANING
-      - HEATING
-      - STORAGE
-      - CONTAINER_RELEASE
-      - DRIVER
-      - OTHER
-      - CMR_PROCESSING
-      - PAYMENT_REMINDERS
-      - CLAIMS_INSURANCE
-      - CUSTOMS
-      - IT
-      - QUALITY
-      - SALES
-      - CUSTOMER_CONTACT
-      title: ContactType
-    TripMetrics:
-      properties:
-        co2e_tank_to_wheel_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Co2E Tank To Wheel Kg
-          description: CO2 equivalent emissions (tank-to-wheel) in kilograms
-        co2e_well_to_tank_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Co2E Well To Tank Kg
-          description: CO2 equivalent emissions (well-to-tank) in kilograms
-        co2e_well_to_wheel_kg:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Co2E Well To Wheel Kg
-          description: CO2 equivalent emissions (well-to-wheel) in kilograms
-        distance_total_km:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Distance Total Km
-          description: Total distance in kilometers
-      type: object
-      title: TripMetrics
-    CompanyReferenceNumbers:
-      properties:
-        eori_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Eori Number
-          description: Economic Operator Registration and Identification
-          examples:
-          - ''
-        duns_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Duns Number
-          description: D-U-N-S Number
-          examples:
-          - ''
-        scac_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scac Code
-          description: Standard Carrier Alpha Code
-          examples:
-          - ''
-        company_registration_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Company Registration Number
-          description: Company Registration Number
-          examples:
-          - ''
-        tss_registration_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tss Registration Number
-          description: TSS registration number
-          examples:
-          - ''
-      type: object
-      title: CompanyReferenceNumbers
-    AmazonExtraFields:
-      properties:
-        asn_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Asn Number
-          description: Amazon Shipment ID
-        fba_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Fba Number
-          description: Amazon FBA ID
-        po_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Po Number
-          description: Amazon PO ID
-        amazon_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Amazon Number
-          description: Amazon order number
-        carton_count:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Carton Count
-          description: Number of cartons
-        unit_count:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Unit Count
-          description: Number of units
-        booking_date:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Booking Date
-          description: Amazon booking date
-        booking_time:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Booking Time
-          description: Amazon booking time
-      type: object
-      title: AmazonExtraFields
-    GenericResource-Output:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: ID of the resource
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        is_archived:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Archived
-          description: Is the resource archived
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyOutput-Output'
-          - type: 'null'
-          description: Subcontractor linked to the resource
-        resource_type:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceTypeEnum'
-          - type: 'null'
-          description: Type of the resource
-      type: object
-      title: GenericResource
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    ChargeOutput:
-      type: object
-    LocationReference:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Identifier of the location
-      type: object
-      required:
-      - id
-      title: LocationReference
-    ContainerResource-Output:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: ID of the resource
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        is_archived:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Archived
-          description: Is the resource archived
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyOutput-Output'
-          - type: 'null'
-          description: Subcontractor linked to the resource
-        resource_type:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceTypeEnum'
-          - type: 'null'
-          description: Type of the resource
-        container_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Container Number
-          description: Container number
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-          description: Manufacturer of the container
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the container
-        standard_size:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Standard Size
-          description: Standard size of the container
-        iso_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Iso Code
-          description: ISO 6346 container type code (e.g. '22G1', '45G1')
-      type: object
-      title: ContainerResource
-    TerminalMetadata:
-      properties:
-        terminal_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Terminal Email
-        sgkv_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sgkv Code
-        uirr_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Uirr Code
-        unlo_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Unlo Code
-        gateway:
-          anyOf:
-          - $ref: '#/components/schemas/Gateway'
-          - type: 'null'
-      type: object
-      title: TerminalMetadata
-    TripCostsOutput:
-      properties:
-        charges:
-          items:
-            $ref: '#/components/schemas/ChargeOutput'
-          type: array
-          title: Charges
-      type: object
-      required:
-      - charges
-      title: TripCostsOutput
-    TaxTypeEnum:
-      type: string
-      enum:
-      - VAT
-      - REVERSE_CHARGE
-      - TRANSIT
-      - NO_VAT
-      - CO_CONTRACTING
-      - OTHER
-      title: TaxTypeEnum
-    Document:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique identifier of the document
-        name:
-          type: string
-          title: Name
-          description: Name of the document
-        type:
-          type: string
-          title: Type
-          description: Type of the document
-        download_url:
-          type: string
-          title: Download Url
-          description: Relative URL from the base URL to download the document
-          default: ''
-        subject_type:
-          type: string
-          title: Subject Type
-          description: Linked subject of the document
-        content_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Content Type
-          description: Content type of the document
-      type: object
-      required:
-      - id
-      - name
-      - type
-      - subject_type
-      title: Document
-    BankAccount:
-      properties:
-        bic_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bic Code
-        iban_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Iban Code
-      type: object
-      title: BankAccount
-    ResourceAllocation-Output:
-      properties:
-        resource:
-          anyOf:
-          - $ref: '#/components/schemas/GenericResource-Output'
-          - $ref: '#/components/schemas/DriverResource-Output'
-          - $ref: '#/components/schemas/ContainerResource-Output'
-          - $ref: '#/components/schemas/VehicleResource-Output'
-          title: Resource
-          description: Resource assigned to the trip
-      type: object
-      required:
-      - resource
-      title: ResourceAllocation
-    BasePaymentTerm:
-      properties:
-        code:
-          $ref: '#/components/schemas/PaymentTermCode'
-          description: 'Payment term codes and their explanations:
-
-            - `END_OF_MONTH_2`: End of next two months
-
-            - `END_OF_MONTH_1`: End of next month
-
-            - `END_OF_MONTH_0_NET_90`: End of this month, plus 90 days
-
-            - `END_OF_MONTH_0_NET_75`: End of this month, plus 75 days
-
-            - `END_OF_MONTH_0_NET_70`: End of this month, plus 70 days
-
-            - `END_OF_MONTH_0_NET_65`: End of this month, plus 65 days
-
-            - `END_OF_MONTH_0_NET_60`: End of this month, plus 60 days
-
-            - `END_OF_MONTH_0_NET_50`: End of this month, plus 50 days
-
-            - `END_OF_MONTH_0_NET_45`: End of this month, plus 45 days
-
-            - `END_OF_MONTH_0_NET_35`: End of this month, plus 35 days
-
-            - `END_OF_MONTH_0_NET_31`: End of this month, plus 31 days
-
-            - `END_OF_MONTH_0_NET_30`: End of this month, plus 30 days
-
-            - `END_OF_MONTH_0_NET_25`: End of this month, plus 25 days
-
-            - `END_OF_MONTH_0_NET_21`: End of this month, plus 21 days
-
-            - `END_OF_MONTH_0_NET_14`: End of this month, plus 14 days
-
-            - `END_OF_MONTH_0_NET_7`: End of this month, plus 7 days
-
-            - `END_OF_MONTH_0_NET_1`: End of this month, plus 1 day
-
-            - `END_OF_MONTH_0`: End of month
-
-            - `PREPAID`: Prepaid
-
-            - `CUSTOM_DUE_DATE`: Custom due date, set on invoice creation. Not allowed to set via the API
-
-            - `UPON_RECEIPT`: Upon receipt
-
-            - `NET_1`: 1 day after receipt
-
-            - `NET_2`: 2 days after receipt
-
-            - `NET_3`: 3 days after receipt
-
-            - `NET_5`: 5 days after receipt
-
-            - `NET_7`: 7 days after receipt
-
-            - `NET_8`: 8 days after receipt
-
-            - `NET_10`: 10 days after receipt
-
-            - `NET_12`: 12 days after receipt
-
-            - `NET_14`: 14 days after receipt
-
-            - `NET_15`: 15 days after receipt
-
-            - `NET_20`: 20 days after receipt
-
-            - `NET_21`: 21 days after receipt
-
-            - `NET_28`: 28 days after receipt
-
-            - `NET_30`: 30 days after receipt
-
-            - `NET_35`: 35 days after receipt
-
-            - `NET_40`: 40 days after receipt
-
-            - `NET_42`: 42 days after receipt
-
-            - `NET_45`: 45 days after receipt
-
-            - `NET_48`: 48 days after receipt
-
-            - `NET_49`: 49 days after receipt
-
-            - `NET_50`: 50 days after receipt
-
-            - `NET_52`: 52 days after receipt
-
-            - `NET_55`: 55 days after receipt
-
-            - `NET_56`: 56 days after receipt
-
-            - `NET_60`: 60 days after receipt
-
-            - `NET_63`: 63 days after receipt
-
-            - `NET_70`: 70 days after receipt
-
-            - `NET_75`: 75 days after receipt
-
-            - `NET_77`: 77 days after receipt
-
-            - `NET_80`: 80 days after receipt
-
-            - `NET_84`: 84 days after receipt
-
-            - `NET_90`: 90 days after receipt
-
-            - `NET_91`: 91 days after receipt
-
-            - `NET_98`: 98 days after receipt
-
-            - `NET_120`: 120 days after receipt'
-          examples:
-          - END_OF_MONTH_2
-      type: object
-      required:
-      - code
-      title: BasePaymentTerm
-    TripOutput:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: ID of the trip
-        name:
-          type: string
-          title: Name
-          description: Name of the trip
-        status:
-          $ref: '#/components/schemas/TripStatusOutput'
-          description: Status of the trip
-        orders:
-          items:
-            $ref: '#/components/schemas/MinimalOrderOutput'
-          type: array
-          title: Orders
-          description: List of orders associated with the trip
-        resource_allocations:
-          items:
-            $ref: '#/components/schemas/ResourceAllocation-Output'
-          type: array
-          title: Resource Allocations
-          description: List of resources allocated to the trip
-        stops:
-          items:
-            $ref: '#/components/schemas/TripStopOutput'
-          type: array
-          title: Stops
-          description: List of stops associated with the trip
-        metrics:
-          anyOf:
-          - $ref: '#/components/schemas/TripMetrics'
-          - type: 'null'
-          description: Trip distance and emission metrics
-        shipment_planning_group:
-          anyOf:
-          - $ref: '#/components/schemas/PlanningGroup'
-          - type: 'null'
-          description: Planning group linked to the trip
-      type: object
-      required:
-      - id
-      - name
-      - status
-      - orders
-      - stops
-      title: TripOutput
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    CustomerStatus:
-      type: string
-      enum:
-      - PROSPECT
-      - NOT_APPROVED
-      - APPROVED
-      - WARNING
-      - BLOCKED
-      title: CustomerStatus
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
-    Incident:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the incident
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-      type: object
-      title: Incident
-    StopExtra:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          default: ''
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          default: ''
-        amazon:
-          anyOf:
-          - $ref: '#/components/schemas/AmazonExtraFields'
-          - type: 'null'
-      type: object
-      title: StopExtra
-    DriverResource-Output:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: ID of the resource
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the resource
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the resource
-        is_archived:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Archived
-          description: Is the resource archived
-        is_external_resource:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is External Resource
-          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
-          examples:
-          - true
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        subcontractor:
-          anyOf:
-          - $ref: '#/components/schemas/CompanyOutput-Output'
-          - type: 'null'
-          description: Subcontractor linked to the resource
-        resource_type:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceTypeEnum'
-          - type: 'null'
-          description: Type of the resource
-        date_of_birth:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Date Of Birth
-          description: Date of birth of the driver
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-          description: Email of the driver
-        first_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: First Name
-          description: First name of the driver
-        home_address:
-          anyOf:
-          - $ref: '#/components/schemas/LocationOutput'
-          - type: 'null'
-          description: Home address of the driver
-        last_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Last Name
-          description: Last name of the driver
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Note about the driver
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-          description: Phone number of the driver
-        start_stop_location:
-          anyOf:
-          - $ref: '#/components/schemas/LocationReference'
-          - type: 'null'
-          description: Location used as the driver's start and stop location for planning. Must reference a valid location. Set to null to unset the driver's start and stop location.
-      type: object
-      title: DriverResource
-    OrderReference:
-      properties:
-        row_id:
-          type: string
-          format: uuid
-          title: Row Id
-          description: Identifier of the reference
-      type: object
-      required:
-      - row_id
-      title: OrderReference
-    Gateway:
-      properties:
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - name
-      title: Gateway
-    CompanyContactOutput:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Unique identifier of the contact
-        roles:
-          items:
-            $ref: '#/components/schemas/ContactType'
-          type: array
-          title: Roles
-          description: List of roles associated with the contact.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the contact person associated with the company.
-          examples:
-          - John Doe
-        note:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Note
-          description: Additional notes about the contact person.
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Email
-          description: Email address of the contact person.
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-          description: Phone number of the contact person.
-          examples:
-          - '+32485123456'
-      type: object
-      title: CompanyContactOutput
-    ResourceTypeEnum:
-      type: string
-      enum:
-      - CHASSIS
-      - COMPARTMENT
-      - CONTAINER
-      - DRIVER
-      - FERRY
-      - FULL_TRAILER
-      - HANDLING
-      - RIGID
-      - SUBCONTRACTOR
-      - TRACTOR
-      - TRAILER
-      - TRAIN
-      - VAN
-      title: ResourceTypeEnum
-    PaymentTermCode:
-      type: string
-      enum:
-      - END_OF_MONTH_2
-      - END_OF_MONTH_1
-      - END_OF_MONTH_0_NET_90
-      - END_OF_MONTH_0_NET_75
-      - END_OF_MONTH_0_NET_70
-      - END_OF_MONTH_0_NET_65
-      - END_OF_MONTH_0_NET_60
-      - END_OF_MONTH_0_NET_50
-      - END_OF_MONTH_0_NET_45
-      - END_OF_MONTH_0_NET_35
-      - END_OF_MONTH_0_NET_31
-      - END_OF_MONTH_0_NET_30
-      - END_OF_MONTH_0_NET_25
-      - END_OF_MONTH_0_NET_21
-      - END_OF_MONTH_0_NET_14
-      - END_OF_MONTH_0_NET_7
-      - END_OF_MONTH_0_NET_1
-      - END_OF_MONTH_0
-      - PREPAID
-      - CUSTOM_DUE_DATE
-      - UPON_RECEIPT
-      - NET_1
-      - NET_2
-      - NET_3
-      - NET_5
-      - NET_7
-      - NET_8
-      - NET_10
-      - NET_12
-      - NET_14
-      - NET_15
-      - NET_20
-      - NET_21
-      - NET_28
-      - NET_30
-      - NET_35
-      - NET_40
-      - NET_42
-      - NET_45
-      - NET_48
-      - NET_49
-      - NET_50
-      - NET_52
-      - NET_55
-      - NET_56
-      - NET_60
-      - NET_63
-      - NET_70
-      - NET_75
-      - NET_77
-      - NET_80
-      - NET_84
-      - NET_90
-      - NET_91
-      - NET_98
-      - NET_120
-      title: PaymentTermCode
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     TripStopOutput:
       properties:
         activity_label:
@@ -1249,6 +281,689 @@ components:
       - id
       - location
       title: TripStopOutput
+    PlanningGroup:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the planning group
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the planning group
+      type: object
+      title: PlanningGroup
+    ChargeOutput:
+      type: object
+    CustomerStatus:
+      type: string
+      enum:
+      - PROSPECT
+      - NOT_APPROVED
+      - APPROVED
+      - WARNING
+      - BLOCKED
+      title: CustomerStatus
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TimeWindow:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        start_time:
+          anyOf:
+          - type: string
+            format: time
+          - type: 'null'
+          title: Start Time
+          description: Start of time window
+          examples:
+          - 09:30
+        end_time:
+          anyOf:
+          - type: string
+            format: time
+          - type: 'null'
+          title: End Time
+          description: End of time window
+          examples:
+          - '16:30'
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        is_enforced:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Enforced
+          description: Enforce the time window for this stop
+        use_location_opening_hours:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use Location Opening Hours
+          description: When true, the stop's time window is derived from the location's opening hours instead of explicit start/end times
+      type: object
+      title: TimeWindow
+    ContactType:
+      type: string
+      enum:
+      - BILLING
+      - OPERATIONS
+      - BOOKINGS
+      - NOTIFICATIONS
+      - CLEANING
+      - HEATING
+      - STORAGE
+      - CONTAINER_RELEASE
+      - DRIVER
+      - OTHER
+      - CMR_PROCESSING
+      - PAYMENT_REMINDERS
+      - CLAIMS_INSURANCE
+      - CUSTOMS
+      - IT
+      - QUALITY
+      - SALES
+      - CUSTOMER_CONTACT
+      title: ContactType
+    TripOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: ID of the trip
+        name:
+          type: string
+          title: Name
+          description: Name of the trip
+        status:
+          $ref: '#/components/schemas/TripStatusOutput'
+          description: Status of the trip
+        orders:
+          items:
+            $ref: '#/components/schemas/MinimalOrderOutput'
+          type: array
+          title: Orders
+          description: List of orders associated with the trip
+        resource_allocations:
+          items:
+            $ref: '#/components/schemas/ResourceAllocation-Output'
+          type: array
+          title: Resource Allocations
+          description: List of resources allocated to the trip
+        stops:
+          items:
+            $ref: '#/components/schemas/TripStopOutput'
+          type: array
+          title: Stops
+          description: List of stops associated with the trip
+        metrics:
+          anyOf:
+          - $ref: '#/components/schemas/TripMetrics'
+          - type: 'null'
+          description: Trip distance and emission metrics
+        shipment_planning_group:
+          anyOf:
+          - $ref: '#/components/schemas/PlanningGroup'
+          - type: 'null'
+          description: Planning group linked to the trip
+      type: object
+      required:
+      - id
+      - name
+      - status
+      - orders
+      - stops
+      title: TripOutput
+    CustomsMetadata:
+      properties:
+        customs_office_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customs Office Code
+      type: object
+      title: CustomsMetadata
+    TaxTypeEnum:
+      type: string
+      enum:
+      - VAT
+      - REVERSE_CHARGE
+      - TRANSIT
+      - NO_VAT
+      - CO_CONTRACTING
+      - OTHER
+      title: TaxTypeEnum
+    BasePaymentTerm:
+      properties:
+        code:
+          $ref: '#/components/schemas/PaymentTermCode'
+          description: 'Payment term codes and their explanations:
+
+            - `END_OF_MONTH_2`: End of next two months
+
+            - `END_OF_MONTH_1`: End of next month
+
+            - `END_OF_MONTH_0_NET_90`: End of this month, plus 90 days
+
+            - `END_OF_MONTH_0_NET_75`: End of this month, plus 75 days
+
+            - `END_OF_MONTH_0_NET_70`: End of this month, plus 70 days
+
+            - `END_OF_MONTH_0_NET_65`: End of this month, plus 65 days
+
+            - `END_OF_MONTH_0_NET_60`: End of this month, plus 60 days
+
+            - `END_OF_MONTH_0_NET_50`: End of this month, plus 50 days
+
+            - `END_OF_MONTH_0_NET_45`: End of this month, plus 45 days
+
+            - `END_OF_MONTH_0_NET_35`: End of this month, plus 35 days
+
+            - `END_OF_MONTH_0_NET_31`: End of this month, plus 31 days
+
+            - `END_OF_MONTH_0_NET_30`: End of this month, plus 30 days
+
+            - `END_OF_MONTH_0_NET_25`: End of this month, plus 25 days
+
+            - `END_OF_MONTH_0_NET_21`: End of this month, plus 21 days
+
+            - `END_OF_MONTH_0_NET_14`: End of this month, plus 14 days
+
+            - `END_OF_MONTH_0_NET_7`: End of this month, plus 7 days
+
+            - `END_OF_MONTH_0_NET_1`: End of this month, plus 1 day
+
+            - `END_OF_MONTH_0`: End of month
+
+            - `PREPAID`: Prepaid
+
+            - `CUSTOM_DUE_DATE`: Custom due date, set on invoice creation. Not allowed to set via the API
+
+            - `UPON_RECEIPT`: Upon receipt
+
+            - `NET_1`: 1 day after receipt
+
+            - `NET_2`: 2 days after receipt
+
+            - `NET_3`: 3 days after receipt
+
+            - `NET_5`: 5 days after receipt
+
+            - `NET_7`: 7 days after receipt
+
+            - `NET_8`: 8 days after receipt
+
+            - `NET_10`: 10 days after receipt
+
+            - `NET_12`: 12 days after receipt
+
+            - `NET_14`: 14 days after receipt
+
+            - `NET_15`: 15 days after receipt
+
+            - `NET_20`: 20 days after receipt
+
+            - `NET_21`: 21 days after receipt
+
+            - `NET_28`: 28 days after receipt
+
+            - `NET_30`: 30 days after receipt
+
+            - `NET_35`: 35 days after receipt
+
+            - `NET_40`: 40 days after receipt
+
+            - `NET_42`: 42 days after receipt
+
+            - `NET_45`: 45 days after receipt
+
+            - `NET_48`: 48 days after receipt
+
+            - `NET_49`: 49 days after receipt
+
+            - `NET_50`: 50 days after receipt
+
+            - `NET_52`: 52 days after receipt
+
+            - `NET_55`: 55 days after receipt
+
+            - `NET_56`: 56 days after receipt
+
+            - `NET_60`: 60 days after receipt
+
+            - `NET_63`: 63 days after receipt
+
+            - `NET_70`: 70 days after receipt
+
+            - `NET_75`: 75 days after receipt
+
+            - `NET_77`: 77 days after receipt
+
+            - `NET_80`: 80 days after receipt
+
+            - `NET_84`: 84 days after receipt
+
+            - `NET_90`: 90 days after receipt
+
+            - `NET_91`: 91 days after receipt
+
+            - `NET_98`: 98 days after receipt
+
+            - `NET_120`: 120 days after receipt'
+          examples:
+          - END_OF_MONTH_2
+      type: object
+      required:
+      - code
+      title: BasePaymentTerm
+    PaymentTermCode:
+      type: string
+      enum:
+      - END_OF_MONTH_2
+      - END_OF_MONTH_1
+      - END_OF_MONTH_0_NET_90
+      - END_OF_MONTH_0_NET_75
+      - END_OF_MONTH_0_NET_70
+      - END_OF_MONTH_0_NET_65
+      - END_OF_MONTH_0_NET_60
+      - END_OF_MONTH_0_NET_50
+      - END_OF_MONTH_0_NET_45
+      - END_OF_MONTH_0_NET_35
+      - END_OF_MONTH_0_NET_31
+      - END_OF_MONTH_0_NET_30
+      - END_OF_MONTH_0_NET_25
+      - END_OF_MONTH_0_NET_21
+      - END_OF_MONTH_0_NET_14
+      - END_OF_MONTH_0_NET_7
+      - END_OF_MONTH_0_NET_1
+      - END_OF_MONTH_0
+      - PREPAID
+      - CUSTOM_DUE_DATE
+      - UPON_RECEIPT
+      - NET_1
+      - NET_2
+      - NET_3
+      - NET_5
+      - NET_7
+      - NET_8
+      - NET_10
+      - NET_12
+      - NET_14
+      - NET_15
+      - NET_20
+      - NET_21
+      - NET_28
+      - NET_30
+      - NET_35
+      - NET_40
+      - NET_42
+      - NET_45
+      - NET_48
+      - NET_49
+      - NET_50
+      - NET_52
+      - NET_55
+      - NET_56
+      - NET_60
+      - NET_63
+      - NET_70
+      - NET_75
+      - NET_77
+      - NET_80
+      - NET_84
+      - NET_90
+      - NET_91
+      - NET_98
+      - NET_120
+      title: PaymentTermCode
+    TripMetrics:
+      properties:
+        co2e_tank_to_wheel_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Co2E Tank To Wheel Kg
+          description: CO2 equivalent emissions (tank-to-wheel) in kilograms
+        co2e_well_to_tank_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Co2E Well To Tank Kg
+          description: CO2 equivalent emissions (well-to-tank) in kilograms
+        co2e_well_to_wheel_kg:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Co2E Well To Wheel Kg
+          description: CO2 equivalent emissions (well-to-wheel) in kilograms
+        distance_total_km:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Distance Total Km
+          description: Total distance in kilometers
+      type: object
+      title: TripMetrics
+    Document:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique identifier of the document
+        name:
+          type: string
+          title: Name
+          description: Name of the document
+        type:
+          type: string
+          title: Type
+          description: Type of the document
+        download_url:
+          type: string
+          title: Download Url
+          description: Relative URL from the base URL to download the document
+          default: ''
+        subject_type:
+          type: string
+          title: Subject Type
+          description: Linked subject of the document
+        content_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content Type
+          description: Content type of the document
+      type: object
+      required:
+      - id
+      - name
+      - type
+      - subject_type
+      title: Document
+    StopDepotOutput:
+      properties:
+        load_sequence_number:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0
+          - type: 'null'
+          title: Load Sequence Number
+          description: Load sequence number for the stop
+        unload_timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Unload Timestamp
+          description: Timestamp for which the delivery is scheduled. ISO 8601 format in UTC.
+          examples:
+          - '2024-12-31T14:30:00Z'
+        unload_sequence_number:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0
+          - type: 'null'
+          title: Unload Sequence Number
+          description: Unload sequence number for the stop
+        load_timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Load Timestamp
+          description: Timestamp for which the pickup is scheduled. ISO 8601 format in UTC.
+          examples:
+          - '2024-12-31T08:00:00Z'
+        load_planned:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Load Planned
+          description: Indicates if the load is planned for this stop
+        unload_planned:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Unload Planned
+          description: Indicates if the unload is planned for this stop
+        load_pickup_stop_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Load Pickup Stop Id
+          description: Identifier of the pickup stop related to the load
+        unload_delivery_stop_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Unload Delivery Stop Id
+          description: Identifier of the delivery stop related to the unload
+      type: object
+      title: StopDepotOutput
+    BankAccount:
+      properties:
+        bic_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bic Code
+        iban_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Iban Code
+      type: object
+      title: BankAccount
+    CompanyReferenceNumbers:
+      properties:
+        eori_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Eori Number
+          description: Economic Operator Registration and Identification
+          examples:
+          - ''
+        duns_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Duns Number
+          description: D-U-N-S Number
+          examples:
+          - ''
+        scac_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scac Code
+          description: Standard Carrier Alpha Code
+          examples:
+          - ''
+        company_registration_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Company Registration Number
+          description: Company Registration Number
+          examples:
+          - ''
+        tss_registration_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tss Registration Number
+          description: TSS registration number
+          examples:
+          - ''
+      type: object
+      title: CompanyReferenceNumbers
+    Gateway:
+      properties:
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - name
+      title: Gateway
+    LocationWithTerminalOutput-Output:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Technical code for integrations/mapping logic; should be treated as stable once set.
+          examples:
+          - LOC123
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+          description: Human-readable label for a location in operational views.
+          examples:
+          - Main Office
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: Identifier from an external (master data) system.
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: First address line of the location
+          examples:
+          - Gaston Crommenlaan 4
+        address_second_line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Second Line
+          description: Second address line of the location
+          examples:
+          - ''
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+          description: City of the location
+          examples:
+          - Ghent
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+          description: State of the location
+          examples:
+          - ''
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: Country code (ISO 3166-1 alpha-2) of the location
+          examples:
+          - BE
+        postal_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Postal Code
+          description: Postal code of the location
+          examples:
+          - '9050'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the location
+          examples:
+          - Qargo HQ
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Unique identifier of the location
+        latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latitude
+          description: Latitude of the location
+        longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Longitude
+          description: Longitude of the location
+        terminal_metadata:
+          anyOf:
+          - $ref: '#/components/schemas/TerminalMetadata'
+          - type: 'null'
+          description: Metadata related to the terminal
+        customs_metadata:
+          anyOf:
+          - $ref: '#/components/schemas/CustomsMetadata'
+          - type: 'null'
+          description: Metadata related to customs
+      type: object
+      title: LocationWithTerminalOutput
     TripStatusOutput:
       type: string
       enum:
@@ -1357,72 +1072,6 @@ components:
           description: Longitude of the location
       type: object
       title: LocationOutput
-    TimeWindow:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Human readable identifier
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Machine readable identifier
-        start_time:
-          anyOf:
-          - type: string
-            format: time
-          - type: 'null'
-          title: Start Time
-          description: Start of time window
-          examples:
-          - 09:30
-        end_time:
-          anyOf:
-          - type: string
-            format: time
-          - type: 'null'
-          title: End Time
-          description: End of time window
-          examples:
-          - '16:30'
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Store values for user defined fields
-        is_enforced:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is Enforced
-          description: Enforce the time window for this stop
-        use_location_opening_hours:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Use Location Opening Hours
-          description: When true, the stop's time window is derived from the location's opening hours instead of explicit start/end times
-      type: object
-      title: TimeWindow
-    PlanningGroup:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the planning group
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the planning group
-      type: object
-      title: PlanningGroup
     CompanyOutput-Output:
       properties:
         id:
@@ -1570,126 +1219,497 @@ components:
       - currency
       - name
       title: CompanyOutput
-    CustomsMetadata:
+    AmazonExtraFields:
       properties:
-        customs_office_code:
+        asn_number:
           anyOf:
           - type: string
           - type: 'null'
-          title: Customs Office Code
+          title: Asn Number
+          description: Amazon Shipment ID
+        fba_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Fba Number
+          description: Amazon FBA ID
+        po_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Po Number
+          description: Amazon PO ID
+        amazon_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Amazon Number
+          description: Amazon order number
+        carton_count:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Carton Count
+          description: Number of cartons
+        unit_count:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Count
+          description: Number of units
+        booking_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Booking Date
+          description: Amazon booking date
+        booking_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Booking Time
+          description: Amazon booking time
       type: object
-      title: CustomsMetadata
-    LocationWithTerminalOutput-Output:
+      title: AmazonExtraFields
+    MinimalOrderOutput:
       properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Technical code for integrations/mapping logic; should be treated as stable once set.
-          examples:
-          - LOC123
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-          description: Human-readable label for a location in operational views.
-          examples:
-          - Main Office
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: Identifier from an external (master data) system.
-        address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address
-          description: First address line of the location
-          examples:
-          - Gaston Crommenlaan 4
-        address_second_line:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address Second Line
-          description: Second address line of the location
-          examples:
-          - ''
-        city:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: City
-          description: City of the location
-          examples:
-          - Ghent
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-          description: State of the location
-          examples:
-          - ''
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-          description: Country code (ISO 3166-1 alpha-2) of the location
-          examples:
-          - BE
-        postal_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Postal Code
-          description: Postal code of the location
-          examples:
-          - '9050'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: ID of the order
+        name:
+          type: string
+          title: Name
+          description: Name of the order
+      type: object
+      required:
+      - id
+      - name
+      title: MinimalOrderOutput
+    Incident:
+      properties:
         name:
           anyOf:
           - type: string
           - type: 'null'
           title: Name
-          description: Name of the location
-          examples:
-          - Qargo HQ
+          description: Human readable identifier
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Machine readable identifier
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the incident
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+      type: object
+      title: Incident
+    LocationReference:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Identifier of the location
+      type: object
+      required:
+      - id
+      title: LocationReference
+    CompanyContactOutput:
+      properties:
         id:
           anyOf:
           - type: string
             format: uuid
           - type: 'null'
           title: Id
-          description: Unique identifier of the location
-        latitude:
+          description: Unique identifier of the contact
+        roles:
+          items:
+            $ref: '#/components/schemas/ContactType'
+          type: array
+          title: Roles
+          description: List of roles associated with the contact.
+        name:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Latitude
-          description: Latitude of the location
-        longitude:
+          title: Name
+          description: Name of the contact person associated with the company.
+          examples:
+          - John Doe
+        note:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Longitude
-          description: Longitude of the location
-        terminal_metadata:
+          title: Note
+          description: Additional notes about the contact person.
+        email:
           anyOf:
-          - $ref: '#/components/schemas/TerminalMetadata'
+          - type: string
           - type: 'null'
-          description: Metadata related to the terminal
-        customs_metadata:
+          title: Email
+          description: Email address of the contact person.
+        phone_number:
           anyOf:
-          - $ref: '#/components/schemas/CustomsMetadata'
+          - type: string
           - type: 'null'
-          description: Metadata related to customs
+          title: Phone Number
+          description: Phone number of the contact person.
+          examples:
+          - '+32485123456'
       type: object
-      title: LocationWithTerminalOutput
+      title: CompanyContactOutput
+    GenericResource-Output:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: ID of the resource
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        is_archived:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Archived
+          description: Is the resource archived
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyOutput-Output'
+          - type: 'null'
+          description: Subcontractor linked to the resource
+        resource_type:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceTypeEnum'
+          - type: 'null'
+          description: Type of the resource
+      type: object
+      title: GenericResource
+    ContainerResource-Output:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: ID of the resource
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        is_archived:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Archived
+          description: Is the resource archived
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyOutput-Output'
+          - type: 'null'
+          description: Subcontractor linked to the resource
+        resource_type:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceTypeEnum'
+          - type: 'null'
+          description: Type of the resource
+        container_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Container Number
+          description: Container number
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+          description: Manufacturer of the container
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the container
+        standard_size:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Standard Size
+          description: Standard size of the container
+        iso_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Iso Code
+          description: ISO 6346 container type code (e.g. '22G1', '45G1')
+      type: object
+      title: ContainerResource
+    StopExtra:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          default: ''
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          default: ''
+        amazon:
+          anyOf:
+          - $ref: '#/components/schemas/AmazonExtraFields'
+          - type: 'null'
+      type: object
+      title: StopExtra
+    DriverResource-Output:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: ID of the resource
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the resource
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the resource
+        is_archived:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Archived
+          description: Is the resource archived
+        is_external_resource:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is External Resource
+          description: Read-only. True if this is a non-owned (subcontractor) resource. When this resource appears inside a trip, name / license_plate / container_number reflect the per-trip override value if one was set on the resource allocation; otherwise the resource master value is returned. `null` indicates the value is not yet projected — treat as internal for backwards compatibility.
+          examples:
+          - true
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Store values for user defined fields
+        subcontractor:
+          anyOf:
+          - $ref: '#/components/schemas/CompanyOutput-Output'
+          - type: 'null'
+          description: Subcontractor linked to the resource
+        resource_type:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceTypeEnum'
+          - type: 'null'
+          description: Type of the resource
+        date_of_birth:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Date Of Birth
+          description: Date of birth of the driver
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+          description: Email of the driver
+        first_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: First Name
+          description: First name of the driver
+        home_address:
+          anyOf:
+          - $ref: '#/components/schemas/LocationOutput'
+          - type: 'null'
+          description: Home address of the driver
+        last_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Name
+          description: Last name of the driver
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+          description: Note about the driver
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+          description: Phone number of the driver
+        start_stop_location:
+          anyOf:
+          - $ref: '#/components/schemas/LocationReference'
+          - type: 'null'
+          description: Location used as the driver's start and stop location for planning. Must reference a valid location. Set to null to unset the driver's start and stop location.
+      type: object
+      title: DriverResource
+    ResourceTypeEnum:
+      type: string
+      enum:
+      - CHASSIS
+      - COMPARTMENT
+      - CONTAINER
+      - DRIVER
+      - FERRY
+      - FULL_TRAILER
+      - HANDLING
+      - RIGID
+      - SUBCONTRACTOR
+      - TRACTOR
+      - TRAILER
+      - TRAIN
+      - VAN
+      title: ResourceTypeEnum
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    OrderReference:
+      properties:
+        row_id:
+          type: string
+          format: uuid
+          title: Row Id
+          description: Identifier of the reference
+      type: object
+      required:
+      - row_id
+      title: OrderReference
+    TripCostsOutput:
+      properties:
+        charges:
+          items:
+            $ref: '#/components/schemas/ChargeOutput'
+          type: array
+          title: Charges
+      type: object
+      required:
+      - charges
+      title: TripCostsOutput
     VehicleResource-Output:
       properties:
         id:
@@ -1795,68 +1815,48 @@ components:
           description: VIN number of the vehicle
       type: object
       title: VehicleResource
-    StopDepotOutput:
+    ResourceAllocation-Output:
       properties:
-        load_sequence_number:
+        resource:
           anyOf:
-          - type: integer
-            exclusiveMinimum: 0
-          - type: 'null'
-          title: Load Sequence Number
-          description: Load sequence number for the stop
-        unload_timestamp:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Unload Timestamp
-          description: Timestamp for which the delivery is scheduled. ISO 8601 format in UTC.
-          examples:
-          - '2024-12-31T14:30:00Z'
-        unload_sequence_number:
-          anyOf:
-          - type: integer
-            exclusiveMinimum: 0
-          - type: 'null'
-          title: Unload Sequence Number
-          description: Unload sequence number for the stop
-        load_timestamp:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Load Timestamp
-          description: Timestamp for which the pickup is scheduled. ISO 8601 format in UTC.
-          examples:
-          - '2024-12-31T08:00:00Z'
-        load_planned:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Load Planned
-          description: Indicates if the load is planned for this stop
-        unload_planned:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Unload Planned
-          description: Indicates if the unload is planned for this stop
-        load_pickup_stop_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Load Pickup Stop Id
-          description: Identifier of the pickup stop related to the load
-        unload_delivery_stop_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Unload Delivery Stop Id
-          description: Identifier of the delivery stop related to the unload
+          - $ref: '#/components/schemas/GenericResource-Output'
+          - $ref: '#/components/schemas/DriverResource-Output'
+          - $ref: '#/components/schemas/ContainerResource-Output'
+          - $ref: '#/components/schemas/VehicleResource-Output'
+          title: Resource
+          description: Resource assigned to the trip
       type: object
-      title: StopDepotOutput
+      required:
+      - resource
+      title: ResourceAllocation
+    TerminalMetadata:
+      properties:
+        terminal_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Terminal Email
+        sgkv_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sgkv Code
+        uirr_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Uirr Code
+        unlo_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unlo Code
+        gateway:
+          anyOf:
+          - $ref: '#/components/schemas/Gateway'
+          - type: 'null'
+      type: object
+      title: TerminalMetadata
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

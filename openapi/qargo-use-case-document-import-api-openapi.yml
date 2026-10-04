@@ -76,28 +76,6 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
-    DocumentImportResponse:
-      properties:
-        errors:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ErrorStatus'
-            type: array
-          - type: 'null'
-          title: Errors
-          description: List of errors that occurred during the webhook processing. If empty/omitted, the webhook was processed successfully.
-          examples:
-          - error_message: The payload is invalid.
-            error_type: USER_INPUT_ERROR
-          - error_message: Not supported.
-            error_type: NOT_SUPPORTED
-          - error_message: Unknown error.
-            error_type: INTERNAL_ERROR
-      type: object
-      title: DocumentImportResponse
-      description: 'Response schema for the document import webhook.
-
-        This schema is used to return errors or success messages.'
     ValidationError:
       properties:
         loc:
@@ -119,15 +97,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ErrorStatus:
       properties:
         error_type:
@@ -181,6 +150,15 @@ components:
       - INTERNAL_ERROR
       - NOT_SUPPORTED
       title: ErrorType
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationErrorResponse:
       properties:
         message:
@@ -199,6 +177,28 @@ components:
       - errors
       title: ValidationErrorResponse
       type: object
+    DocumentImportResponse:
+      properties:
+        errors:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ErrorStatus'
+            type: array
+          - type: 'null'
+          title: Errors
+          description: List of errors that occurred during the webhook processing. If empty/omitted, the webhook was processed successfully.
+          examples:
+          - error_message: The payload is invalid.
+            error_type: USER_INPUT_ERROR
+          - error_message: Not supported.
+            error_type: NOT_SUPPORTED
+          - error_message: Unknown error.
+            error_type: INTERNAL_ERROR
+      type: object
+      title: DocumentImportResponse
+      description: 'Response schema for the document import webhook.
+
+        This schema is used to return errors or success messages.'
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

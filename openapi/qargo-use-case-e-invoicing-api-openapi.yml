@@ -62,6 +62,435 @@ paths:
           description: Service Unavailable — temporarily unable to handle the request
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EInvoiceCompanyInput:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: The unique identifier of the company.
+        name:
+          type: string
+          title: Name
+          description: Name of the company.
+          examples:
+          - John Doe
+        vat_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vat Number
+          description: VAT number of the company.
+          examples:
+          - BE1234.123.123
+        billing_location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+          description: Billing address of the company.
+      type: object
+      required:
+      - name
+      title: EInvoiceCompanyInput
+    Location:
+      properties:
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Technical code for integrations/mapping logic; should be treated as stable once set.
+          examples:
+          - LOC123
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+          description: Human-readable label for a location in operational views.
+          examples:
+          - Main Office
+        external_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: External Id
+          description: Identifier from an external (master data) system.
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: First address line of the location
+          examples:
+          - Gaston Crommenlaan 4
+        address_second_line:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address Second Line
+          description: Second address line of the location
+          examples:
+          - ''
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: City
+          description: City of the location
+          examples:
+          - Ghent
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+          description: State of the location
+          examples:
+          - ''
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+          description: Country code (ISO 3166-1 alpha-2) of the location
+          examples:
+          - BE
+        postal_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Postal Code
+          description: Postal code of the location
+          examples:
+          - '9050'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the location
+          examples:
+          - Qargo HQ
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Identifier of the location
+        latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latitude
+        longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Longitude
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Location description
+        location_identifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location Identifier
+          description: External location identifier
+      type: object
+      title: Location
+    TaxRateType:
+      type: string
+      enum:
+      - VAT
+      - NO_VAT
+      - REVERSE_CHARGE
+      - TRANSIT
+      - CO_CONTRACTING
+      - OTHER
+      title: TaxRateType
+    EInvoiceDocumentType:
+      type: string
+      enum:
+      - INVOICE
+      - CREDIT_NOTE
+      - OTHER
+      title: EInvoiceDocumentType
+    EInvoiceDocumentAttachment:
+      properties:
+        base64:
+          type: string
+          title: Base64
+          description: Base64 encoded content of the document attachment.
+        content_type:
+          type: string
+          title: Content Type
+          description: MIME type of the document attachment, e.g., 'application/pdf', 'application/xml'.
+        document_type:
+          $ref: '#/components/schemas/EInvoiceDocumentType'
+          description: Type of the document attachment.
+        filename:
+          type: string
+          title: Filename
+          description: Filename of the document attachment.
+      type: object
+      required:
+      - base64
+      - content_type
+      - document_type
+      - filename
+      title: EInvoiceDocumentAttachment
+    EInvoiceAttachment:
+      properties:
+        document:
+          $ref: '#/components/schemas/EInvoiceDocumentAttachment'
+      type: object
+      required:
+      - document
+      title: EInvoiceAttachment
+    ValidationErrorDetail:
+      properties:
+        message:
+          description: Human-readable summary of this validation failure
+          title: Message
+          type: string
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: Name of the field that failed validation, if known
+          title: Field
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
+          title: Path
+        detail:
+          anyOf:
+          - type: string
+          - type: object
+          - type: 'null'
+          default: null
+          description: Additional structured context about the failure, if provided by the backend
+          title: Detail
+      required:
+      - message
+      title: ValidationErrorDetail
+      type: object
+    PurchaseEInvoiceInput:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Reference from invoicing party.
+          examples:
+          - Invoice-0001
+        date:
+          type: string
+          format: date
+          title: Date
+          description: Invoice transaction date.
+          examples:
+          - '2022-01-01'
+        currency:
+          type: string
+          title: Currency
+          description: Currency code of the e-invoice.
+          examples:
+          - EUR
+        exchange_rate:
+          anyOf:
+          - $ref: '#/components/schemas/ExchangeRate'
+          - type: 'null'
+          description: Exchange rate information if applicable.
+        total_excl_tax:
+          anyOf:
+          - type: number
+          - type: string
+          title: Total Excl Tax
+          description: Total amount excluding tax for the e-invoice.
+          examples:
+          - '100'
+        total_incl_tax:
+          anyOf:
+          - type: number
+          - type: string
+          title: Total Incl Tax
+          description: Total amount including tax for the e-invoice.
+          examples:
+          - '121'
+        total_tax:
+          anyOf:
+          - type: number
+          - type: string
+          title: Total Tax
+          description: Total tax amount for the e-invoice.
+          examples:
+          - '21'
+        custom_fields:
+          type: object
+          title: Custom Fields
+          description: Custom fields associated with this e-invoice.
+        supplier:
+          $ref: '#/components/schemas/EInvoiceCompanyInput'
+          description: Supplier company information.
+        customer_reference_numbers:
+          items:
+            type: string
+          type: array
+          title: Customer Reference Numbers
+          description: Reference numbers used to match the invoice.
+          examples:
+          - - '12345'
+        line_items:
+          items:
+            $ref: '#/components/schemas/EInvoiceLineItem'
+          type: array
+          title: Line Items
+          description: List of invoice lines associated with this e-invoice.
+        attachments:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EInvoiceAttachment'
+            type: array
+          - type: 'null'
+          title: Attachments
+          description: List of document attachments associated with this e-invoice.
+        due_date:
+          type: string
+          format: date
+          title: Due Date
+          description: Payment due date.
+          examples:
+          - '2022-01-01'
+        invoice_type:
+          type: string
+          const: PURCHASE
+          title: Invoice Type
+          description: Indicates that this is a purchase invoice.
+      type: object
+      required:
+      - name
+      - date
+      - currency
+      - total_excl_tax
+      - total_incl_tax
+      - total_tax
+      - supplier
+      - line_items
+      - due_date
+      - invoice_type
+      title: PurchaseEInvoiceInput
+    api__accounting__models__invoice__TaxRate:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+          description: Unique identifier of the tax rate in Qargo.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the Tax rate in Qargo.
+          examples:
+          - 21%
+        percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Percentage
+          examples:
+          - 21
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+          description: Code of the tax rate item in the accounting software.
+          examples:
+          - 21% VAT
+        tax_type:
+          anyOf:
+          - $ref: '#/components/schemas/TaxRateType'
+          - type: 'null'
+          default: VAT
+          examples:
+          - VAT
+      type: object
+      title: TaxRate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationErrorResponse:
+      properties:
+        message:
+          description: Human-readable summary of the validation failure
+          title: Message
+          type: string
+        errors:
+          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetail'
+          minItems: 1
+          title: Errors
+          type: array
+      required:
+      - message
+      - errors
+      title: ValidationErrorResponse
+      type: object
+    api__order__models__charge__AccountInput:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: Code of the general ledger in the accounting software linked to this charge line.
+          examples:
+          - '200'
+      type: object
+      required:
+      - code
+      title: AccountInput
     ExchangeRate:
       properties:
         rate_date:
@@ -183,166 +612,6 @@ components:
       - line_items
       - invoice_type
       title: PurchaseECreditNoteInput
-    PurchaseEInvoiceInput:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: Reference from invoicing party.
-          examples:
-          - Invoice-0001
-        date:
-          type: string
-          format: date
-          title: Date
-          description: Invoice transaction date.
-          examples:
-          - '2022-01-01'
-        currency:
-          type: string
-          title: Currency
-          description: Currency code of the e-invoice.
-          examples:
-          - EUR
-        exchange_rate:
-          anyOf:
-          - $ref: '#/components/schemas/ExchangeRate'
-          - type: 'null'
-          description: Exchange rate information if applicable.
-        total_excl_tax:
-          anyOf:
-          - type: number
-          - type: string
-          title: Total Excl Tax
-          description: Total amount excluding tax for the e-invoice.
-          examples:
-          - '100'
-        total_incl_tax:
-          anyOf:
-          - type: number
-          - type: string
-          title: Total Incl Tax
-          description: Total amount including tax for the e-invoice.
-          examples:
-          - '121'
-        total_tax:
-          anyOf:
-          - type: number
-          - type: string
-          title: Total Tax
-          description: Total tax amount for the e-invoice.
-          examples:
-          - '21'
-        custom_fields:
-          type: object
-          title: Custom Fields
-          description: Custom fields associated with this e-invoice.
-        supplier:
-          $ref: '#/components/schemas/EInvoiceCompanyInput'
-          description: Supplier company information.
-        customer_reference_numbers:
-          items:
-            type: string
-          type: array
-          title: Customer Reference Numbers
-          description: Reference numbers used to match the invoice.
-          examples:
-          - - '12345'
-        line_items:
-          items:
-            $ref: '#/components/schemas/EInvoiceLineItem'
-          type: array
-          title: Line Items
-          description: List of invoice lines associated with this e-invoice.
-        attachments:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/EInvoiceAttachment'
-            type: array
-          - type: 'null'
-          title: Attachments
-          description: List of document attachments associated with this e-invoice.
-        due_date:
-          type: string
-          format: date
-          title: Due Date
-          description: Payment due date.
-          examples:
-          - '2022-01-01'
-        invoice_type:
-          type: string
-          const: PURCHASE
-          title: Invoice Type
-          description: Indicates that this is a purchase invoice.
-      type: object
-      required:
-      - name
-      - date
-      - currency
-      - total_excl_tax
-      - total_incl_tax
-      - total_tax
-      - supplier
-      - line_items
-      - due_date
-      - invoice_type
-      title: PurchaseEInvoiceInput
-    EInvoiceDocumentAttachment:
-      properties:
-        base64:
-          type: string
-          title: Base64
-          description: Base64 encoded content of the document attachment.
-        content_type:
-          type: string
-          title: Content Type
-          description: MIME type of the document attachment, e.g., 'application/pdf', 'application/xml'.
-        document_type:
-          $ref: '#/components/schemas/EInvoiceDocumentType'
-          description: Type of the document attachment.
-        filename:
-          type: string
-          title: Filename
-          description: Filename of the document attachment.
-      type: object
-      required:
-      - base64
-      - content_type
-      - document_type
-      - filename
-      title: EInvoiceDocumentAttachment
-    EInvoiceCompanyInput:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: The unique identifier of the company.
-        name:
-          type: string
-          title: Name
-          description: Name of the company.
-          examples:
-          - John Doe
-        vat_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vat Number
-          description: VAT number of the company.
-          examples:
-          - BE1234.123.123
-        billing_location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-          description: Billing address of the company.
-      type: object
-      required:
-      - name
-      title: EInvoiceCompanyInput
     EInvoiceLineItem:
       properties:
         description:
@@ -393,275 +662,6 @@ components:
       - amount
       - currency
       title: EInvoiceLineItem
-    api__accounting__models__invoice__TaxRate:
-      properties:
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Unique identifier of the tax rate in Qargo.
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the Tax rate in Qargo.
-          examples:
-          - 21%
-        percentage:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Percentage
-          examples:
-          - 21
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Code of the tax rate item in the accounting software.
-          examples:
-          - 21% VAT
-        tax_type:
-          anyOf:
-          - $ref: '#/components/schemas/TaxRateType'
-          - type: 'null'
-          default: VAT
-          examples:
-          - VAT
-      type: object
-      title: TaxRate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    EInvoiceDocumentType:
-      type: string
-      enum:
-      - INVOICE
-      - CREDIT_NOTE
-      - OTHER
-      title: EInvoiceDocumentType
-    TaxRateType:
-      type: string
-      enum:
-      - VAT
-      - NO_VAT
-      - REVERSE_CHARGE
-      - TRANSIT
-      - CO_CONTRACTING
-      - OTHER
-      title: TaxRateType
-    EInvoiceAttachment:
-      properties:
-        document:
-          $ref: '#/components/schemas/EInvoiceDocumentAttachment'
-      type: object
-      required:
-      - document
-      title: EInvoiceAttachment
-    ValidationErrorDetail:
-      properties:
-        message:
-          description: Human-readable summary of this validation failure
-          title: Message
-          type: string
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: Name of the field that failed validation, if known
-          title: Field
-        path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: null
-          description: JSON path to the field within the request payload (e.g. '$.consignor.address.country')
-          title: Path
-        detail:
-          anyOf:
-          - type: string
-          - type: object
-          - type: 'null'
-          default: null
-          description: Additional structured context about the failure, if provided by the backend
-          title: Detail
-      required:
-      - message
-      title: ValidationErrorDetail
-      type: object
-    api__order__models__charge__AccountInput:
-      properties:
-        code:
-          type: string
-          title: Code
-          description: Code of the general ledger in the accounting software linked to this charge line.
-          examples:
-          - '200'
-      type: object
-      required:
-      - code
-      title: AccountInput
-    Location:
-      properties:
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-          description: Technical code for integrations/mapping logic; should be treated as stable once set.
-          examples:
-          - LOC123
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-          description: Human-readable label for a location in operational views.
-          examples:
-          - Main Office
-        external_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: External Id
-          description: Identifier from an external (master data) system.
-        address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address
-          description: First address line of the location
-          examples:
-          - Gaston Crommenlaan 4
-        address_second_line:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Address Second Line
-          description: Second address line of the location
-          examples:
-          - ''
-        city:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: City
-          description: City of the location
-          examples:
-          - Ghent
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-          description: State of the location
-          examples:
-          - ''
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-          description: Country code (ISO 3166-1 alpha-2) of the location
-          examples:
-          - BE
-        postal_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Postal Code
-          description: Postal code of the location
-          examples:
-          - '9050'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the location
-          examples:
-          - Qargo HQ
-        id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Id
-          description: Identifier of the location
-        latitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Latitude
-        longitude:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Longitude
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Location description
-        location_identifier:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Location Identifier
-          description: External location identifier
-      type: object
-      title: Location
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ValidationErrorResponse:
-      properties:
-        message:
-          description: Human-readable summary of the validation failure
-          title: Message
-          type: string
-        errors:
-          description: One entry per validation failure. Always present and non-empty — a single failure yields a one-item array, so integrators can handle one and many the same way.
-          items:
-            $ref: '#/components/schemas/ValidationErrorDetail'
-          minItems: 1
-          title: Errors
-          type: array
-      required:
-      - message
-      - errors
-      title: ValidationErrorResponse
-      type: object
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2

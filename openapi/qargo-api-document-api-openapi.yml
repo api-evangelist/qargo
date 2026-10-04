@@ -130,25 +130,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    Body_Upload_document_content_v1_documents_document_upload_content_post:
-      properties:
-        file:
-          type: string
-          format: binary
-          title: File
-      type: object
-      required:
-      - file
-      title: Body_Upload_document_content_v1_documents_document_upload_content_post
     ValidationErrorDetail:
       properties:
         message:
@@ -181,17 +162,15 @@ components:
       - message
       title: ValidationErrorDetail
       type: object
-    DocumentUploadResponse:
+    HTTPValidationError:
       properties:
-        upload_id:
-          type: string
-          format: uuid
-          title: Upload Id
-          description: Unique identifier for the uploaded document
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - upload_id
-      title: DocumentUploadResponse
+      title: HTTPValidationError
     ValidationErrorResponse:
       properties:
         message:
@@ -210,6 +189,27 @@ components:
       - errors
       title: ValidationErrorResponse
       type: object
+    DocumentUploadResponse:
+      properties:
+        upload_id:
+          type: string
+          format: uuid
+          title: Upload Id
+          description: Unique identifier for the uploaded document
+      type: object
+      required:
+      - upload_id
+      title: DocumentUploadResponse
+    Body_Upload_document_content_v1_documents_document_upload_content_post:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+      type: object
+      required:
+      - file
+      title: Body_Upload_document_content_v1_documents_document_upload_content_post
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2
