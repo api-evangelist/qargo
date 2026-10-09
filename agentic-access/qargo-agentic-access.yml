@@ -1,6 +1,14 @@
-generated: '2026-07-20'
+generated: '2026-09-24'
 method: generated
-source: openapi/qargo-tms-openapi-original.yml
+source: openapi/qargo-api-accounting-api-openapi.yml, openapi/qargo-api-authentication-api-openapi.yml,
+  openapi/qargo-api-company-api-openapi.yml, openapi/qargo-api-document-api-openapi.yml, openapi/qargo-api-order-api-openapi.yml,
+  openapi/qargo-api-resource-api-openapi.yml, openapi/qargo-api-task-api-openapi.yml, openapi/qargo-api-trip-api-openapi.yml,
+  openapi/qargo-system-api-openapi.yml, openapi/qargo-use-case-accounting-api-openapi.yml, openapi/qargo-use-case-document-import-api-openapi.yml,
+  openapi/qargo-use-case-e-invoicing-api-openapi.yml, openapi/qargo-use-case-fleet-dispatch-api-openapi.yml,
+  openapi/qargo-use-case-intermodal-partner-api-openapi.yml, openapi/qargo-use-case-location-booking-api-openapi.yml,
+  openapi/qargo-use-case-order-api-openapi.yml, openapi/qargo-use-case-subcontractor-dispatch-api-openapi.yml,
+  openapi/qargo-use-case-tracking-api-openapi.yml, openapi/qargo-use-case-trip-import-api-openapi.yml,
+  openapi/qargo-use-case-visibility-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
@@ -11,8 +19,8 @@ summary:
     acting: 64
   by_consequence:
     read: 50
-    write: 36
-    physical: 21
+    write: 37
+    physical: 20
     safety-critical: 7
   human_in_the_loop_required: 7
 operations:
@@ -376,50 +384,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v1/documents/document/{id}/download
-  method: get
-  operationId: download_document_v1_documents_document__id__download_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/webhook/billing-document-update
-  method: post
-  operationId: billing-document-update-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: https://<accounting-visibility-event-receiving-payload>
-  method: post
-  operationId: Accounting_visibility_eventhttps____accounting_visibility_event_receiving_payload__post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v1/accounting/company
   method: get
   operationId: list_companies__deprecated__v1_accounting_company_get
@@ -670,123 +634,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/orders/order/upload
+- path: /v1/auth/token
   method: post
-  operationId: import_order_v1_orders_order_upload_post
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/orders/order/upload/{upload_id}
-  method: get
-  operationId: get_order_import_status_v1_orders_order_upload__upload_id__get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/orders/order/{order_id}
-  method: get
-  operationId: get_order_details_v1_orders_order__order_id__get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/orders/order/{order_id}/charges
-  method: get
-  operationId: List_Order_Charges_v1_orders_order__order_id__charges_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/orders/order/{order_id}/charges/approval
-  method: post
-  operationId: Approve_Order_Charges_v1_orders_order__order_id__charges_approval_post
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/orders/order/{order_id}/documents
-  method: get
-  operationId: list_order_documents_v1_orders_order__order_id__documents_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/orders/order/{order_id}/export
-  method: get
-  operationId: order_export_v1_orders_order__order_id__export_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/orders/order/{order_id}/status
-  method: get
-  operationId: order_status_v1_orders_order__order_id__status_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: https://<visibility-event-receiving-endpoint>
-  method: post
-  operationId: operational_visibility_event_webhook_post
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/documents/document/upload_content
-  method: post
-  operationId: Upload_document_content_v1_documents_document_upload_content_post
+  operationId: generate_token_v1_auth_token_post
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -799,168 +649,6 @@ operations:
       triggers:
       - abnormal
       - high-value
-    audit: required
-- path: /v1/webhook/document-import
-  method: post
-  operationId: document-import-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/webhook/fleet-document-upload
-  method: post
-  operationId: fleet-document-upload-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /v1/webhook/subco-document-upload
-  method: post
-  operationId: subcontractor-document-upload-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /v1/webhook/e-invoicing
-  method: post
-  operationId: e-invoicing-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/webhook/fleet-status-update
-  method: post
-  operationId: fleet-status-update-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: https://<external-fleet-receiving-endpoint>
-  method: post
-  operationId: fleet-dispatch-payload
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /v1/webhook/intermodal-status
-  method: post
-  operationId: intermodal-booking-status-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: https://<intermodal-booking-receiving-payload>
-  method: post
-  operationId: Intermodal_booking_payloadhttps____intermodal_booking_receiving_payload__post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/webhook/location-booking-update
-  method: post
-  operationId: location-booking-update-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: https://<location-booking-receiving-endpoint>
-  method: post
-  operationId: location-dispatch-payload
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
     audit: required
 - path: /v1/companies/company
   method: get
@@ -1150,6 +838,128 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /v1/documents/document/{id}/download
+  method: get
+  operationId: download_document_v1_documents_document__id__download_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/documents/document/upload_content
+  method: post
+  operationId: Upload_document_content_v1_documents_document_upload_content_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/orders/order/upload
+  method: post
+  operationId: import_order_v1_orders_order_upload_post
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/orders/order/upload/{upload_id}
+  method: get
+  operationId: get_order_import_status_v1_orders_order_upload__upload_id__get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/orders/order/{order_id}
+  method: get
+  operationId: get_order_details_v1_orders_order__order_id__get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/orders/order/{order_id}/charges
+  method: get
+  operationId: List_Order_Charges_v1_orders_order__order_id__charges_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/orders/order/{order_id}/charges/approval
+  method: post
+  operationId: Approve_Order_Charges_v1_orders_order__order_id__charges_approval_post
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/orders/order/{order_id}/documents
+  method: get
+  operationId: list_order_documents_v1_orders_order__order_id__documents_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/orders/order/{order_id}/export
+  method: get
+  operationId: order_export_v1_orders_order__order_id__export_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/orders/order/{order_id}/status
+  method: get
+  operationId: order_status_v1_orders_order__order_id__status_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /v1/resources/resource
   method: post
   operationId: Create_resource_v1_resources_resource_post
@@ -1390,122 +1200,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v1/webhook
-  method: post
-  operationId: order-import-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/webhook/partial-order-update
-  method: post
-  operationId: partial-order-update
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/webhook/subco-status-update
-  method: post
-  operationId: subcontractor-status-update-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: https://<external_subco_receiving_endpoint>
-  method: post
-  operationId: subcontractor-dispatch-payload
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /v1/webhook/tracking-update
-  method: post
-  operationId: tracking-update
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/webhook/trip-import
-  method: post
-  operationId: trip-import-webhook
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/auth/token
-  method: post
-  operationId: generate_token_v1_auth_token_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v1/tasks/available-tasks
   method: get
   operationId: list_available_tasks_v1_tasks_available_tasks_get
@@ -1582,3 +1276,315 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /v1/webhook/billing-document-update
+  method: post
+  operationId: billing-document-update-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/document-import
+  method: post
+  operationId: document-import-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/e-invoicing
+  method: post
+  operationId: e-invoicing-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/fleet-document-upload
+  method: post
+  operationId: fleet-document-upload-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/webhook/fleet-status-update
+  method: post
+  operationId: fleet-status-update-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: https://<external-fleet-receiving-endpoint>
+  method: post
+  operationId: fleet-dispatch-payload
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/webhook/intermodal-status
+  method: post
+  operationId: intermodal-booking-status-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: https://<intermodal-booking-receiving-payload>
+  method: post
+  operationId: Intermodal_booking_payloadhttps____intermodal_booking_receiving_payload__post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/location-booking-update
+  method: post
+  operationId: location-booking-update-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: https://<location-booking-receiving-endpoint>
+  method: post
+  operationId: location-dispatch-payload
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/webhook
+  method: post
+  operationId: order-import-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/partial-order-update
+  method: post
+  operationId: partial-order-update
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/subco-document-upload
+  method: post
+  operationId: subcontractor-document-upload-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/webhook/subco-status-update
+  method: post
+  operationId: subcontractor-status-update-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: https://<external_subco_receiving_endpoint>
+  method: post
+  operationId: subcontractor-dispatch-payload
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/webhook/tracking-update
+  method: post
+  operationId: tracking-update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhook/trip-import
+  method: post
+  operationId: trip-import-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: https://<accounting-visibility-event-receiving-payload>
+  method: post
+  operationId: Accounting_visibility_eventhttps____accounting_visibility_event_receiving_payload__post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: https://<visibility-event-receiving-endpoint>
+  method: post
+  operationId: operational_visibility_event_webhook_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
